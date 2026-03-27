@@ -1,0 +1,2 @@
+# example of overriding parameters from CLI
+nextflow run md_vs.nf -profile slurm --outdir /path/output/dir/

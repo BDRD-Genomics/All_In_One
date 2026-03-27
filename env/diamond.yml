@@ -1,0 +1,15 @@
+name: diamond
+channels:
+  - http://repomaster.genomics.local/repos/mamba/conda-forge
+  - http://repomaster.genomics.local/repos/mamba/bioconda
+  - http://repomaster.genomics.local/repos/mamba/anaconda
+  - http://repomaster.genomics.local/repos/mamba/r
+  - http://repomaster.genomics.local/repos/mamba/compbiocore
+  - http://repomaster.genomics.local/repos/mamba/nanoporetech
+  - http://repomaster.genomics.local/repos/mamba/gurobi
+dependencies:
+  - diamond
+  - ca-certificates
+  - openssl
+  - krona
+prefix: /export/miniforge3/envs/diamond
