@@ -32,21 +32,23 @@ The pipeline is designed so that major analysis stages can be enabled or disable
 
 ```text
 All_In_One/
-├── main.nf                 # Main DSL2 workflow entry point
-├── nextflow.config         # Top-level Nextflow configuration
-├── params.config           # User-facing pipeline parameters
-├── conf/                   # Profiles, resources, containers, databases, site config
-├── workflows/              # Workflows and local DSL2 modules
-├── scripts/                # Supporting Python, R, and shell scripts
-├── env/                    # Conda environment definitions
-├── containers/docker/      # Dockerfiles and container build environments
-├── ICTV/                   # ICTV viral family/genome-size resources
+├── main.nf
+├── nextflow.config
+├── params.config
+├── conf/
+├── workflows/
+├── scripts/
+├── env/
+├── containers/
+│   ├── docker/              # Dockerfiles and image build environments
+│   └── apptainer/           # Apptainer/Singularity image build/export resources
+├── ICTV/
 └── docs/
-    ├── index.md            # Documentation home
-    ├── usage.md            # Usage guide
-    ├── parameters.md       # Complete parameter reference
-    ├── containers.md       # Docker and Apptainer guide
-    └── configuration.md    # Installation and site configuration
+    ├── index.md
+    ├── usage.md
+    ├── parameters.md
+    ├── containers.md
+    └── configuration.md
 ```
 
 ---
