@@ -10,7 +10,7 @@
 
 ## Overview
 
-The pipeline is designed so that major analysis stages can be enabled or disabled independently with Nextflow parameters. A run can therefore be configured for anything from basic read QC to a larger workflow containing assembly, taxonomic classification, virulence/AMR characterization, viral screening, and reference-based read mapping.
+The pipeline is designed so that major analysis stages can be enabled or disabled independently with Nextflow parameters. A run can therefore be configured for anything from basic read QC to a larger workflow containing assembly, taxonomic classification, AMR characterization, viral screening, and reference-based read mapping.
 
 ### Major workflow areas
 
@@ -18,12 +18,12 @@ The pipeline is designed so that major analysis stages can be enabled or disable
 |---|---|
 | Quality control | fastp, FastQC, NanoPlot, MultiQC, read-distribution statistics |
 | Host / rRNA removal | host read mapping, BBMap/minimap2, RiboDetector |
-| Assembly | SPAdes, metaSPAdes, plasmidSPAdes, Unicycler, Dragonflye, Raven, Myloasm, CLC |
+| Assembly | SPAdes, metaSPAdes, plasmidSPAdes, Unicycler, Dragonflye, Raven, Myloasm |
 | Assembly validation | CheckM / CheckM2 / CheckV and AutoCycler workflows |
 | Taxonomic classification | Kraken2/Bracken, Sourmash, Mash, MetaPhlAn, GOTTCHA, Taxpasta |
 | Sequence search / viral analysis | DIAMOND BLASTX, MMseqs2, VirusSeeker workflows |
 | Contig characterization | Prokka, BUSCO, MLST, AMRFinderPlus, RGI, PhiSpy, MOB-suite, PLASMe |
-| Specialized analysis | VF classifier, chimeric-contig detection, automated read mapping |
+| Specialized analysis | chimeric-contig detection, automated read mapping |
 | Reporting | Nextflow trace, timeline, report, DAG, QC summaries, and exercise reports |
 
 ---
@@ -32,23 +32,21 @@ The pipeline is designed so that major analysis stages can be enabled or disable
 
 ```text
 All_In_One/
-├── main.nf
-├── nextflow.config
-├── params.config
-├── conf/
-├── workflows/
-├── scripts/
-├── env/
-├── containers/
-│   ├── docker/              # Dockerfiles and image build environments
-│   └── apptainer/           # Apptainer/Singularity image build/export resources
-├── ICTV/
+├── main.nf                 # Main DSL2 workflow entry point
+├── nextflow.config         # Top-level Nextflow configuration
+├── params.config           # User-facing pipeline parameters
+├── conf/                   # Profiles, resources, containers, databases, site config
+├── workflows/              # Workflows and local DSL2 modules
+├── scripts/                # Supporting Python, R, and shell scripts
+├── env/                    # Conda environment definitions
+├── containers/docker/      # Dockerfiles and container build environments
+├── ICTV/                   # ICTV viral family/genome-size resources
 └── docs/
-    ├── index.md
-    ├── usage.md
-    ├── parameters.md
-    ├── containers.md
-    └── configuration.md
+    ├── index.md            # Documentation home
+    ├── usage.md            # Usage guide
+    ├── parameters.md       # Complete parameter reference
+    ├── containers.md       # Docker and Apptainer guide
+    └── configuration.md    # Installation and site configuration
 ```
 
 ---
@@ -85,7 +83,7 @@ Create a site-specific configuration from the included template:
 cp conf/site.config.example site.config
 ```
 
-Edit `site.config` for the local installation. This is where paths such as container directories, database directories, temporary storage, Dorado, MEGAN, CLC, and other installation-specific resources should be defined.
+Edit `site.config` for the local installation. This is where paths such as container directories, database directories, temporary storage, MEGAN, and other installation-specific resources should be defined.
 
 `site.config` is intended to be installation-specific and should not be committed when it contains local paths or credentials.
 
@@ -220,7 +218,6 @@ The following are some of the primary switches used to control a run:
 | `--run_blastx` | Run DIAMOND BLASTX analysis |
 | `--run_mmseqs` | Run MMseqs2 searches |
 | `--run_reads_taxonomic_classifier` | Enable read-level taxonomic classification |
-| `--vf_classifier` | Run the VF classifier |
 | `--characterize_contigs` | Enable contig characterization workflows |
 | `--run_readmapping_auto` | Enable automated reference selection/read mapping |
 | `--vs` | Enable VirusSeeker workflow components |
@@ -300,11 +297,9 @@ The parameter page is organized into sections for:
 - Quality control
 - Host and rRNA removal
 - Assembly
-- Nanopore polishing and CLC
 - Assembly validation and AutoCycler
 - Sequence search and viral analysis
 - Read taxonomic classification
-- Virulence-factor classification
 - Contig characterization
 - Automated read mapping
 - Krona rendering
