@@ -1,0 +1,7 @@
+name: mobsuite
+channels:
+  - conda-forge
+  - bioconda
+channel_priority: strict
+dependencies:
+  - mob_suite

@@ -1,62 +1,140 @@
-# Configuration
-
-All-In-One separates portable pipeline logic from installation-specific configuration. The main configuration files are under `conf/`.
-
-## Configuration files
-
-| File | Purpose |
-|---|---|
-| `conf/profiles.config` | Execution and software profiles |
-| `conf/resources.config` | Process resource definitions |
-| `conf/containers.config` | Container image definitions |
-| `conf/conda.config` | Conda environment configuration |
-| `conf/databases.config` | Database configuration |
-| `conf/databases.config.internal` | Internal database configuration |
-| `conf/site.config.example` | Template for installation-specific settings |
+# Installation and configuration
 
 ## Site configuration
 
-Create a local site configuration from the template:
+Installation-specific locations are kept outside the tracked pipeline defaults.
 
 ```bash
 cp conf/site.config.example site.config
 ```
 
-Edit `site.config` for the local environment. Installation-specific paths such as container locations, database roots, temporary storage, and external software paths belong here rather than in workflow modules.
+Edit the copied file for the target system. It controls:
 
-Do not commit a site configuration that contains credentials or sensitive local infrastructure information.
+- Container directory
+- Database root
+- Temporary and Conda cache directories
+- Dorado installation and polishing models
+- MEGAN command-line tools
+- VF-classifier installation root
+- CLC Genomics Server connection information
 
-## Containers
+Pass the file before the `run` command:
 
-Container definitions and build recipes are under:
-
-```text
-containers/docker/
+```bash
+nextflow -c site.config run main.nf ...
 ```
 
-The repository includes individual Dockerfiles and Conda environment definitions for pipeline components. Container mappings used by Nextflow are defined in `conf/containers.config`.
+`site.config` is excluded from Git because it can contain installation paths and CLC credentials.
 
-## Conda
+## Profiles
 
-Conda environments are stored under `env/`, with additional image-build environment files under `containers/docker/`.
+Execution and software profiles are composable.
 
-The active backend is selected through the configured Nextflow profile rather than by editing individual workflow modules.
+| Profile | Purpose |
+|---|---|
+| `local` | Execute processes on the current machine. |
+| `slurm` | Submit processes through Slurm. |
+| `apptainer` | Use configured Apptainer images. |
+| `conda` | Create and use repository-defined Conda environments. |
+| `docker` | Use Docker containers. |
+
+Typical combinations:
+
+```bash
+# Cluster with Apptainer
+nextflow -c site.config run main.nf -profile slurm,apptainer -params-file params.yml
+
+# Cluster with Conda
+nextflow -c site.config run main.nf -profile slurm,conda -params-file params.yml
+
+# Local testing with Conda
+nextflow -c site.config run main.nf -profile local,conda -params-file params.yml
+```
+
+Do not combine multiple software backends in one run.
 
 ## Databases
 
-Database locations are configured in:
+All_In_One uses a single database root, `database_dir`. The recommended setup is to place all required external databases beneath this directory using the directory structure defined in `conf/databases.config`.
 
-```text
-conf/databases.config
-conf/databases.config.internal
+Set the root in `site.config`:
+
+```groovy
+params {
+    database_dir = '/data/All_In_One_databases'
+}
 ```
 
-Only databases needed by enabled workflows need to be available for a given run.
+Alternatively, set it with an environment variable:
 
-## Slurm and resources
+```bash
+export AIO_DATABASE_DIR=/data/All_In_One_databases
+```
 
-Cluster behavior is controlled through `conf/profiles.config` and `conf/resources.config`. Site-specific queue, account, storage, or scheduler settings should remain outside reusable workflow code wherever possible.
+A typical layout is:
 
-## Parameters
+```text
+/data/All_In_One_databases/
+├── amrfinderplus/
+├── bbmap/
+├── blastdb/
+├── busco/
+├── checkm/
+├── checkm2/
+├── checkv/
+├── gottcha/
+├── kraken2/
+├── krona/
+├── mash/
+├── metaphlan4/
+├── mmseqs/
+├── mob_suite/
+├── PLASMe/
+├── sourmash/
+└── taxonomy/
+```
 
-Pipeline behavior is controlled through command-line parameters. See the complete [Parameters](parameters.md) reference.
+Only databases required by enabled workflows need to be installed.
+
+### Overriding individual database locations
+
+The paths in `conf/databases.config` are defaults. If an existing database is stored elsewhere, override only that parameter without reorganizing the rest of the database tree.
+
+For example:
+
+```bash
+nextflow run main.nf \
+    --database_dir /data/All_In_One_databases \
+    --checkm2_db /software/checkm2/uniref100.KO.1.dmnd \
+    --diamond_dbdir /shared/blast/nr/nr
+```
+
+The same overrides may be placed in `site.config`:
+
+```groovy
+params {
+    database_dir = '/data/All_In_One_databases'
+
+    checkm2_db    = '/software/checkm2/uniref100.KO.1.dmnd'
+    diamond_dbdir = '/shared/blast/nr/nr'
+}
+```
+
+## Containers
+
+Container filenames are defined in `conf/containers.config` and resolved beneath `container_dir`.
+
+CLC runs outside the container because it uses an external licensed server/client installation. The remaining process-specific image selection is configured in `conf/profiles.config`.
+
+## Building the documentation site
+
+The Markdown files render directly on GitHub. A local website matching the grouped parameter-reference layout can be built with MkDocs:
+
+```bash
+python -m pip install -r requirements-docs.txt
+mkdocs serve
+```
+
+Open the address printed by MkDocs. GitHub Pages deployment is configured in `.github/workflows/docs.yml`.
+
+In the GitHub repository settings, open **Pages** and select **GitHub Actions** as the source. A push to `main` that changes the documentation or parameter schema will then rebuild and publish the site.

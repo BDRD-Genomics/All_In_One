@@ -1,0 +1,7 @@
+name: gottcha2
+channels:
+  - conda-forge
+  - bioconda
+channel_priority: strict
+dependencies:
+  - gottcha2
