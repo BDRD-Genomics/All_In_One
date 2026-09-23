@@ -407,68 +407,6 @@ process MOBSUITE {
     """
 }
 
-process CHIMERIC_DETECTION {
-    tag { "${assembler} | ${sample_id}" }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/chimeric_detection/${assembler}/" }, mode: 'copy'
-    label 'optimized_blastx_reads'
-    input:
-    tuple val(sample_id), val(assembler), path(contigs_fasta)
-
-    output:
-    tuple val(sample_id), val(assembler), file("*"), emit: chimeric_detection_ch
-
-    when:
-    (params.chimeric_detection)
-
-    script:
-    """
-    # run_chimeric_detection
-
-    python ${params.scripts}/FindChimericContigs.py \\
-    --max_target_seqs ${params.max_target_seqs} \\
-    --desired_rank ${params.desired_rank} \\
-    --threads ${task.cpus} \\
-    --blast_db1 ${params.blast_core_nt} \\
-    --contigs ${contigs_fasta} \\
-    --outDir . \\
-    --prefix Chimeric_${assembler}_${params.desired_rank}_${sample_id} \\
-    --project_dir .
-    
-    """
-}
-
-process UNMAPPED_CHIMERIC_DETECTION {
-    tag { "${sample_id} | ${assembler}" }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/chimeric_detection/${assembler}/" }, mode: 'copy'
-    label 'optimized_blastx_reads'
-    //errorStrategy 'ignore'
-    
-    input:
-    tuple val(sample_id), val(assembler), path(fna)
-
-    output:
-    tuple val(sample_id), val(assembler), file("*"), emit: unmapped_chimeric_detection_ch
- 
-    when:
-    (params.chimeric_detection)
-
-    script:
-    """
-    # run_chimeric_detection
-
-    python ${params.scripts}/FindChimericContigs.py \\
-    --max_target_seqs ${params.max_target_seqs} \\
-    --desired_rank ${params.desired_rank} \\
-    --threads ${task.cpus} \\
-    --blast_db1 ${params.blast_core_nt} \\
-    --contigs ${fna} \\
-    --outDir . \\
-    --prefix Chimeric_${assembler}_${params.desired_rank}_${sample_id} \\
-    --project_dir .
-
-    """
-}
-
 process AMR_VF_BLAST_plasmids {
     tag { "${assembler} | ${sample_id}" }
     publishDir { "${params.outdir}/${params.project_id}/${sample_id}/AMR_VF/${assembler}" }, mode: 'copy'

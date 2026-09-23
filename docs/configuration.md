@@ -15,8 +15,6 @@ Edit the copied file for the target system. It controls:
 - Temporary and Conda cache directories
 - Dorado installation and polishing models
 - MEGAN command-line tools
-- VF-classifier installation root
-- CLC Genomics Server connection information
 
 Pass the file before the `run` command:
 
@@ -24,7 +22,6 @@ Pass the file before the `run` command:
 nextflow -c site.config run main.nf ...
 ```
 
-`site.config` is excluded from Git because it can contain installation paths and CLC credentials.
 
 ## Profiles
 
@@ -124,7 +121,6 @@ params {
 
 Container filenames are defined in `conf/containers.config` and resolved beneath `container_dir`.
 
-CLC runs outside the container because it uses an external licensed server/client installation. The remaining process-specific image selection is configured in `conf/profiles.config`.
 
 ## Building the documentation site
 

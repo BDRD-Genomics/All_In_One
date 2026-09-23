@@ -48,7 +48,6 @@ def get_sample_name(full_file_list):
         r"\.LR\.trimmed\.fastq\.gz",
         r"_fastp_R1\.fastq\.gz", r"_fastp_R2\.fastq\.gz",
         r"_host_removed_sr_R1\.fastq\.gz", r"_host_removed_sr_R2\.fastq\.gz",
-        r"_CLC\.fasta",
         r"_host_removed_LR\.fastq\.gz", 
         r"_S\d*_L001_R1(.*)\.fastq\.gz", r"_S\d*_L001_R2(.*)\.fastq\.gz",
         r"\.fastq\.gz",

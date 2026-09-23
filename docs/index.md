@@ -19,7 +19,6 @@
 | Taxonomic classification         | Kraken2/Bracken, Sourmash, Mash, MetaPhlAn, GOTTCHA2, Taxpasta                |
 | Sequence search / viral analysis | DIAMOND BLASTX, BLAST, MMseqs2, VirusSeeker workflows                         |
 | Contig characterization          | Prokka, BUSCO, MLST, AMRFinderPlus, RGI, PhiSpy, MOB-suite, PLASMe            |
-| Specialized analysis             | Chimeric-contig detection                                                     |
 | Reporting                        | Nextflow trace, timeline, execution report, DAG, and QC summaries             |
 
 ## Repository layout

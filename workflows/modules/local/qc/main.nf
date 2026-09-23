@@ -423,30 +423,6 @@ process Fastcat_trim {
     """
 }
 
-process Exercise_Report_QC {
-    publishDir "${params.outdir}/${params.project_id}/exercise_report", mode: 'copy'
-    label 'qc'
-    conda "$baseDir/env/pandas_env.yml"
-    errorStrategy 'ignore'
-    
-    input:
-    val sample_id
-    val multiqc_out
-
-    output:
-    file "*.docx"
-
-    script:
-    """
-    python ${params.scripts}/exercise_report_QC_only_v2.py \
-    -s ${sample_id} \
-    -i ${params.outdir}/${params.project_id}/ \
-    -o . \
-    -p "${params.project_id}" \
-    -t ${baseDir}/templates/QC_Isolate_Template_v2.docx
-    """
-	
-}
 
 
 

@@ -572,24 +572,6 @@ process READS_TAXONOMIC_CLASSIFIER_SUMMARY {
     """
 }
 
-process Exercise_Report_Taxonomy {
-    publishDir "${params.outdir}/${params.project_id}/exercise_report", mode: 'copy'
-    label 'lowmem'
-    conda "$baseDir/env/pandas_env.yml"
-    errorStrategy 'ignore'
-
-    input:
-    val(sample_id)
-
-    output:
-    path "*.docx", emit: report_out_ch
-
-    script:
-    """
-    python ${params.scripts}/exercise_report_Taxonomy_only_v2.py -s ${sample_id} -i ${params.outdir}/${params.project_id}/ -o . -p ${params.project_id} -t ${baseDir}/templates/Taxonomy_Isolate_Template_v2.docx
-    """
-
-}
 
 
 
@@ -752,11 +734,9 @@ workflow Reads_Taxonomic_Classifier_Workflow {
         )	    
 	
 
-        def exercise_report_ch = MASH.out.mash_results
             .join(KRAKEN2_KRONA_SNAPSHOT.out.kraken2_krona_snapshot)
             .map{ sid, mashout, svg, png -> sid }
             .map{ sid -> sid.replaceAll('_long|_short',"")}
-	Exercise_Report_Taxonomy( exercise_report_ch )
 
     }
 
@@ -792,5 +772,4 @@ workflow Reads_Taxonomic_Classifier_Workflow {
     gottcha_results = params.run_gottcha ? GOTTCHA_CLASSIFY.out.gottcha_results : Channel.empty()
 
     taxpasta_tables = params.run_taxpasta ? taxpasta_tables_ch : Channel.empty()
-    taxonomy_exercise_report = Exercise_Report_Taxonomy.out.report_out_ch
 }

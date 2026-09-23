@@ -55,9 +55,6 @@ params {
     blast_core_nt     = "${params.export_database}/blastdb/core_nt/core_nt"
 
     // Automated read mapping
-    readmapping_auto_gcf_genomes_dir    = "${params.export_database}/GCF"
-    readmapping_auto_refseq_prok_dir    = "${params.export_database}/blastdb/ref_prok_rep_genomes"
-    readmapping_auto_refseq_viruses_dir = "${params.export_database}/blastdb/ref_viruses_rep_genomes"
     assembly_summary_refseq             = "${params.export_database}/assembly_summary_refseq.txt"
     assembly_summary_refseq_historical  = "${params.export_database}/assembly_summary_refseq_historical.txt"
 

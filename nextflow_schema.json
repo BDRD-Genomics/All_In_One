@@ -103,11 +103,6 @@
           "description": "Minimum qualified Phred score used by fastp-long.",
           "default": 8
         },
-        "exercise_report": {
-          "type": "boolean",
-          "description": "Create the exercise-style final report.",
-          "default": false
-        },
         "agnostic_read_analysis": {
           "type": "boolean",
           "description": "Enable analyses that do not require an expected organism assignment.",
@@ -344,74 +339,6 @@
         "medaka_model": {
           "type": "string",
           "description": "Medaka model name.",
-          "default": ""
-        }
-      }
-    },
-    "nanopore_clc_options": {
-      "title": "Nanopore polishing and CLC",
-      "type": "object",
-      "description": "Dorado, variant-calling, Nanopore, and CLC Genomics Server options.",
-      "properties": {
-        "bam_file": {
-          "type": "string",
-          "description": "Input BAM file or BAM location for Dorado workflows.",
-          "default": "",
-          "format": "file-path"
-        },
-        "dorado_polish": {
-          "type": "boolean",
-          "description": "Run Dorado polishing.",
-          "default": false
-        },
-        "run_variant": {
-          "type": "boolean",
-          "description": "Run the variant-calling branch.",
-          "default": false
-        },
-        "nanopore_assembly": {
-          "type": "boolean",
-          "description": "Enable the specialized Nanopore assembly branch.",
-          "default": false
-        },
-        "clc": {
-          "type": "boolean",
-          "description": "Run assembly using CLC Genomics Server.",
-          "default": false
-        },
-        "clc_grid": {
-          "type": "string",
-          "description": "CLC execution backend or grid identifier.",
-          "default": "slurm"
-        },
-        "clc_min_length": {
-          "type": "integer",
-          "description": "Minimum contig length reported by CLC assembly.",
-          "default": 1000
-        },
-        "clc_create_assembly_graph": {
-          "type": "boolean",
-          "description": "Request a CLC assembly graph.",
-          "default": true
-        },
-        "clc_create_report": {
-          "type": "boolean",
-          "description": "Request a CLC assembly report.",
-          "default": true
-        },
-        "clc_keep_circular_contigs_under_len_threshold": {
-          "type": "boolean",
-          "description": "Retain circular CLC contigs shorter than the minimum-length threshold.",
-          "default": false
-        },
-        "clc_report_export_format": {
-          "type": "string",
-          "description": "CLC assembly-report export format.",
-          "default": "export_pdf"
-        },
-        "clc_graph_export_format": {
-          "type": "string",
-          "description": "CLC assembly-graph export format.",
           "default": ""
         }
       }
@@ -713,59 +640,10 @@
         }
       }
     },
-    "vf_classifier_options": {
-      "title": "Virulence-factor classifier",
-      "type": "object",
-      "description": "Machine-learning and VFDB homology settings for VF classification.",
-      "properties": {
-        "vf_classifier": {
-          "type": "boolean",
-          "description": "Run the virulence-factor classifier independently of VirusSeeker.",
-          "default": false
-        },
-        "vf_input_type": {
-          "type": "string",
-          "description": "VF-classifier input type: `nucleotide` or `protein`.",
-          "default": "nucleotide",
-          "enum": [
-            "nucleotide",
-            "protein"
-          ]
-        },
-        "vf_mode": {
-          "type": "string",
-          "description": "VF-classifier analysis mode: `isolate` or `metagenome`.",
-          "default": "isolate",
-          "enum": [
-            "isolate",
-            "metagenome"
-          ]
-        },
-        "vf_homology": {
-          "type": "string",
-          "description": "Enable or disable VFDB homology support using `yes` or `no`.",
-          "default": "yes",
-          "enum": [
-            "yes",
-            "no"
-          ]
-        },
-        "vf_gpu": {
-          "type": "boolean",
-          "description": "Expose a GPU to the VF-classifier container and request a GPU from the scheduler.",
-          "default": true
-        },
-        "vf_threshold": {
-          "type": "number",
-          "description": "Model probability threshold used to call virulence factors.",
-          "default": 0.34
-        }
-      }
-    },
     "contig_characterization_options": {
       "title": "Contig characterization",
       "type": "object",
-      "description": "Annotation, AMR/VF, typing, plasmid, prophage, and chimeric-contig analyses.",
+      "description": "Annotation, AMR/VF, typing, plasmid, and prophage analyses.",
       "properties": {
         "characterize_contigs": {
           "type": "boolean",
@@ -807,11 +685,6 @@
           "description": "Run NCBI AMRFinderPlus.",
           "default": false
         },
-        "chimeric_detection": {
-          "type": "boolean",
-          "description": "Run chimeric-contig detection.",
-          "default": false
-        },
         "blast_contigs": {
           "type": "boolean",
           "description": "Run nucleotide BLAST analysis of assembled contigs.",
@@ -846,16 +719,6 @@
             "balance",
             "sensitive"
           ]
-        },
-        "desired_rank": {
-          "type": "string",
-          "description": "Taxonomic rank targeted by chimeric-contig analysis.",
-          "default": "genus"
-        },
-        "max_target_seqs": {
-          "type": "integer",
-          "description": "Maximum BLAST target sequences retained for chimeric-contig analysis.",
-          "default": 10
         }
       }
     },
@@ -863,23 +726,7 @@
       "title": "Automated read mapping",
       "type": "object",
       "description": "Automatic reference selection, ANI filtering, and mapping options.",
-      "properties": {
-        "run_readmapping_auto": {
-          "type": "boolean",
-          "description": "Automatically select references and map reads.",
-          "default": false
-        },
-        "readmapping_auto_cluster_dedup": {
-          "type": "boolean",
-          "description": "Cluster and deduplicate automatically selected references.",
-          "default": false
-        },
-        "readmapping_auto_ani_threshold": {
-          "type": "integer",
-          "description": "ANI percentage required when deduplicating selected references.",
-          "default": 99
-        }
-      }
+      "properties": {}
     },
     "visualization_options": {
       "title": "Krona rendering",
@@ -1097,6 +944,34 @@
           "format": "directory-path"
         }
       }
+    },
+    "nanopore_options": {
+      "title": "Nanopore polishing",
+      "type": "object",
+      "description": "Dorado, variant-calling, and Nanopore polishing options.",
+      "properties": {
+        "bam_file": {
+          "type": "string",
+          "description": "Input BAM file or BAM location for Dorado workflows.",
+          "default": "",
+          "format": "file-path"
+        },
+        "dorado_polish": {
+          "type": "boolean",
+          "description": "Run Dorado polishing.",
+          "default": false
+        },
+        "run_variant": {
+          "type": "boolean",
+          "description": "Run the variant-calling branch.",
+          "default": false
+        },
+        "nanopore_assembly": {
+          "type": "boolean",
+          "description": "Enable the specialized Nanopore assembly branch.",
+          "default": false
+        }
+      }
     }
   },
   "allOf": [
@@ -1119,7 +994,7 @@
       "$ref": "#/definitions/assembly_options"
     },
     {
-      "$ref": "#/definitions/nanopore_clc_options"
+      "$ref": "#/definitions/nanopore_options"
     },
     {
       "$ref": "#/definitions/assembly_validation_options"
@@ -1129,9 +1004,6 @@
     },
     {
       "$ref": "#/definitions/taxonomy_options"
-    },
-    {
-      "$ref": "#/definitions/vf_classifier_options"
     },
     {
       "$ref": "#/definitions/contig_characterization_options"

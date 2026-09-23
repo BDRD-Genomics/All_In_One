@@ -2,13 +2,12 @@
 nextflow.enable.dsl=2
 
 // Imports
-include { BLASTN_NT_contigs;PROKKA;BUSCO;AMR_VF_BLAST;MLST;CHIMERIC_DETECTION;RGI;AMRFINDER;PLASME;PHISPY;MOBSUITE } from './modules/local/contig_characterization/main_contigs.nf'
+include { BLASTN_NT_contigs;PROKKA;BUSCO;AMR_VF_BLAST;MLST;RGI;AMRFINDER;PLASME;PHISPY;MOBSUITE } from './modules/local/contig_characterization/main_contigs.nf'
 include { AMR_VF_BLAST_plasmids;AMR_VF_BLAST_select_agents;AMR_VF_BLAST_AMR;AMR_VF_BLAST_VF } 			     from './modules/local/contig_characterization/main_contigs.nf'
 include { AMRFINDER_UNMAPPED; UNMAPPED_LR_TO_FASTA; RGI_UNMAPPED; AMR_VF_BLASTN_UNMAPPED } 			     from './modules/local/contig_characterization/main_contigs.nf'
 include { CheckM_Assemblies;CheckM2_Assemblies;CheckV_Assemblies }                                   	    	     from './modules/local/checkm/main.nf'
 include { Map_Reads_2_Contigs }                                                                      		     from './modules/local/map2refseq/main.nf'
 //include { Assembly_Workflow as Unmapped_Assembly_Workflow }                                          		     from './assembly.nf'
-include {UNMAPPED_CHIMERIC_DETECTION}                                                                                         from './modules/local/contig_characterization/main_contigs.nf'
 
 def contigPickCpus(size_mb) {
     size_mb < 400 ? 12 : size_mb < 800 ? 24 : size_mb < 2000 ? 64 : 128
@@ -31,7 +30,6 @@ workflow CONTIG_based_analysis {
     - (from MLST) mlst_ch
     - (from RGI) rgi_ch
     - (from AMR_FINDER) amrfinder_ch
-    - (from CHIMERIC_DETECTION) chimeric_detection_ch
      */
 
     take:
@@ -72,8 +70,6 @@ workflow CONTIG_based_analysis {
     PROKKA(sample_asm_contigs)
     def prokka_out_ch = PROKKA.out.prokka_ch
     //prokka_out_ch.view{ "prokka_output_ch: $it" } //sid, assembler, fna, faa, gff
-    CHIMERIC_DETECTION(sample_asm_contigs)
-    def chimeric_detection_out_ch = CHIMERIC_DETECTION.out.chimeric_detection_ch
 
     def map2contigs_ch = all_tagged.map { sid, fq1, fq2, lr, contigs, assembler, mode, cpus, mem ->
         tuple(sid, fq1, fq2, lr, contigs, mode, assembler)}
@@ -105,7 +101,6 @@ workflow CONTIG_based_analysis {
     def unmapped_rgi_out_ch         = Channel.empty()
     def unmapped_amrfinder_out_ch   = Channel.empty()
     def unmapped_contigs_out_ch     = Channel.empty()
-    def unmapped_chimeric_detection = Channel.empty()
 
         if (params.test_unmapped_reassembly) {
 
@@ -182,7 +177,7 @@ workflow CONTIG_based_analysis {
         RGI_UNMAPPED(unmapped_fasta_for_analysis_ch)
         //AMRFINDER_UNMAPPED(PROKKA_UNMAPPED.out.prokka_ch)
         AMRFINDER_UNMAPPED(unmapped_fasta_for_analysis_ch)
-        UNMAPPED_CHIMERIC_DETECTION(unmapped_fasta_for_analysis_ch)
+
         unmapped_contigs_out_ch =
             UNMAPPED_LR_TO_FASTA.out.fasta_ch.map {
                 sid, source_assembler, fasta ->
@@ -203,9 +198,7 @@ workflow CONTIG_based_analysis {
             RGI_UNMAPPED.out.rgi_ch
         unmapped_amrfinder_out_ch =
             AMRFINDER_UNMAPPED.out.amrfinder_ch
-        unmapped_chimeric_detection =
-	    UNMAPPED_CHIMERIC_DETECTION.out.unmapped_chimeric_detection_ch
-    }
+}
  
     CheckM_Assemblies(sample_asm_contigs)
     CheckM2_Assemblies(sample_asm_contigs)
@@ -232,7 +225,6 @@ workflow CONTIG_based_analysis {
     MOBSUITE(sample_asm_contigs)
 
     PLASME(sample_asm_contigs)
-    //PLACEHOLDER FOR CHIMERIC DETECTION
 
     emit:
     busco_out_ch = BUSCO.out.busco_ch
@@ -257,6 +249,4 @@ workflow CONTIG_based_analysis {
     unmapped_amr_vf_blastn_ch = unmapped_amr_vf_out_ch
     unmapped_rgi_ch = unmapped_rgi_out_ch
     unmapped_amrfinder_ch = unmapped_amrfinder_out_ch
-    //chimeric_detection_ch = chimeric_detection_ch
-    //unmapped_chimeric_detection = unmapped_chimeric_detection
 }

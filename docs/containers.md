@@ -106,7 +106,6 @@ Dockerfile.mmseqs2
 Dockerfile.myloasm
 Dockerfile.nanoplot
 Dockerfile.prokka
-Dockerfile.readmapping_auto
 Dockerfile.rgi
 Dockerfile.ribodetector
 Dockerfile.spades
