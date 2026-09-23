@@ -59,7 +59,6 @@ workflow MMSEQ_AllAssemblers {
       meta   : it[0] == 'metaspades'
       uni    : it[0] == 'unicycler'
       raven    : it[0] == 'raven'
-      clc : it[0] == 'clc'
     }
 
   emit:
@@ -68,6 +67,5 @@ workflow MMSEQ_AllAssemblers {
     meta   = split.meta  .map { asm, sid, tsv -> tuple(sid, tsv) }             // (sid, tsv)
     uni    = split.uni   .map { asm, sid, tsv -> tuple(sid, tsv) }             // (sid, tsv)
     raven  = split.raven   .map { asm, sid, tsv -> tuple(sid, tsv) }             // (sid, tsv)
-    clc    = split.clc   .map { asm, sid, tsv -> tuple(sid, tsv) }              // (sid, tsv)
     all    = all_out                                                           // (asm, sid, tsv)
 }

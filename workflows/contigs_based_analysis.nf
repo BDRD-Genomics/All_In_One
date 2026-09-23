@@ -177,6 +177,7 @@ workflow CONTIG_based_analysis {
         RGI_UNMAPPED(unmapped_fasta_for_analysis_ch)
         //AMRFINDER_UNMAPPED(PROKKA_UNMAPPED.out.prokka_ch)
         AMRFINDER_UNMAPPED(unmapped_fasta_for_analysis_ch)
+
         unmapped_contigs_out_ch =
             UNMAPPED_LR_TO_FASTA.out.fasta_ch.map {
                 sid, source_assembler, fasta ->
@@ -197,7 +198,7 @@ workflow CONTIG_based_analysis {
             RGI_UNMAPPED.out.rgi_ch
         unmapped_amrfinder_out_ch =
             AMRFINDER_UNMAPPED.out.amrfinder_ch
-    }
+}
  
     CheckM_Assemblies(sample_asm_contigs)
     CheckM2_Assemblies(sample_asm_contigs)

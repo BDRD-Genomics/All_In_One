@@ -38,7 +38,7 @@ Defaults:
   --assembly-dir               current directory
   --reads-dir                  current directory
   --outdir                     ge_screen_results
-  --patterns                   *_dragonflye.fasta,*_dragonflye_contigs.fasta,*_EDGE.fasta,*_CLC.fasta
+  --patterns                   *_dragonflye.fasta,*_dragonflye_contigs.fasta,*_EDGE.fasta
   --read-ext                   .fastq.gz
   --partition                  ss
   --threads                    16
@@ -100,8 +100,6 @@ Read matching:
     _dragonflye_contigs.fasta
     _dragonflye.fasta
     _EDGE.fasta
-    _CLC.fasta
-
 Example:
   ST3-2_0001_DODSAFE_SS_fastcat_barcode0013_dragonflye.fasta
   -> read stem:
@@ -116,7 +114,7 @@ GE_SCREEN_SCRIPT=""
 ASSEMBLY_DIR="."
 READS_DIR="."
 OUTDIR="ge_screen_results"
-PATTERNS="*_dragonflye.fasta,*_dragonflye_contigs.fasta,*_EDGE.fasta,*_CLC.fasta"
+PATTERNS="*_dragonflye.fasta,*_dragonflye_contigs.fasta,*_EDGE.fasta"
 READ_EXT=".fastq.gz"
 PARTITION="ss"
 THREADS="16"
@@ -238,7 +236,6 @@ assembly_stem_from_name() {
     *_dragonflye_contigs.fasta) echo "${name%_dragonflye_contigs.fasta}" ;;
     *_dragonflye.fasta)        echo "${name%_dragonflye.fasta}" ;;
     *_EDGE.fasta)              echo "${name%_EDGE.fasta}" ;;
-    *_CLC.fasta)               echo "${name%_CLC.fasta}" ;;
     *.fasta)                   echo "${name%.fasta}" ;;
     *.fa)                      echo "${name%.fa}" ;;
     *.fna)                     echo "${name%.fna}" ;;
@@ -252,7 +249,6 @@ assembler_label_from_name() {
     *_dragonflye_contigs.fasta) echo "dragonflye_contigs" ;;
     *_dragonflye.fasta)        echo "dragonflye" ;;
     *_EDGE.fasta)              echo "EDGE" ;;
-    *_CLC.fasta)               echo "CLC" ;;
     *.fasta)                   echo "fasta" ;;
     *.fa)                      echo "fa" ;;
     *.fna)                     echo "fna" ;;

@@ -407,8 +407,6 @@ process MOBSUITE {
     """
 }
 
-
-
 process AMR_VF_BLAST_plasmids {
     tag { "${assembler} | ${sample_id}" }
     publishDir { "${params.outdir}/${params.project_id}/${sample_id}/AMR_VF/${assembler}" }, mode: 'copy'

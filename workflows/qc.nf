@@ -11,7 +11,6 @@ include {
     Post_trim_fastqc;
     Multiqc_QC_Stats;
     Interleave;
-    Exercise_Report_QC
 } from './modules/local/qc/main.nf'
 
 
@@ -69,10 +68,6 @@ workflow QC_Workflow {
         Post_trim_fastqc.out.posttrim_fastqc_ch.collect()
     )
 
-    Exercise_Report_QC(
-        Pretrim_fastqc_merged.out.pretrim_fastqc_sample_id,
-        Multiqc_QC_Stats.out.multiqc_complete_ch
-    )
 
 
     emit:

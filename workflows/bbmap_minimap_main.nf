@@ -8,16 +8,16 @@ nextflow.enable.dsl=2
 ========================================================================================
 */
 // Include modules
-include { Fasta_preprocess } from './modules/local/readmapping_auto/main.nf'
-include { BBMap } from './modules/local/readmapping_auto/main.nf'
-include { Minimap } from './modules/local/readmapping_auto/main.nf'
-include { Minimap_Hyb } from './modules/local/readmapping_auto/main.nf'
-include { Minimap_sr } from './modules/local/readmapping_auto/main.nf'
-include { Filter_bams } from './modules/local/readmapping_auto/main.nf'
-include { Individual_Covstats } from './modules/local/readmapping_auto/main.nf'
-include { Combine_Covstats } from './modules/local/readmapping_auto/main.nf'
-include { PileUp } from './modules/local/readmapping_auto/main.nf'
-include { IVar } from './modules/local/readmapping_auto/main.nf'
+include { Fasta_preprocess } from './modules/local/readmapping/main.nf'
+include { BBMap } from './modules/local/readmapping/main.nf'
+include { Minimap } from './modules/local/readmapping/main.nf'
+include { Minimap_Hyb } from './modules/local/readmapping/main.nf'
+include { Minimap_sr } from './modules/local/readmapping/main.nf'
+include { Filter_bams } from './modules/local/readmapping/main.nf'
+include { Individual_Covstats } from './modules/local/readmapping/main.nf'
+include { Combine_Covstats } from './modules/local/readmapping/main.nf'
+include { PileUp } from './modules/local/readmapping/main.nf'
+include { IVar } from './modules/local/readmapping/main.nf'
 
 
 
