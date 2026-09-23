@@ -1,0 +1,13 @@
+name: plasme
+channels:
+  - conda-forge
+  - bioconda
+channel_priority: strict
+dependencies:
+  - python
+  - pytorch
+  - diamond
+  - blast
+  - biopython
+  - numpy
+  - pandas

@@ -1,7 +1,7 @@
-name: mlst
+name: checkv
 channels:
   - conda-forge
   - bioconda
 channel_priority: strict
 dependencies:
-  - mlst
+  - checkv

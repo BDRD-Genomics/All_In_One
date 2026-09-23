@@ -1,0 +1,1149 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "All-In-One pipeline parameters",
+  "description": "Parameters for short-read, long-read, and hybrid infectious-disease sequencing analysis.",
+  "type": "object",
+  "definitions": {
+    "input_output_options": {
+      "title": "Input and output",
+      "type": "object",
+      "description": "Input sample sheet, project naming, and output locations.",
+      "properties": {
+        "samplesheet": {
+          "type": "string",
+          "description": "CSV sample sheet with the columns `sample_id`, `fastq_1`, `fastq_2`, and `long_read`.",
+          "default": "samplesheet.csv",
+          "format": "file-path"
+        },
+        "project_id": {
+          "type": "string",
+          "description": "Project identifier used in output paths and report names.",
+          "default": "YOU_FORGOT_TO_SET_THIS"
+        },
+        "outdir": {
+          "type": "string",
+          "description": "Directory where pipeline results and execution reports are written.",
+          "default": "${launchDir}/results",
+          "format": "directory-path"
+        },
+        "work_dir": {
+          "type": "string",
+          "description": "Nextflow work directory.",
+          "default": "${launchDir}/work",
+          "format": "directory-path"
+        },
+        "cleanup": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "Whether Nextflow should remove intermediate work files after successful completion.",
+          "default": null
+        }
+      },
+      "required": [
+        "samplesheet",
+        "project_id"
+      ]
+    },
+    "input_mode_options": {
+      "title": "Sequencing mode",
+      "type": "object",
+      "description": "Select the sequencing-data mode represented by the sample sheet.",
+      "properties": {
+        "shortreads": {
+          "type": "boolean",
+          "description": "Run in paired short-read mode. Set only one sequencing-mode switch to true.",
+          "default": false
+        },
+        "longreads": {
+          "type": "boolean",
+          "description": "Run in long-read mode. Set only one sequencing-mode switch to true.",
+          "default": false
+        },
+        "hybrid": {
+          "type": "boolean",
+          "description": "Run with paired short reads and long reads. Set only one sequencing-mode switch to true.",
+          "default": false
+        }
+      }
+    },
+    "quality_control_options": {
+      "title": "Quality control",
+      "type": "object",
+      "description": "Read trimming, FastQC, NanoPlot, MultiQC, and reporting options.",
+      "properties": {
+        "run_qc": {
+          "type": "boolean",
+          "description": "Run the primary read quality-control workflow.",
+          "default": true
+        },
+        "run_qc_stats": {
+          "type": "boolean",
+          "description": "Generate FastQC, NanoPlot, MultiQC, and summary statistics where applicable.",
+          "default": true
+        },
+        "trim": {
+          "type": "boolean",
+          "description": "Trim and filter reads before downstream analysis.",
+          "default": true
+        },
+        "fastp_opts": {
+          "type": "string",
+          "description": "Additional command-line options passed to fastp for paired short reads.",
+          "default": "-q 20 -e 20 --cut_front --cut_tail -w 16 -l 50"
+        },
+        "fastp_long_opts": {
+          "type": "string",
+          "description": "Additional command-line options passed to fastp-long.",
+          "default": ""
+        },
+        "quality_phread_fastp_long": {
+          "type": "integer",
+          "description": "Minimum qualified Phred score used by fastp-long.",
+          "default": 8
+        },
+        "exercise_report": {
+          "type": "boolean",
+          "description": "Create the exercise-style final report.",
+          "default": false
+        },
+        "agnostic_read_analysis": {
+          "type": "boolean",
+          "description": "Enable analyses that do not require an expected organism assignment.",
+          "default": true
+        }
+      }
+    },
+    "host_rrna_options": {
+      "title": "Host and rRNA removal",
+      "type": "object",
+      "description": "Host-depletion and ribosomal-RNA filtering options.",
+      "properties": {
+        "map2reads": {
+          "type": "boolean",
+          "description": "Map reads against the host reference and retain host-removed reads.",
+          "default": false
+        },
+        "host_db": {
+          "type": "string",
+          "description": "Host reference FASTA or preconfigured host reference used for read removal.",
+          "default": "",
+          "format": "file-path"
+        },
+        "remove_rRNA_reads": {
+          "type": "boolean",
+          "description": "Remove ribosomal-RNA reads before downstream analysis.",
+          "default": false
+        },
+        "bbmap_args": {
+          "type": "string",
+          "description": "Additional BBMap settings for rRNA filtering.",
+          "default": "k=13 usemodulo=f rebuild=f interleaved=auto fastareadlen=500 unpigz=f touppercase=t "
+        },
+        "rRNA_method": {
+          "type": "string",
+          "description": "rRNA-removal implementation: `bbmap_minimap2` or `ribodetector`.",
+          "default": "bbmap_minimap2",
+          "enum": [
+            "bbmap_minimap2",
+            "ribodetector"
+          ]
+        },
+        "ribodetector_mode": {
+          "type": "string",
+          "description": "RiboDetector execution mode: `cpu` or `gpu`.",
+          "default": "cpu",
+          "enum": [
+            "cpu",
+            "gpu"
+          ]
+        },
+        "ribodetector_short_len": {
+          "type": "integer",
+          "description": "Read-length setting supplied to RiboDetector for short reads.",
+          "default": 100
+        },
+        "ribodetector_long_len": {
+          "type": "integer",
+          "description": "Read-length setting supplied to RiboDetector for long reads.",
+          "default": 100
+        },
+        "ribodetector_ensure": {
+          "type": "string",
+          "description": "RiboDetector class that must be retained or reported.",
+          "default": "rrna"
+        },
+        "ribodetector_chunk_size": {
+          "type": "integer",
+          "description": "Number of sequences processed per RiboDetector chunk.",
+          "default": 256
+        },
+        "ribodetector_cpu_cluster_options": {
+          "type": "string",
+          "description": "Additional scheduler options for CPU RiboDetector jobs.",
+          "default": ""
+        },
+        "ribodetector_gpu_cluster_options": {
+          "type": "string",
+          "description": "Additional scheduler options for GPU RiboDetector jobs.",
+          "default": "--gres=gpu:1"
+        },
+        "ribodetector_gpu_memory": {
+          "type": "integer",
+          "description": "GPU-memory setting supplied to RiboDetector.",
+          "default": 4
+        }
+      }
+    },
+    "assembly_options": {
+      "title": "Assembly",
+      "type": "object",
+      "description": "Short-read, long-read, hybrid, and metagenomic assembly options.",
+      "properties": {
+        "run_assembly": {
+          "type": "boolean",
+          "description": "Run one or more enabled assembly workflows.",
+          "default": false
+        },
+        "subassembly": {
+          "type": "boolean",
+          "description": "Run the subassembly workflow.",
+          "default": false
+        },
+        "spades": {
+          "type": "boolean",
+          "description": "Run SPAdes assembly.",
+          "default": false
+        },
+        "metaspades": {
+          "type": "boolean",
+          "description": "Run metaSPAdes assembly.",
+          "default": false
+        },
+        "plasmidspades": {
+          "type": "boolean",
+          "description": "Run plasmidSPAdes assembly.",
+          "default": false
+        },
+        "unicycler": {
+          "type": "boolean",
+          "description": "Run Unicycler assembly.",
+          "default": false
+        },
+        "unicycler_mode": {
+          "type": "string",
+          "description": "Unicycler bridging mode, such as `conservative`, `normal`, or `bold`.",
+          "default": "normal",
+          "enum": [
+            "conservative",
+            "normal",
+            "bold"
+          ]
+        },
+        "dragonflye": {
+          "type": "boolean",
+          "description": "Run Dragonflye long-read assembly.",
+          "default": false
+        },
+        "dragonflye_isolate": {
+          "type": "boolean",
+          "description": "Use isolate-oriented Dragonflye behavior.",
+          "default": false
+        },
+        "raven": {
+          "type": "boolean",
+          "description": "Run Raven long-read assembly.",
+          "default": false
+        },
+        "myloasm": {
+          "type": "boolean",
+          "description": "Run Myloasm long-read metagenome assembly.",
+          "default": false
+        },
+        "myloasm_hifi": {
+          "type": "boolean",
+          "description": "Treat Myloasm input as HiFi reads.",
+          "default": false
+        },
+        "metaspades_default_cpus": {
+          "type": "integer",
+          "description": "Default CPU request for metaSPAdes.",
+          "default": 254
+        },
+        "metaspades_default_mem": {
+          "type": "string",
+          "description": "Default memory request for metaSPAdes.",
+          "default": "500 GB"
+        },
+        "metaSPAdes": {
+          "type": "string",
+          "description": "metaSPAdes command template.",
+          "default": "spades.py --only-assembler --tmp-dir ${params.tmp_dir} --meta"
+        },
+        "myloasm_cpus": {
+          "type": "integer",
+          "description": "CPU request for Myloasm.",
+          "default": 50
+        },
+        "myloasm_memory": {
+          "type": "string",
+          "description": "Memory request for Myloasm.",
+          "default": "256 GB"
+        },
+        "myloasm_time": {
+          "type": "string",
+          "description": "Wall-time request for Myloasm.",
+          "default": "72h"
+        },
+        "myloasm_opts": {
+          "type": "string",
+          "description": "Additional Myloasm command-line options.",
+          "default": "--clean-dir"
+        },
+        "dragonflye_opts": {
+          "type": "string",
+          "description": "Additional Dragonflye command-line options.",
+          "default": "--trim --trimopts \"--discard_middle\" --depth 100 --opts \"--iterations 5 --meta\" --racon 3 --polypolish 5 --polypolish_careful --nanohq"
+        },
+        "raven_opts": {
+          "type": "string",
+          "description": "Additional Raven command-line options.",
+          "default": "--trim --trimopts \"--discard_middle\" --depth 0 --racon 3"
+        },
+        "dragonflye_min_quality": {
+          "type": "integer",
+          "description": "Minimum long-read quality used by Dragonflye-associated filtering.",
+          "default": 8
+        },
+        "use_gsize": {
+          "type": "boolean",
+          "description": "Provide an explicit genome-size estimate to long-read assembly.",
+          "default": false
+        },
+        "gsize": {
+          "type": "string",
+          "description": "Expected genome size, for example `5m`.",
+          "default": ""
+        },
+        "threads": {
+          "type": "integer",
+          "description": "Generic thread count used by legacy assembly steps.",
+          "default": 8
+        },
+        "memory": {
+          "type": "integer",
+          "description": "Generic memory value used by legacy assembly steps.",
+          "default": 8
+        },
+        "medaka": {
+          "type": "boolean",
+          "description": "Run Medaka consensus polishing where supported.",
+          "default": false
+        },
+        "medaka_model": {
+          "type": "string",
+          "description": "Medaka model name.",
+          "default": ""
+        }
+      }
+    },
+    "nanopore_clc_options": {
+      "title": "Nanopore polishing and CLC",
+      "type": "object",
+      "description": "Dorado, variant-calling, Nanopore, and CLC Genomics Server options.",
+      "properties": {
+        "bam_file": {
+          "type": "string",
+          "description": "Input BAM file or BAM location for Dorado workflows.",
+          "default": "",
+          "format": "file-path"
+        },
+        "dorado_polish": {
+          "type": "boolean",
+          "description": "Run Dorado polishing.",
+          "default": false
+        },
+        "run_variant": {
+          "type": "boolean",
+          "description": "Run the variant-calling branch.",
+          "default": false
+        },
+        "nanopore_assembly": {
+          "type": "boolean",
+          "description": "Enable the specialized Nanopore assembly branch.",
+          "default": false
+        },
+        "clc": {
+          "type": "boolean",
+          "description": "Run assembly using CLC Genomics Server.",
+          "default": false
+        },
+        "clc_grid": {
+          "type": "string",
+          "description": "CLC execution backend or grid identifier.",
+          "default": "slurm"
+        },
+        "clc_min_length": {
+          "type": "integer",
+          "description": "Minimum contig length reported by CLC assembly.",
+          "default": 1000
+        },
+        "clc_create_assembly_graph": {
+          "type": "boolean",
+          "description": "Request a CLC assembly graph.",
+          "default": true
+        },
+        "clc_create_report": {
+          "type": "boolean",
+          "description": "Request a CLC assembly report.",
+          "default": true
+        },
+        "clc_keep_circular_contigs_under_len_threshold": {
+          "type": "boolean",
+          "description": "Retain circular CLC contigs shorter than the minimum-length threshold.",
+          "default": false
+        },
+        "clc_report_export_format": {
+          "type": "string",
+          "description": "CLC assembly-report export format.",
+          "default": "export_pdf"
+        },
+        "clc_graph_export_format": {
+          "type": "string",
+          "description": "CLC assembly-graph export format.",
+          "default": ""
+        }
+      }
+    },
+    "assembly_validation_options": {
+      "title": "Assembly validation and AutoCycler",
+      "type": "object",
+      "description": "CheckM, CheckV, consensus assembly, and long-read subsampling options.",
+      "properties": {
+        "run_checkm": {
+          "type": "boolean",
+          "description": "Run CheckM, CheckM2, and CheckV assembly validation where configured.",
+          "default": true
+        },
+        "checkm_time": {
+          "type": "string",
+          "description": "CheckM wall-time request.",
+          "default": "36h"
+        },
+        "checkm_cpus": {
+          "type": "integer",
+          "description": "CheckM CPU request.",
+          "default": 32
+        },
+        "checkm_mem": {
+          "type": "string",
+          "description": "CheckM memory request.",
+          "default": "64GB"
+        },
+        "run_autocycler": {
+          "type": "boolean",
+          "description": "Run the AutoCycler consensus-assembly workflow.",
+          "default": false
+        },
+        "ac_enable_contig_filtering": {
+          "type": "boolean",
+          "description": "Filter AutoCycler input contigs before clustering.",
+          "default": true
+        },
+        "ac_min_contig_len": {
+          "type": "integer",
+          "description": "Minimum AutoCycler contig length.",
+          "default": 1000
+        },
+        "ac_max_contigs_per_assembly": {
+          "type": "integer",
+          "description": "Maximum contigs retained from each assembly for AutoCycler.",
+          "default": 25
+        },
+        "skip_subsample": {
+          "type": "boolean",
+          "description": "Skip AutoCycler read subsampling.",
+          "default": true
+        },
+        "subsample_count": {
+          "type": "integer",
+          "description": "Number of long-read subsamples to create.",
+          "default": 6
+        },
+        "min_read_depth": {
+          "type": "integer",
+          "description": "Minimum read depth used during subsampling.",
+          "default": 25
+        },
+        "autocycler_assemblers": {
+          "type": "string",
+          "description": "Comma-separated assembler set used by AutoCycler.",
+          "default": "flye,miniasm,necat,myloasm"
+        },
+        "autocycler_subsamples": {
+          "type": "integer",
+          "description": "Number of subsamples passed through the AutoCycler assembler set.",
+          "default": 4
+        },
+        "use_flye": {
+          "type": "boolean",
+          "description": "Include Flye in AutoCycler assembly generation.",
+          "default": true
+        },
+        "use_miniasm": {
+          "type": "boolean",
+          "description": "Include Miniasm in AutoCycler assembly generation.",
+          "default": false
+        },
+        "use_necat": {
+          "type": "boolean",
+          "description": "Include NECAT in AutoCycler assembly generation.",
+          "default": false
+        },
+        "use_myloasm": {
+          "type": "boolean",
+          "description": "Include Myloasm in AutoCycler assembly generation.",
+          "default": true
+        }
+      }
+    },
+    "search_virus_options": {
+      "title": "Sequence search and viral analysis",
+      "type": "object",
+      "description": "BLASTX, DIAMOND, MMseqs2, Hecatomb, and VirusSeeker options.",
+      "properties": {
+        "run_blastx": {
+          "type": "boolean",
+          "description": "Run DIAMOND BLASTX analysis.",
+          "default": false
+        },
+        "diamond_args": {
+          "type": "string",
+          "description": "Additional DIAMOND search options.",
+          "default": "--block-size 20 --iterate faster --index-chunks 1 --tmpdir ${params.tmp_dir}"
+        },
+        "run_mmseqs": {
+          "type": "boolean",
+          "description": "Run MMseqs2 nucleotide/protein search workflows.",
+          "default": false
+        },
+        "mmseqs_search_max_seqs": {
+          "type": "integer",
+          "description": "Maximum number of MMseqs2 target sequences retained per query.",
+          "default": 20
+        },
+        "mmseqs_search_opts": {
+          "type": "string",
+          "description": "Additional options passed to `mmseqs search`.",
+          "default": "--max-seqs 25 -s 7.0 -e 1.0E-8 --search-type 3 --split 0 --cov-mode 2 --cov 0.15"
+        },
+        "mmseqs_createdb_opts": {
+          "type": "string",
+          "description": "Additional options passed to `mmseqs createdb`.",
+          "default": "--createdb-mode 1"
+        },
+        "mmseqs_format": {
+          "type": "string",
+          "description": "Column list passed to MMseqs2 `convertalis`.",
+          "default": "query,target,pident,alnlen,mismatch,gapopen,qstart,qend,tstart,tend,evalue,bits,theader,qlen,tlen"
+        },
+        "mmseqs_convertalis_opts": {
+          "type": "string",
+          "description": "Additional options passed to `mmseqs convertalis`.",
+          "default": ""
+        },
+        "mmseqs_cpus": {
+          "type": "integer",
+          "description": "CPU request for MMseqs2 searches.",
+          "default": 254
+        },
+        "mmseqs_mem": {
+          "type": "integer",
+          "description": "Memory request for MMseqs2 searches.",
+          "default": 960
+        },
+        "db_BP": {
+          "type": "string",
+          "description": "Optional database-size value used by search calculations.",
+          "default": ""
+        },
+        "hecatomb_config": {
+          "type": "string",
+          "description": "Optional Hecatomb configuration file.",
+          "default": "",
+          "format": "file-path"
+        },
+        "vs": {
+          "type": "boolean",
+          "description": "Run the VirusSeeker workflow.",
+          "default": false
+        }
+      }
+    },
+    "taxonomy_options": {
+      "title": "Read taxonomic classification",
+      "type": "object",
+      "description": "Kraken2, Bracken, Sourmash, Mash, MetaPhlAn, GOTTCHA, and Taxpasta options.",
+      "properties": {
+        "run_reads_taxonomic_classifier": {
+          "type": "boolean",
+          "description": "Run the combined read-taxonomy workflow.",
+          "default": false
+        },
+        "run_kraken2": {
+          "type": "boolean",
+          "description": "Run Kraken2 classification.",
+          "default": true
+        },
+        "run_sourmash": {
+          "type": "boolean",
+          "description": "Run Sourmash sketching and gather.",
+          "default": true
+        },
+        "run_mash": {
+          "type": "boolean",
+          "description": "Run Mash distance analysis.",
+          "default": true
+        },
+        "run_metaphlan4": {
+          "type": "boolean",
+          "description": "Run MetaPhlAn 4 classification.",
+          "default": false
+        },
+        "run_gottcha": {
+          "type": "boolean",
+          "description": "Run GOTTCHA classification.",
+          "default": false
+        },
+        "run_taxpasta": {
+          "type": "boolean",
+          "description": "Normalize taxonomy outputs with Taxpasta.",
+          "default": true
+        },
+        "make_taxonomic_classifier_summary": {
+          "type": "boolean",
+          "description": "Create a combined taxonomy summary across enabled classifiers.",
+          "default": true
+        },
+        "run_sourmash_kreport": {
+          "type": "boolean",
+          "description": "Convert Sourmash results into Kraken-style reports.",
+          "default": false
+        },
+        "sourmash_taxonomy": {
+          "type": "string",
+          "description": "Optional Sourmash taxonomy mapping file.",
+          "default": "",
+          "format": "file-path"
+        },
+        "sourmash_tax_extra_args": {
+          "type": "string",
+          "description": "Additional arguments for Sourmash taxonomy conversion.",
+          "default": "--ignore-abund"
+        },
+        "kraken2_extra_args": {
+          "type": "string",
+          "description": "Additional Kraken2 command-line options.",
+          "default": "--use-names --confidence 0.05"
+        },
+        "run_bracken": {
+          "type": "boolean",
+          "description": "Estimate species abundance from Kraken2 results using Bracken.",
+          "default": true
+        },
+        "bracken_level": {
+          "type": "string",
+          "description": "Bracken taxonomic level, such as `S` for species.",
+          "default": "S",
+          "enum": [
+            "D",
+            "P",
+            "C",
+            "O",
+            "F",
+            "G",
+            "S"
+          ]
+        },
+        "bracken_threshold": {
+          "type": "integer",
+          "description": "Minimum reads required by Bracken.",
+          "default": 1
+        },
+        "bracken_read_length_short": {
+          "type": "integer",
+          "description": "Expected short-read length supplied to Bracken.",
+          "default": 150
+        },
+        "bracken_read_length_long": {
+          "type": "integer",
+          "description": "Expected long-read length supplied to Bracken.",
+          "default": 300
+        },
+        "bracken_extra_args": {
+          "type": "string",
+          "description": "Additional Bracken command-line options.",
+          "default": ""
+        },
+        "sourmash_scaled_param": {
+          "type": "string",
+          "description": "Sourmash sketch parameters.",
+          "default": "k=21,scaled=1000"
+        },
+        "sourmash_extra_args": {
+          "type": "string",
+          "description": "Additional Sourmash command-line options.",
+          "default": ""
+        },
+        "metaphlan4_extra_args": {
+          "type": "string",
+          "description": "Additional MetaPhlAn 4 command-line options.",
+          "default": ""
+        },
+        "metaphlan4_db_arg": {
+          "type": "string",
+          "description": "Argument name used to supply the MetaPhlAn database directory.",
+          "default": "--db_dir"
+        },
+        "gottcha_extra_args": {
+          "type": "string",
+          "description": "Additional GOTTCHA command-line options.",
+          "default": ""
+        }
+      }
+    },
+    "vf_classifier_options": {
+      "title": "Virulence-factor classifier",
+      "type": "object",
+      "description": "Machine-learning and VFDB homology settings for VF classification.",
+      "properties": {
+        "vf_classifier": {
+          "type": "boolean",
+          "description": "Run the virulence-factor classifier independently of VirusSeeker.",
+          "default": false
+        },
+        "vf_input_type": {
+          "type": "string",
+          "description": "VF-classifier input type: `nucleotide` or `protein`.",
+          "default": "nucleotide",
+          "enum": [
+            "nucleotide",
+            "protein"
+          ]
+        },
+        "vf_mode": {
+          "type": "string",
+          "description": "VF-classifier analysis mode: `isolate` or `metagenome`.",
+          "default": "isolate",
+          "enum": [
+            "isolate",
+            "metagenome"
+          ]
+        },
+        "vf_homology": {
+          "type": "string",
+          "description": "Enable or disable VFDB homology support using `yes` or `no`.",
+          "default": "yes",
+          "enum": [
+            "yes",
+            "no"
+          ]
+        },
+        "vf_gpu": {
+          "type": "boolean",
+          "description": "Expose a GPU to the VF-classifier container and request a GPU from the scheduler.",
+          "default": true
+        },
+        "vf_threshold": {
+          "type": "number",
+          "description": "Model probability threshold used to call virulence factors.",
+          "default": 0.34
+        }
+      }
+    },
+    "contig_characterization_options": {
+      "title": "Contig characterization",
+      "type": "object",
+      "description": "Annotation, AMR/VF, typing, plasmid, prophage, and chimeric-contig analyses.",
+      "properties": {
+        "characterize_contigs": {
+          "type": "boolean",
+          "description": "Run the selected contig-characterization tools.",
+          "default": false
+        },
+        "prokka": {
+          "type": "boolean",
+          "description": "Annotate contigs with Prokka.",
+          "default": false
+        },
+        "busco": {
+          "type": "boolean",
+          "description": "Evaluate assembly completeness with BUSCO.",
+          "default": false
+        },
+        "amr_vf": {
+          "type": "boolean",
+          "description": "Run AMR and virulence-factor similarity searches.",
+          "default": false
+        },
+        "mlst": {
+          "type": "boolean",
+          "description": "Run multilocus sequence typing.",
+          "default": false
+        },
+        "ge_screen": {
+          "type": "boolean",
+          "description": "Run the genetic-engineering screening workflow.",
+          "default": false
+        },
+        "rgi": {
+          "type": "boolean",
+          "description": "Run the CARD Resistance Gene Identifier.",
+          "default": false
+        },
+        "amrfinder": {
+          "type": "boolean",
+          "description": "Run NCBI AMRFinderPlus.",
+          "default": false
+        },
+        "chimeric_detection": {
+          "type": "boolean",
+          "description": "Run chimeric-contig detection.",
+          "default": false
+        },
+        "blast_contigs": {
+          "type": "boolean",
+          "description": "Run nucleotide BLAST analysis of assembled contigs.",
+          "default": true
+        },
+        "run_phispy": {
+          "type": "boolean",
+          "description": "Run PhiSpy prophage prediction.",
+          "default": false
+        },
+        "run_mobsuite": {
+          "type": "boolean",
+          "description": "Run MOB-suite plasmid analysis.",
+          "default": false
+        },
+        "run_plasme": {
+          "type": "boolean",
+          "description": "Run PLASMe plasmid prediction.",
+          "default": false
+        },
+        "rgi_load_cmd": {
+          "type": "string",
+          "description": "Optional RGI database-loading command.",
+          "default": ""
+        },
+        "plasme_mode": {
+          "type": "string",
+          "description": "PLASMe sensitivity/specificity mode.",
+          "default": "balance",
+          "enum": [
+            "specific",
+            "balance",
+            "sensitive"
+          ]
+        },
+        "desired_rank": {
+          "type": "string",
+          "description": "Taxonomic rank targeted by chimeric-contig analysis.",
+          "default": "genus"
+        },
+        "max_target_seqs": {
+          "type": "integer",
+          "description": "Maximum BLAST target sequences retained for chimeric-contig analysis.",
+          "default": 10
+        }
+      }
+    },
+    "read_mapping_options": {
+      "title": "Automated read mapping",
+      "type": "object",
+      "description": "Automatic reference selection, ANI filtering, and mapping options.",
+      "properties": {
+        "run_readmapping_auto": {
+          "type": "boolean",
+          "description": "Automatically select references and map reads.",
+          "default": false
+        },
+        "readmapping_auto_cluster_dedup": {
+          "type": "boolean",
+          "description": "Cluster and deduplicate automatically selected references.",
+          "default": false
+        },
+        "readmapping_auto_ani_threshold": {
+          "type": "integer",
+          "description": "ANI percentage required when deduplicating selected references.",
+          "default": 99
+        }
+      }
+    },
+    "visualization_options": {
+      "title": "Krona rendering",
+      "type": "object",
+      "description": "Browser timing and image dimensions for automated Krona snapshots.",
+      "properties": {
+        "krona_snapshot_width": {
+          "type": "integer",
+          "description": "Browser viewport width used for Krona screenshots.",
+          "default": 1600
+        },
+        "krona_snapshot_height": {
+          "type": "integer",
+          "description": "Browser viewport height used for Krona screenshots.",
+          "default": 1600
+        },
+        "krona_snapshot_wait_ms": {
+          "type": "integer",
+          "description": "Delay before attempting a Krona screenshot.",
+          "default": 1600
+        },
+        "krona_snapshot_popup_timeout_ms": {
+          "type": "integer",
+          "description": "Maximum time to wait for the Krona snapshot popup.",
+          "default": 30000
+        },
+        "krona_snapshot_download_timeout_ms": {
+          "type": "integer",
+          "description": "Maximum time to wait for a Krona image download.",
+          "default": 30000
+        },
+        "krona_snapshot_png_width": {
+          "type": "integer",
+          "description": "Output PNG width for Krona snapshots.",
+          "default": 1800
+        },
+        "krona_font": {
+          "type": "integer",
+          "description": "Krona label font size.",
+          "default": 15
+        }
+      }
+    },
+    "advanced_options": {
+      "title": "Advanced and developer options",
+      "type": "object",
+      "description": "Internal paths, experimental branches, and generated report identifiers.",
+      "properties": {
+        "test_unmapped_reassembly": {
+          "type": "boolean",
+          "description": "Enable the experimental unmapped-read analysis branch.",
+          "default": false
+        },
+        "scripts": {
+          "type": "string",
+          "description": "Directory containing pipeline helper scripts. Normally follows the repository automatically.",
+          "default": "${projectDir}/scripts",
+          "format": "directory-path"
+        },
+        "trace_report_suffix": {
+          "type": "string",
+          "description": "Timestamp suffix used for trace, timeline, DAG, and execution-report filenames."
+        }
+      }
+    },
+    "database_options": {
+      "title": "Database configuration",
+      "type": "object",
+      "description": "Single database root and optional per-database path overrides.",
+      "properties": {
+        "database_dir": {
+          "type": "string",
+          "description": "Root directory containing All_In_One external databases. Individual database paths default beneath this directory and may be overridden separately.",
+          "format": "directory-path"
+        },
+        "host_db_silva": {
+          "type": "string",
+          "description": "Override path to the SILVA rRNA FASTA used for host/rRNA filtering.",
+          "format": "file-path"
+        },
+        "bbmap_ref_silva": {
+          "type": "string",
+          "description": "Override directory containing the BBMap SILVA reference.",
+          "format": "directory-path"
+        },
+        "checkm_data_dir": {
+          "type": "string",
+          "description": "Override CheckM database directory.",
+          "format": "directory-path"
+        },
+        "checkm2_db": {
+          "type": "string",
+          "description": "Override CheckM2 DIAMOND database path.",
+          "format": "file-path"
+        },
+        "checkv_db": {
+          "type": "string",
+          "description": "Override CheckV database directory.",
+          "format": "directory-path"
+        },
+        "diamond_dbdir": {
+          "type": "string",
+          "description": "Override DIAMOND nr database path/prefix."
+        },
+        "diamond_dbdir_small_toxin": {
+          "type": "string",
+          "description": "Override DIAMOND small-toxin database path/prefix."
+        },
+        "megandb": {
+          "type": "string",
+          "description": "Override MEGAN database directory.",
+          "format": "directory-path"
+        },
+        "ncbi_taxa": {
+          "type": "string",
+          "description": "Override NCBI taxonomy SQLite database path.",
+          "format": "file-path"
+        },
+        "vhunter": {
+          "type": "string",
+          "description": "Override VirusHunter/MEGAN mapping database path.",
+          "format": "file-path"
+        },
+        "mmseqs_nt_db": {
+          "type": "string",
+          "description": "Override MMseqs2 nucleotide database path/prefix."
+        },
+        "db_BN": {
+          "type": "string",
+          "description": "Override MMseqs2 core_nt database path/prefix."
+        },
+        "kraken2_db": {
+          "type": "string",
+          "description": "Override Kraken2 database directory.",
+          "format": "directory-path"
+        },
+        "krona_db": {
+          "type": "string",
+          "description": "Override Krona taxonomy database directory.",
+          "format": "directory-path"
+        },
+        "sourmash_db": {
+          "type": "string",
+          "description": "Override Sourmash database path."
+        },
+        "mash_db": {
+          "type": "string",
+          "description": "Override Mash sketch database path.",
+          "format": "file-path"
+        },
+        "metaphlan4_db": {
+          "type": "string",
+          "description": "Override MetaPhlAn database directory.",
+          "format": "directory-path"
+        },
+        "gottcha_db": {
+          "type": "string",
+          "description": "Override GOTTCHA2 database directory.",
+          "format": "directory-path"
+        },
+        "busco_db": {
+          "type": "string",
+          "description": "Override BUSCO database directory.",
+          "format": "directory-path"
+        },
+        "addgeneDB": {
+          "type": "string",
+          "description": "Override Addgene BLAST database path/prefix."
+        },
+        "snapgeneDB": {
+          "type": "string",
+          "description": "Override SnapGene BLAST database path/prefix."
+        },
+        "vfdb_nt": {
+          "type": "string",
+          "description": "Override VFDB nucleotide BLAST database path/prefix."
+        },
+        "AMR_CDS": {
+          "type": "string",
+          "description": "Override AMR CDS BLAST database path/prefix."
+        },
+        "selectAgents_nuc": {
+          "type": "string",
+          "description": "Override Select Agents nucleotide database path/prefix."
+        },
+        "vfdb_prot": {
+          "type": "string",
+          "description": "Override VFDB protein BLAST database path/prefix."
+        },
+        "AMR_Prot": {
+          "type": "string",
+          "description": "Override AMR protein BLAST database path/prefix."
+        },
+        "selectAgents_prot": {
+          "type": "string",
+          "description": "Override Select Agents protein database path/prefix."
+        },
+        "amrfinderDB": {
+          "type": "string",
+          "description": "Override AMRFinderPlus database directory.",
+          "format": "directory-path"
+        },
+        "plasme_db": {
+          "type": "string",
+          "description": "Override PLASMe database directory.",
+          "format": "directory-path"
+        },
+        "blast_core_nt": {
+          "type": "string",
+          "description": "Override core_nt BLAST database path/prefix."
+        },
+        "mobsuite_db_host": {
+          "type": "string",
+          "description": "Override MOB-suite database directory.",
+          "format": "directory-path"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "#/definitions/input_output_options"
+    },
+    {
+      "$ref": "#/definitions/database_options"
+    },
+    {
+      "$ref": "#/definitions/input_mode_options"
+    },
+    {
+      "$ref": "#/definitions/quality_control_options"
+    },
+    {
+      "$ref": "#/definitions/host_rrna_options"
+    },
+    {
+      "$ref": "#/definitions/assembly_options"
+    },
+    {
+      "$ref": "#/definitions/nanopore_clc_options"
+    },
+    {
+      "$ref": "#/definitions/assembly_validation_options"
+    },
+    {
+      "$ref": "#/definitions/search_virus_options"
+    },
+    {
+      "$ref": "#/definitions/taxonomy_options"
+    },
+    {
+      "$ref": "#/definitions/vf_classifier_options"
+    },
+    {
+      "$ref": "#/definitions/contig_characterization_options"
+    },
+    {
+      "$ref": "#/definitions/read_mapping_options"
+    },
+    {
+      "$ref": "#/definitions/visualization_options"
+    },
+    {
+      "$ref": "#/definitions/advanced_options"
+    }
+  ]
+}

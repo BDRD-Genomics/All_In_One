@@ -1,10 +1,34 @@
-# All-In-One Pipeline Parameters
+# Parameters
 
-This page documents the user-facing parameters defined by the All-In-One pipeline. Parameters are grouped by workflow area to make the reference easier to navigate.
+This page is generated from the repository-root `nextflow_schema.json` file.
+Edit `params.config` and `scripts/generate_parameter_docs.py`, then regenerate this file instead of editing the tables directly.
 
-Command-line pipeline parameters use two hyphens, for example `--run_qc false`. Nextflow engine options such as `-profile`, `-c`, and `-params-file` use one hyphen.
+```bash
+python scripts/generate_parameter_docs.py
+```
 
-> **Back to the main page:** [All-In-One README](../README.md)
+Command-line parameters use two hyphens, for example `--run_qc false`.
+Nextflow engine options such as `-profile` and `-params-file` use one hyphen.
+
+## Database configuration
+
+All external databases default beneath a single root set by `--database_dir` or `AIO_DATABASE_DIR`. The recommended layout is documented in [Configuration](configuration.md#databases).
+
+```bash
+export AIO_DATABASE_DIR=/data/All_In_One_databases
+```
+
+Individual database locations may be overridden when an existing installation is stored elsewhere. For example:
+
+```bash
+nextflow run main.nf \
+    --database_dir /data/All_In_One_databases \
+    --checkm2_db /software/checkm2/uniref100.KO.1.dmnd \
+    --diamond_dbdir /shared/blast/nr/nr
+```
+
+The complete set of defaults is maintained in `conf/databases.config`.
+
 
 ## Parameter groups
 
@@ -13,10 +37,13 @@ Command-line pipeline parameters use two hyphens, for example `--run_qc false`. 
 - [Quality control](#quality-control)
 - [Host and rRNA removal](#host-and-rrna-removal)
 - [Assembly](#assembly)
+- [Nanopore polishing and CLC](#nanopore-polishing-and-clc)
 - [Assembly validation and AutoCycler](#assembly-validation-and-autocycler)
 - [Sequence search and viral analysis](#sequence-search-and-viral-analysis)
 - [Read taxonomic classification](#read-taxonomic-classification)
+- [Virulence-factor classifier](#virulence-factor-classifier)
 - [Contig characterization](#contig-characterization)
+- [Automated read mapping](#automated-read-mapping)
 - [Krona rendering](#krona-rendering)
 - [Advanced and developer options](#advanced-and-developer-options)
 
@@ -571,6 +598,121 @@ Medaka model name.
 - Type: `string`
 - Default: ``
 
+## Nanopore polishing and CLC
+
+Dorado, variant-calling, Nanopore, and CLC Genomics Server options.
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| [`--bam_file`](#bam_file) | string | `` | Input BAM file or BAM location for Dorado workflows. |
+| [`--dorado_polish`](#dorado_polish) | boolean | `false` | Run Dorado polishing. |
+| [`--run_variant`](#run_variant) | boolean | `false` | Run the variant-calling branch. |
+| [`--nanopore_assembly`](#nanopore_assembly) | boolean | `false` | Enable the specialized Nanopore assembly branch. |
+| [`--clc`](#clc) | boolean | `false` | Run assembly using CLC Genomics Server. |
+| [`--clc_grid`](#clc_grid) | string | `slurm` | CLC execution backend or grid identifier. |
+| [`--clc_min_length`](#clc_min_length) | integer | `1000` | Minimum contig length reported by CLC assembly. |
+| [`--clc_create_assembly_graph`](#clc_create_assembly_graph) | boolean | `true` | Request a CLC assembly graph. |
+| [`--clc_create_report`](#clc_create_report) | boolean | `true` | Request a CLC assembly report. |
+| [`--clc_keep_circular_contigs_under_len_threshold`](#clc_keep_circular_contigs_under_len_threshold) | boolean | `false` | Retain circular CLC contigs shorter than the minimum-length threshold. |
+| [`--clc_report_export_format`](#clc_report_export_format) | string | `export_pdf` | CLC assembly-report export format. |
+| [`--clc_graph_export_format`](#clc_graph_export_format) | string | `` | CLC assembly-graph export format. |
+
+<a id="bam_file"></a>
+### `--bam_file`
+
+Input BAM file or BAM location for Dorado workflows.
+
+- Type: `string`
+- Default: ``
+
+<a id="dorado_polish"></a>
+### `--dorado_polish`
+
+Run Dorado polishing.
+
+- Type: `boolean`
+- Default: `false`
+
+<a id="run_variant"></a>
+### `--run_variant`
+
+Run the variant-calling branch.
+
+- Type: `boolean`
+- Default: `false`
+
+<a id="nanopore_assembly"></a>
+### `--nanopore_assembly`
+
+Enable the specialized Nanopore assembly branch.
+
+- Type: `boolean`
+- Default: `false`
+
+<a id="clc"></a>
+### `--clc`
+
+Run assembly using CLC Genomics Server.
+
+- Type: `boolean`
+- Default: `false`
+
+<a id="clc_grid"></a>
+### `--clc_grid`
+
+CLC execution backend or grid identifier.
+
+- Type: `string`
+- Default: `slurm`
+
+<a id="clc_min_length"></a>
+### `--clc_min_length`
+
+Minimum contig length reported by CLC assembly.
+
+- Type: `integer`
+- Default: `1000`
+
+<a id="clc_create_assembly_graph"></a>
+### `--clc_create_assembly_graph`
+
+Request a CLC assembly graph.
+
+- Type: `boolean`
+- Default: `true`
+
+<a id="clc_create_report"></a>
+### `--clc_create_report`
+
+Request a CLC assembly report.
+
+- Type: `boolean`
+- Default: `true`
+
+<a id="clc_keep_circular_contigs_under_len_threshold"></a>
+### `--clc_keep_circular_contigs_under_len_threshold`
+
+Retain circular CLC contigs shorter than the minimum-length threshold.
+
+- Type: `boolean`
+- Default: `false`
+
+<a id="clc_report_export_format"></a>
+### `--clc_report_export_format`
+
+CLC assembly-report export format.
+
+- Type: `string`
+- Default: `export_pdf`
+
+<a id="clc_graph_export_format"></a>
+### `--clc_graph_export_format`
+
+CLC assembly-graph export format.
+
+- Type: `string`
+- Default: ``
+
 ## Assembly validation and AutoCycler
 
 CheckM, CheckV, consensus assembly, and long-read subsampling options.
@@ -1070,6 +1212,69 @@ Additional GOTTCHA command-line options.
 - Type: `string`
 - Default: ``
 
+## Virulence-factor classifier
+
+Machine-learning and VFDB homology settings for VF classification.
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| [`--vf_classifier`](#vf_classifier) | boolean | `false` | Run the virulence-factor classifier independently of VirusSeeker. |
+| [`--vf_input_type`](#vf_input_type) | string | `nucleotide` | VF-classifier input type: `nucleotide` or `protein`. Allowed values: `nucleotide`, `protein`. |
+| [`--vf_mode`](#vf_mode) | string | `isolate` | VF-classifier analysis mode: `isolate` or `metagenome`. Allowed values: `isolate`, `metagenome`. |
+| [`--vf_homology`](#vf_homology) | string | `yes` | Enable or disable VFDB homology support using `yes` or `no`. Allowed values: `yes`, `no`. |
+| [`--vf_gpu`](#vf_gpu) | boolean | `true` | Expose a GPU to the VF-classifier container and request a GPU from the scheduler. |
+| [`--vf_threshold`](#vf_threshold) | number | `0.34` | Model probability threshold used to call virulence factors. |
+
+<a id="vf_classifier"></a>
+### `--vf_classifier`
+
+Run the virulence-factor classifier independently of VirusSeeker.
+
+- Type: `boolean`
+- Default: `false`
+
+<a id="vf_input_type"></a>
+### `--vf_input_type`
+
+VF-classifier input type: `nucleotide` or `protein`.
+
+- Type: `string`
+- Default: `nucleotide`
+- Allowed values: `nucleotide`, `protein`
+
+<a id="vf_mode"></a>
+### `--vf_mode`
+
+VF-classifier analysis mode: `isolate` or `metagenome`.
+
+- Type: `string`
+- Default: `isolate`
+- Allowed values: `isolate`, `metagenome`
+
+<a id="vf_homology"></a>
+### `--vf_homology`
+
+Enable or disable VFDB homology support using `yes` or `no`.
+
+- Type: `string`
+- Default: `yes`
+- Allowed values: `yes`, `no`
+
+<a id="vf_gpu"></a>
+### `--vf_gpu`
+
+Expose a GPU to the VF-classifier container and request a GPU from the scheduler.
+
+- Type: `boolean`
+- Default: `true`
+
+<a id="vf_threshold"></a>
+### `--vf_threshold`
+
+Model probability threshold used to call virulence factors.
+
+- Type: `number`
+- Default: `0.34`
 
 ## Contig characterization
 
@@ -1231,6 +1436,40 @@ Maximum BLAST target sequences retained for chimeric-contig analysis.
 
 - Type: `integer`
 - Default: `10`
+
+## Automated read mapping
+
+Automatic reference selection, ANI filtering, and mapping options.
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| [`--run_readmapping_auto`](#run_readmapping_auto) | boolean | `false` | Automatically select references and map reads. |
+| [`--readmapping_auto_cluster_dedup`](#readmapping_auto_cluster_dedup) | boolean | `false` | Cluster and deduplicate automatically selected references. |
+| [`--readmapping_auto_ani_threshold`](#readmapping_auto_ani_threshold) | integer | `99` | ANI percentage required when deduplicating selected references. |
+
+<a id="run_readmapping_auto"></a>
+### `--run_readmapping_auto`
+
+Automatically select references and map reads.
+
+- Type: `boolean`
+- Default: `false`
+
+<a id="readmapping_auto_cluster_dedup"></a>
+### `--readmapping_auto_cluster_dedup`
+
+Cluster and deduplicate automatically selected references.
+
+- Type: `boolean`
+- Default: `false`
+
+<a id="readmapping_auto_ani_threshold"></a>
+### `--readmapping_auto_ani_threshold`
+
+ANI percentage required when deduplicating selected references.
+
+- Type: `integer`
+- Default: `99`
 
 ## Krona rendering
 

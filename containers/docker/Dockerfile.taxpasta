@@ -1,0 +1,19 @@
+FROM ghcr.io/bdrd-genomics/allinone-conda-base:1.0.2
+
+LABEL org.opencontainers.image.source="https://github.com/BDRD-Genomics/All_In_One"
+LABEL org.opencontainers.image.title="All_In_One taxpasta"
+
+SHELL ["/bin/bash", "-lc"]
+
+COPY environment.taxpasta.yml /tmp/environment.yml
+
+RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml \
+    && /opt/conda/bin/mamba clean -a -y \
+    && /opt/conda/bin/conda clean -a -y \
+    && rm -rf /opt/conda/pkgs/* /root/.cache /tmp/* /var/tmp/*
+
+ENV CONDA_DEFAULT_ENV=taxpasta
+ENV CONDA_PREFIX=/opt/conda/envs/taxpasta
+ENV PATH=/opt/conda/envs/taxpasta/bin:/opt/conda/bin:$PATH
+
+CMD ["bash"]

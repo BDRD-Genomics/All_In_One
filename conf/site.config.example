@@ -12,12 +12,9 @@
 
 params {
     container_dir = System.getenv('AIO_CONTAINER_DIR') ?: "${projectDir}/containers"
-
-    // Current pipeline supports three storage roots because the existing
-    // installation uses /export/database, /database, and /data/database.
-    database_dir        = System.getenv('AIO_DATABASE_DIR') ?: "${projectDir}/database"
-    legacy_database_dir = System.getenv('AIO_LEGACY_DATABASE_DIR') ?: params.database_dir
-    data_database_dir   = System.getenv('AIO_DATA_DATABASE_DIR') ?: params.database_dir
+    // Single root for all external pipeline databases.
+    // Recommended: keep all All_In_One databases beneath this directory.
+    database_dir = System.getenv('AIO_DATABASE_DIR') ?: "${projectDir}/database"
 
     tmp_dir = System.getenv('AIO_TMP_DIR') ?: "${launchDir}/tmp"
 

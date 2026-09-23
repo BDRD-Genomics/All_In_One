@@ -24,7 +24,6 @@ include { Read_Distribution }                   from './workflows/modules/local/
 include { Posttrim_NanoPlot as Posttrim_NanoPlot_After_ReadDistribution } from './workflows/modules/local/qc/main.nf'
 include { Autocycler_Workflow }                 from './workflows/autocycler_wf.nf'
 include { CONTIG_based_analysis } 		        from './workflows/contigs_based_analysis.nf'
-include { Exercise_Report_Full }                from './workflows/modules/local/reporting/main.nf'
 include { LongRead_NanoPlot_QC_Stats }          from './workflows/modules/local/qc/main.nf'
 include { Reads_Taxonomic_Classifier_Workflow } from './workflows/reads_taxonomic_classifier.nf'
 // ─── Main Workflow ─────────────────────────────────────
@@ -517,11 +516,6 @@ workflow {
 
         CONTIG_based_analysis( characterize_contigs_ch )
 
-        def full_report_ch = Exercise_Report_Full(CONTIG_based_analysis.out.checkm_out_ch.map{sid, asm, file -> tuple(sid, asm)},
-            CONTIG_based_analysis.out.blastn_contigs_out_ch.collect(),
-            CONTIG_based_analysis.out.rgi_out_ch.collect(),
-            CONTIG_based_analysis.out.busco_out_ch.collect(),
-            CONTIG_based_analysis.out.amrfinder_out_ch.collect())
         }
 
 

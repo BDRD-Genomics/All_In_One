@@ -1,7 +1,9 @@
-name: mlst
+name: metaphlan4
+
 channels:
   - conda-forge
   - bioconda
-channel_priority: strict
+
 dependencies:
-  - mlst
+  - python=3.11
+  - metaphlan
