@@ -17,7 +17,6 @@ Command-line pipeline parameters use two hyphens, for example `--run_qc false`. 
 - [Sequence search and viral analysis](#sequence-search-and-viral-analysis)
 - [Read taxonomic classification](#read-taxonomic-classification)
 - [Contig characterization](#contig-characterization)
-- [Automated read mapping](#automated-read-mapping)
 - [Krona rendering](#krona-rendering)
 - [Advanced and developer options](#advanced-and-developer-options)
 
@@ -1232,40 +1231,6 @@ Maximum BLAST target sequences retained for chimeric-contig analysis.
 
 - Type: `integer`
 - Default: `10`
-
-## Automated read mapping
-
-Automatic reference selection, ANI filtering, and mapping options.
-
-| Parameter | Type | Default | Description |
-|---|---|---|---|
-| [`--run_readmapping_auto`](#run_readmapping_auto) | boolean | `false` | Automatically select references and map reads. |
-| [`--readmapping_auto_cluster_dedup`](#readmapping_auto_cluster_dedup) | boolean | `false` | Cluster and deduplicate automatically selected references. |
-| [`--readmapping_auto_ani_threshold`](#readmapping_auto_ani_threshold) | integer | `99` | ANI percentage required when deduplicating selected references. |
-
-<a id="run_readmapping_auto"></a>
-### `--run_readmapping_auto`
-
-Automatically select references and map reads.
-
-- Type: `boolean`
-- Default: `false`
-
-<a id="readmapping_auto_cluster_dedup"></a>
-### `--readmapping_auto_cluster_dedup`
-
-Cluster and deduplicate automatically selected references.
-
-- Type: `boolean`
-- Default: `false`
-
-<a id="readmapping_auto_ani_threshold"></a>
-### `--readmapping_auto_ani_threshold`
-
-ANI percentage required when deduplicating selected references.
-
-- Type: `integer`
-- Default: `99`
 
 ## Krona rendering
 

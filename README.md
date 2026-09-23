@@ -2,9 +2,9 @@
 
 **All-In-One** is a modular [Nextflow](https://www.nextflow.io/) DSL2 workflow for infectious-disease sequencing analysis. It supports **paired short-read**, **long-read**, and **hybrid** sequencing data and combines quality control, host/rRNA removal, assembly, taxonomic classification, viral analysis, genome characterization, automated reference mapping, and reporting in a single configurable pipeline.
 
-**Documentation:** Browse the [documentation](docs/index.md), jump to the [parameter reference](docs/parameters.md), or see the [Docker and Apptainer guide](docs/containers.md).
-
-The complete parameter reference is maintained in [`docs/parameters.md`](docs/parameters.md).
+> **Documentation:** Browse the [GitHub Pages documentation](https://bdrd-genomics.github.io/All_In_One/), jump to the [parameter reference](https://bdrd-genomics.github.io/All_In_One/parameters/), or see the [Docker and Apptainer guide](https://bdrd-genomics.github.io/All_In_One/containers/).
+>
+> The Markdown parameter reference is also available directly in the repository at [`docs/parameters.md`](docs/parameters.md).
 
 ---
 
@@ -23,7 +23,7 @@ The pipeline is designed so that major analysis stages can be enabled or disable
 | Taxonomic classification | Kraken2/Bracken, Sourmash, Mash, MetaPhlAn, GOTTCHA, Taxpasta |
 | Sequence search / viral analysis | DIAMOND BLASTX, MMseqs2, VirusSeeker workflows |
 | Contig characterization | Prokka, BUSCO, MLST, AMRFinderPlus, RGI, PhiSpy, MOB-suite, PLASMe |
-| Specialized analysis | chimeric-contig detection, automated read mapping |
+| Specialized analysis | chimeric-contig detection |
 | Reporting | Nextflow trace, timeline, report, DAG, QC summaries, and exercise reports |
 
 ---
@@ -32,23 +32,21 @@ The pipeline is designed so that major analysis stages can be enabled or disable
 
 ```text
 All_In_One/
-├── main.nf
-├── nextflow.config
-├── params.config
-├── conf/
-├── workflows/
-├── scripts/
-├── env/
-├── containers/
-│   ├── docker/              # Dockerfiles and image build environments
-│   └── apptainer/           # Apptainer/Singularity image build/export resources
-├── ICTV/
+├── main.nf                 # Main DSL2 workflow entry point
+├── nextflow.config         # Top-level Nextflow configuration
+├── params.config           # User-facing pipeline parameters
+├── conf/                   # Profiles, resources, containers, databases, site config
+├── workflows/              # Workflows and local DSL2 modules
+├── scripts/                # Supporting Python, R, and shell scripts
+├── env/                    # Conda environment definitions
+├── containers/docker/      # Dockerfiles and container build environments
+├── ICTV/                   # ICTV viral family/genome-size resources
 └── docs/
-    ├── index.md
-    ├── usage.md
-    ├── parameters.md
-    ├── containers.md
-    └── configuration.md
+    ├── index.md            # Documentation home
+    ├── usage.md            # Usage guide
+    ├── parameters.md       # Complete parameter reference
+    ├── containers.md       # Docker and Apptainer guide
+    └── configuration.md    # Installation and site configuration
 ```
 
 ---
@@ -221,7 +219,6 @@ The following are some of the primary switches used to control a run:
 | `--run_mmseqs` | Run MMseqs2 searches |
 | `--run_reads_taxonomic_classifier` | Enable read-level taxonomic classification |
 | `--characterize_contigs` | Enable contig characterization workflows |
-| `--run_readmapping_auto` | Enable automated reference selection/read mapping |
 | `--vs` | Enable VirusSeeker workflow components |
 | `--run_autocycler` | Enable AutoCycler workflow |
 
@@ -303,7 +300,6 @@ The parameter page is organized into sections for:
 - Sequence search and viral analysis
 - Read taxonomic classification
 - Contig characterization
-- Automated read mapping
 - Krona rendering
 - Advanced/developer options
 
