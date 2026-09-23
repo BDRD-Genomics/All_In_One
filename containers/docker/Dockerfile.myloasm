@@ -1,4 +1,5 @@
 FROM ghcr.io/bdrd-genomics/allinone-conda-base:1.0.2
+LABEL org.opencontainers.image.source="https://github.com/BDRD-Genomics/All_In_One"
 
 COPY environment.myloasm.yml /tmp/environment.yml
 

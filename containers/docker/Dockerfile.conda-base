@@ -1,4 +1,5 @@
 FROM ghcr.io/bdrd-genomics/allinone-base:1.0.0
+LABEL org.opencontainers.image.source="https://github.com/BDRD-Genomics/All_In_One"
 
 RUN dnf -y install \
         wget \
