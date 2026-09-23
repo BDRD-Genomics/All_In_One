@@ -2,7 +2,7 @@
 
 **All-In-One** is a modular [Nextflow](https://www.nextflow.io/) DSL2 workflow for metagenomic and viral sequencing analysis. It supports **paired short-read**, **long-read**, and **hybrid** sequencing data and combines quality control, host/rRNA removal, assembly, taxonomic classification, viral analysis, genome characterization, automated reference mapping, and reporting in a single configurable pipeline.
 
-> **Documentation:** Browse the [GitHub Pages documentation](https://bdrd-genomics.github.io/All_In_One/) or jump directly to the [parameter reference](https://bdrd-genomics.github.io/All_In_One/parameters/).
+> **Documentation:** Browse the [GitHub Pages documentation](https://bdrd-genomics.github.io/All_In_One/), jump to the [parameter reference](https://bdrd-genomics.github.io/All_In_One/parameters/), or see the [Docker and Apptainer guide](https://bdrd-genomics.github.io/All_In_One/containers/).
 >
 > The Markdown parameter reference is also available directly in the repository at [`docs/parameters.md`](docs/parameters.md).
 
@@ -42,7 +42,11 @@ All_In_One/
 ├── containers/docker/      # Dockerfiles and container build environments
 ├── ICTV/                   # ICTV viral family/genome-size resources
 └── docs/
-    └── parameters.md       # Complete parameter reference
+    ├── index.md            # Documentation home
+    ├── usage.md            # Usage guide
+    ├── parameters.md       # Complete parameter reference
+    ├── containers.md       # Docker and Apptainer guide
+    └── configuration.md    # Installation and site configuration
 ```
 
 ---
@@ -251,6 +255,8 @@ containers/docker/
 ```
 
 This directory contains the Dockerfiles and Conda environment definitions used to build the pipeline's component images. Runtime container selection is configured through `conf/containers.config` and the selected Nextflow profile.
+
+See the **[Docker and Apptainer documentation](https://bdrd-genomics.github.io/All_In_One/containers/)** for backend selection, image building, SIF conversion, and offline HPC deployment.
 
 ---
 
