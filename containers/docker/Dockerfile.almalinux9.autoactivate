@@ -1,4 +1,5 @@
 FROM almalinux:9
+LABEL org.opencontainers.image.source="https://github.com/BDRD-Genomics/All_In_One"
 
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
