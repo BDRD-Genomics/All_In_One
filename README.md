@@ -1,6 +1,6 @@
 # All-In-One Sequencing Pipeline
 
-**All-In-One** is a modular [Nextflow](https://www.nextflow.io/) DSL2 workflow for infectious-disease sequencing analysis. It supports **paired short-read**, **long-read**, and **hybrid** sequencing data and combines quality control, host/rRNA removal, assembly, taxonomic classification, viral analysis, genome characterization, automated reference mapping, and reporting in a single configurable pipeline.
+**All-In-One** is a modular [Nextflow](https://www.nextflow.io/) DSL2 workflow for metagenomic and viral sequencing analysis. It supports **paired short-read**, **long-read**, and **hybrid** sequencing data and combines quality control, host/rRNA removal, assembly, taxonomic classification, viral analysis, genome characterization, automated reference mapping, and reporting in a single configurable pipeline.
 
 > **Documentation:** Browse the [GitHub Pages documentation](https://bdrd-genomics.github.io/All_In_One/) or jump directly to the [parameter reference](https://bdrd-genomics.github.io/All_In_One/parameters/).
 >
