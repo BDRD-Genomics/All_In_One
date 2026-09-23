@@ -52,9 +52,7 @@ df <- data.frame(
   sample_id       = unlist(sample),
   fastq_1         = file.path(fastq_dir, unlist(fastq_1)),
   fastq_2         = file.path(fastq_dir, unlist(fastq_2)),
-  long_read       = file.path(fastq_dir, unlist(long_read)),
-  all_fastq_files = file.path(fastq_dir, '[!Undetermined_]*.fastq.gz'),
-  data_dir        = fastq_dir,
+  long_read       = file.path(fastq_dir, unlist(long_read))
   stringsAsFactors = FALSE
 )
 
