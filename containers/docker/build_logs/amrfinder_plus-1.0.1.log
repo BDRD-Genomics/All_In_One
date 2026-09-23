@@ -1,0 +1,268 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.amrfinder_plus
+#1 transferring dockerfile: 550B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:1.0.2
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:1.0.2
+#4 CACHED
+
+#5 [internal] load build context
+#5 transferring context: 222B done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.amrfinderplus.yml /tmp/environment.yml
+#6 DONE 0.1s
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml &&     /opt/conda/bin/conda clean -a -y
+#7 0.548 warning  libmamba 'repo.anaconda.com', a commercial channel hosted by Anaconda.com, is used.
+#7 0.548     
+#7 0.548 warning  libmamba Please make sure you understand Anaconda Terms of Services.
+#7 0.548     
+#7 0.548 warning  libmamba See: https://legal.anaconda.com/policies/en/
+#7 1.336 ⚠ Shard Index for pkgs/main/linux-64 not available, falling back to flat repodata
+#7 1.336 Using Flat Repodata for pkgs/main/linux-64                                                      ✔ Starting
+#7 2.675 Using Flat Repodata for pkgs/main/linux-64                                                ✔ Done (1.3 sec)
+#7 2.675 ⚠ Shard Index for pkgs/main/noarch not available, falling back to flat repodata
+#7 2.675 Using Flat Repodata for pkgs/main/noarch                                                        ✔ Starting
+#7 2.770 Using Flat Repodata for pkgs/main/noarch                                                  ✔ Done (0.1 sec)
+#7 2.770 ⚠ Shard Index for pkgs/r/linux-64 not available, falling back to flat repodata
+#7 2.770 Using Flat Repodata for pkgs/r/linux-64                                                         ✔ Starting
+#7 2.920 Using Flat Repodata for pkgs/r/linux-64                                                   ✔ Done (0.1 sec)
+#7 2.920 ⚠ Shard Index for pkgs/r/noarch not available, falling back to flat repodata
+#7 2.920 Using Flat Repodata for pkgs/r/noarch                                                           ✔ Starting
+#7 3.110 Using Flat Repodata for pkgs/r/noarch                                                     ✔ Done (0.2 sec)
+#7 3.823 Fetch Shard Index for conda-forge/linux-64                                                      ⧖ Starting
+#7 4.013 Fetch Shard Index for conda-forge/linux-64                                                ✔ Done (0.2 sec)
+#7 4.013 Fetch Shard Index for conda-forge/noarch                                                        ⧖ Starting
+#7 4.229 Fetch Shard Index for conda-forge/noarch                                                  ✔ Done (0.2 sec)
+#7 4.229 Fetching and Parsing Packages' Shards                                                           ⧖ Starting
+#7 4.229 Fetching and Parsing Packages' Shards                                                     ✔ Done (0.0 sec)
+#7 5.324 Using Flat Repodata for conda-forge/linux-64                                                    ✔ Starting
+#7 16.55 Using Flat Repodata for conda-forge/linux-64                                             ✔ Done (11.2 sec)
+#7 16.56 Using Cached Shard Index for conda-forge/noarch                                                     ✔ Done
+#7 16.57 Using Cached Shard Index for conda-forge/linux-64                                                   ✔ Done
+#7 16.57 Fetching and Parsing Packages' Shards                                                           ⧖ Starting
+#7 16.57 Fetching and Parsing Packages' Shards                                                     ✔ Done (0.0 sec)
+#7 17.15 Using Flat Repodata for conda-forge/noarch                                                      ✔ Starting
+#7 22.84 Using Flat Repodata for conda-forge/noarch                                                ✔ Done (5.7 sec)
+#7 22.84 Fetch Shard Index for bioconda/linux-64                                                         ⧖ Starting
+#7 22.98 Fetch Shard Index for bioconda/linux-64                                                   ✔ Done (0.1 sec)
+#7 22.98 Fetch Shard Index for bioconda/noarch                                                           ⧖ Starting
+#7 23.16 Fetch Shard Index for bioconda/noarch                                                     ✔ Done (0.2 sec)
+#7 23.16 Fetching and Parsing Packages' Shards                                                           ⧖ Starting
+#7 25.49 Fetching and Parsing Packages' Shards                                                     ✔ Done (2.3 sec)
+#7 25.51 Using Cached Shard Index for conda-forge/linux-64                                                   ✔ Done
+#7 25.53 Using Cached Shard Index for conda-forge/noarch                                                     ✔ Done
+#7 25.53 Fetching and Parsing Packages' Shards                                                           ⧖ Starting
+#7 28.91 Fetching and Parsing Packages' Shards                                                     ✔ Done (3.4 sec)
+#7 29.13 Using Cached Shard Index for bioconda/linux-64                                                      ✔ Done
+#7 29.13 Using Cached Shard Index for bioconda/noarch                                                        ✔ Done
+#7 29.13 Fetching and Parsing Packages' Shards                                                           ⧖ Starting
+#7 29.40 Fetching and Parsing Packages' Shards                                                     ✔ Done (0.3 sec)
+#7 29.41 Parsing Packages' Records                                                                ✔ Done (28.1 sec)
+#7 29.43 
+#7 29.43 Resolving Environment                                                                           ⧖ Starting
+#7 33.45 Resolving Environment                                                                     ✔ Done (4.0 sec)
+#7 33.51 
+#7 33.51 Transaction
+#7 33.51 
+#7 33.51   Prefix: /opt/conda/envs/amrfinderplus
+#7 33.51 
+#7 33.51   Updating specs:
+#7 33.51 
+#7 33.51    - ncbi-amrfinderplus
+#7 33.51 
+#7 33.51 
+#7 33.77   Package                         Version  Build                 Channel           Size
+#7 33.77 ─────────────────────────────────────────────────────────────────────────────────────────
+#7 33.77   Install:
+#7 33.77 ─────────────────────────────────────────────────────────────────────────────────────────
+#7 33.77 
+#7 33.77   + _openmp_mutex                     4.5  20_gnu                conda-forge       29kB
+#7 33.77   + blast                          2.17.0  hb02a186_1            bioconda         160MB
+#7 33.77   + bzip2                           1.0.8  hda65f42_10           conda-forge     Cached
+#7 33.77   + c-ares                         1.34.8  hebe6cf0_2            conda-forge     Cached
+#7 33.77   + ca-certificates             2026.7.22  hbd8a1cb_0            conda-forge     Cached
+#7 33.77   + curl                           8.22.0  ha042cf0_0            conda-forge      197kB
+#7 33.77   + entrez-direct                    26.0  h1079eea_0            bioconda          16MB
+#7 33.77   + gsl                               2.7  he838d99_0            conda-forge        3MB
+#7 33.77   + hmmer                             3.4  h7d74f8d_5            bioconda           9MB
+#7 33.77   + icu                              78.3  py310h44b86e0_2       conda-forge     Cached
+#7 33.77   + keyutils                        1.6.3  h7cc23a3_1            conda-forge     Cached
+#7 33.77   + krb5                           1.22.2  hbc21106_2            conda-forge     Cached
+#7 33.77   + libblas                        3.11.0  11_h4a7cf45_openblas  conda-forge       18kB
+#7 33.77   + libcblas                       3.11.0  11_h0358290_openblas  conda-forge       18kB
+#7 33.77   + libcurl                        8.22.0  ha042cf0_0            conda-forge     Cached
+#7 33.77   + libedit                  3.1.20250104  pl5321h373387f_1      conda-forge     Cached
+#7 33.77   + libev                            4.33  h280c20c_3            conda-forge     Cached
+#7 33.77   + libgcc                         16.2.0  ha9f2e26_5            conda-forge        1MB
+#7 33.77   + libgcc-ng                      16.2.0  h69a702a_5            conda-forge       29kB
+#7 33.77   + libgfortran                    16.2.0  h69a702a_5            conda-forge       29kB
+#7 33.77   + libgfortran-ng                 16.2.0  h69a702a_5            conda-forge       29kB
+#7 33.77   + libgfortran5                   16.2.0  h6b99dfc_5            conda-forge        3MB
+#7 33.77   + libgomp                        16.2.0  he0feb66_5            conda-forge      642kB
+#7 33.77   + libidn2                         2.3.8  hfac485b_1            conda-forge      139kB
+#7 33.77   + libnghttp2                     1.68.1  h74cf4be_1            conda-forge     Cached
+#7 33.77   + libopenblas                    0.3.34  pthreads_hf13c14d_2   conda-forge        7MB
+#7 33.77   + libpsl                         0.23.1  hd9e3e90_1            conda-forge     Cached
+#7 33.77   + libsqlite                      3.53.4  h13e7031_1            conda-forge     Cached
+#7 33.77   + libssh2                        1.11.1  h6154650_1            conda-forge     Cached
+#7 33.77   + libstdcxx                      16.2.0  h934c35e_5            conda-forge        7MB
+#7 33.77   + libstdcxx-ng                   16.2.0  hdf11a46_5            conda-forge       29kB
+#7 33.77   + libunistring                   0.9.10  h7f98852_0            conda-forge        1MB
+#7 33.77   + libxcrypt                      4.4.38  h280c20c_0            conda-forge      102kB
+#7 33.77   + libzlib                         1.3.2  h25fd6f3_3            conda-forge     Cached
+#7 33.77   + mpi                               1.0  openmpi               conda-forge        4kB
+#7 33.77   + ncbi-amrfinderplus              4.2.7  hf69ffd2_0            bioconda           1MB
+#7 33.77   + ncbi-vdb                        3.4.1  hd63eeec_0            bioconda           9MB
+#7 33.77   + ncurses                           6.6  hdb14827_1            conda-forge     Cached
+#7 33.77   + openmpi                         4.1.6  hc5af2df_101          conda-forge        4MB
+#7 33.77   + openssl                         3.6.4  h781a0a9_0            conda-forge     Cached
+#7 33.77   + pcre2                           10.47  h8b3dc9c_1            conda-forge        1MB
+#7 33.77   + perl                           5.32.1  9_h7cc23a3_perl5      conda-forge       13MB
+#7 33.77   + perl-archive-tar                 3.12  pl5321hdfd78af_0      bioconda          39kB
+#7 33.77   + perl-carp                        1.50  pl5321hd8ed1ab_0      conda-forge       22kB
+#7 33.77   + perl-common-sense                3.75  pl5321hd8ed1ab_0      conda-forge       20kB
+#7 33.77   + perl-compress-raw-bzip2         2.214  pl5321hda65f42_0      conda-forge       56kB
+#7 33.77   + perl-compress-raw-zlib          2.214  pl5321h4dac143_0      conda-forge       81kB
+#7 33.77   + perl-encode                      3.24  pl5321hb03c661_0      conda-forge        2MB
+#7 33.77   + perl-exporter                    5.74  pl5321hd8ed1ab_0      conda-forge       19kB
+#7 33.77   + perl-exporter-tiny           1.002002  pl5321hd8ed1ab_0      conda-forge       29kB
+#7 33.77   + perl-extutils-makemaker          7.70  pl5321hd8ed1ab_0      conda-forge      157kB
+#7 33.77   + perl-io-compress                2.216  pl5321h503566f_0      bioconda          87kB
+#7 33.77   + perl-io-zlib                     1.15  pl5321hdfd78af_1      bioconda          13kB
+#7 33.77   + perl-json                        4.11  pl5321hdfd78af_0      bioconda          53kB
+#7 33.77   + perl-json-xs                     4.04  pl5321h9948957_0      bioconda          71kB
+#7 33.77   + perl-list-moreutils             0.430  pl5321hdfd78af_0      bioconda          32kB
+#7 33.77   + perl-list-moreutils-xs          0.430  pl5321h7b50bb2_5      bioconda          52kB
+#7 33.77   + perl-parent                     0.243  pl5321hd8ed1ab_0      conda-forge       14kB
+#7 33.77   + perl-pathtools                   3.75  pl5321hb9d3cd8_2      conda-forge       51kB
+#7 33.77   + perl-scalar-list-utils           1.70  pl5321hb03c661_0      conda-forge       52kB
+#7 33.77   + perl-storable                    3.15  pl5321hb9d3cd8_2      conda-forge       71kB
+#7 33.77   + perl-types-serialiser            1.01  pl5321hdfd78af_0      bioconda          13kB
+#7 33.77   + wget                           1.25.0  h653f8fd_1            conda-forge      746kB
+#7 33.77   + zlib                            1.3.2  h25fd6f3_3            conda-forge       96kB
+#7 33.77   + zstd                            1.5.7  hb78ec9c_7            conda-forge     Cached
+#7 33.77 
+#7 33.77   Summary:
+#7 33.77 
+#7 33.77   Install: 65 packages
+#7 33.77 
+#7 33.77   Total download: 241MB
+#7 33.77 
+#7 33.77 ─────────────────────────────────────────────────────────────────────────────────────────
+#7 33.77 
+#7 33.77 
+#7 33.77 warning  libmamba Security Warning: This transaction includes executing package scripts (pre/post-link/unlink) if present. These scripts can contain arbitrary code. Please ensure you trust the package sources.
+#7 33.77 Confirm changes: [Y/n] 
+#7 33.77 Transaction starting
+#7 39.45 Linking libzlib-1.3.2-h25fd6f3_3
+#7 39.45 Linking libgomp-16.2.0-he0feb66_5
+#7 39.45 Linking mpi-1.0-openmpi
+#7 39.46 Linking zstd-1.5.7-hb78ec9c_7
+#7 39.46 Linking zlib-1.3.2-h25fd6f3_3
+#7 39.46 Linking _openmp_mutex-4.5-20_gnu
+#7 39.47 Linking libgcc-16.2.0-ha9f2e26_5
+#7 39.47 Linking libxcrypt-4.4.38-h280c20c_0
+#7 39.47 Linking libgfortran5-16.2.0-h6b99dfc_5
+#7 39.47 Linking ncurses-6.6-hdb14827_1
+#7 41.29 Linking libgcc-ng-16.2.0-h69a702a_5
+#7 41.29 Linking libev-4.33-h280c20c_3
+#7 41.29 Linking c-ares-1.34.8-hebe6cf0_2
+#7 41.32 Linking keyutils-1.6.3-h7cc23a3_1
+#7 41.34 Linking bzip2-1.0.8-hda65f42_10
+#7 41.34 Linking libstdcxx-16.2.0-h934c35e_5
+#7 41.34 Linking perl-5.32.1-9_h7cc23a3_perl5
+#7 41.54 Linking libgfortran-16.2.0-h69a702a_5
+#7 41.54 Linking libedit-3.1.20250104-pl5321h373387f_1
+#7 41.55 Linking libunistring-0.9.10-h7f98852_0
+#7 41.56 Linking pcre2-10.47-h8b3dc9c_1
+#7 41.59 Linking icu-78.3-py310h44b86e0_2
+#7 41.67 Linking libstdcxx-ng-16.2.0-hdf11a46_5
+#7 41.68 Linking perl-storable-3.15-pl5321hb9d3cd8_2
+#7 41.68 Linking perl-scalar-list-utils-1.70-pl5321hb03c661_0
+#7 41.68 Linking perl-compress-raw-zlib-2.214-pl5321h4dac143_0
+#7 41.68 Linking perl-compress-raw-bzip2-2.214-pl5321hda65f42_0
+#7 41.68 Linking libgfortran-ng-16.2.0-h69a702a_5
+#7 41.68 Linking libopenblas-0.3.34-pthreads_hf13c14d_2
+#7 41.69 Linking libidn2-2.3.8-hfac485b_1
+#7 41.69 Linking libsqlite-3.53.4-h13e7031_1
+#7 41.69 Linking libpsl-0.23.1-hd9e3e90_1
+#7 41.69 Linking openmpi-4.1.6-hc5af2df_101
+#7 41.82 warning  libmamba Executing post-link script for package 'openmpi'.
+#7 41.88  
+#7 41.88 For Linux 64, Open MPI is built with CUDA awareness but this support is disabled by default.
+#7 41.88 To enable it, please set the environment variable OMPI_MCA_opal_cuda_support=true before
+#7 41.88 launching your MPI processes. Equivalently, you can set the MCA parameter in the command line:
+#7 41.88 mpiexec --mca opal_cuda_support 1 ...
+#7 41.88  
+#7 41.88 In addition, the UCX support is also built but disabled by default.
+#7 41.88 To enable it, first install UCX (conda install -c conda-forge ucx). Then, set the environment
+#7 41.88 variables OMPI_MCA_pml="ucx" OMPI_MCA_osc="ucx" before launching your MPI processes.
+#7 41.88 Equivalently, you can set the MCA parameters in the command line:
+#7 41.88 mpiexec --mca pml ucx --mca osc ucx ...
+#7 41.88 Note that you might also need to set UCX_MEMTYPE_CACHE=n for CUDA awareness via UCX.
+#7 41.88 Please consult UCX's documentation for detail.
+#7 41.88  
+#7 41.88 
+#7 41.89 Linking libblas-3.11.0-11_h4a7cf45_openblas
+#7 41.96 Linking libcblas-3.11.0-11_h0358290_openblas
+#7 42.04 Linking gsl-2.7-he838d99_0
+#7 42.14 Linking ca-certificates-2026.7.22-hbd8a1cb_0
+#7 42.15 Linking perl-extutils-makemaker-7.70-pl5321hd8ed1ab_0
+#7 42.15 Linking perl-parent-0.243-pl5321hd8ed1ab_0
+#7 42.15 Linking perl-exporter-5.74-pl5321hd8ed1ab_0
+#7 42.15 Linking perl-common-sense-3.75-pl5321hd8ed1ab_0
+#7 42.15 Linking perl-exporter-tiny-1.002002-pl5321hd8ed1ab_0
+#7 42.15 Linking perl-carp-1.50-pl5321hd8ed1ab_0
+#7 42.15 Linking ncbi-vdb-3.4.1-hd63eeec_0
+#7 42.23 Linking perl-list-moreutils-xs-0.430-pl5321h7b50bb2_5
+#7 42.24 Linking hmmer-3.4-h7d74f8d_5
+#7 42.28 Linking perl-io-zlib-1.15-pl5321hdfd78af_1
+#7 42.28 Linking perl-types-serialiser-1.01-pl5321hdfd78af_0
+#7 42.28 Linking perl-list-moreutils-0.430-pl5321hdfd78af_0
+#7 42.28 Linking openssl-3.6.4-h781a0a9_0
+#7 42.35 Linking perl-encode-3.24-pl5321hb03c661_0
+#7 42.38 Linking perl-pathtools-3.75-pl5321hb9d3cd8_2
+#7 42.38 Linking libssh2-1.11.1-h6154650_1
+#7 42.45 Linking libnghttp2-1.68.1-h74cf4be_1
+#7 42.45 Linking krb5-1.22.2-hbc21106_2
+#7 42.51 Linking wget-1.25.0-h653f8fd_1
+#7 42.53 Linking libcurl-8.22.0-ha042cf0_0
+#7 42.54 Linking curl-8.22.0-ha042cf0_0
+#7 42.54 Linking perl-json-xs-4.04-pl5321h9948957_0
+#7 42.54 Linking perl-io-compress-2.216-pl5321h503566f_0
+#7 42.55 Linking entrez-direct-26.0-h1079eea_0
+#7 42.56 Linking perl-json-4.11-pl5321hdfd78af_0
+#7 42.57 Linking perl-archive-tar-3.12-pl5321hdfd78af_0
+#7 42.57 Linking blast-2.17.0-hb02a186_1
+#7 42.61 Linking ncbi-amrfinderplus-4.2.7-hf69ffd2_0
+#7 42.62 
+#7 42.62 Transaction finished
+#7 42.62 
+#7 42.62 
+#7 42.62 To activate this environment, use:
+#7 42.62 
+#7 42.62     mamba activate amrfinderplus
+#7 42.62 
+#7 42.62 Or to execute a single command in this environment, use:
+#7 42.62 
+#7 42.62     mamba run -n amrfinderplus mycommand
+#7 42.62 
+#7 44.59 There are no unused tarball(s) to remove.
+#7 44.59 Will remove 1 index cache(s).
+#7 44.59 There are no unused package(s) to remove.
+#7 44.59 There are no tempfile(s) to remove.
+#7 44.59 There are no logfile(s) to remove.
+#7 DONE 47.2s
+
+#8 exporting to image
+#8 exporting layers

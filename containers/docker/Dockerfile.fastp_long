@@ -1,0 +1,26 @@
+FROM ghcr.io/bdrd-genomics/allinone-conda-base:1.0.2
+
+SHELL ["/bin/bash", "-lc"]
+
+LABEL description="fastp and fastplong container installed from Bioconda"
+
+# Avoid dnf package conflicts from curl-minimal/coreutils-single in Alma/RHEL-based images.
+# fastp and fastplong are installed entirely through conda.
+COPY environment.fastp_long.yml /tmp/environment.yml
+
+RUN conda config --system --set channel_priority flexible && \
+    /opt/conda/bin/mamba env create -f /tmp/environment.yml && \
+    /opt/conda/bin/conda clean -afy
+
+# Auto-activate fastp_long env
+RUN echo 'source /opt/conda/etc/profile.d/conda.sh' > /etc/profile.d/conda_auto.sh && \
+    echo 'conda activate fastp_long' >> /etc/profile.d/conda_auto.sh && \
+    chmod +x /etc/profile.d/conda_auto.sh
+
+ENV BASH_ENV=/etc/profile.d/conda_auto.sh
+ENV PATH=/opt/conda/envs/fastp_long/bin:/opt/conda/bin:$PATH
+ENV CONDA_DEFAULT_ENV=fastp_long
+
+WORKDIR /data
+
+CMD ["fastp", "--help"]

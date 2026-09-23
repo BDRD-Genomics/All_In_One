@@ -1,0 +1,66 @@
+/*
+ * ============================================================
+ * DATABASE / REFERENCE DEFINITIONS
+ * ============================================================
+ *
+ * Root directories come from site.config.
+ */
+
+params {
+    // rRNA / host-removal references
+    host_db_silva   = "${params.nodes_export_database}/bbmap/silva_release138_LSU-SSU_NR99_rRNA/SILVA_138.1_LSU-SSU_NR99_tax_silva.fasta"
+    bbmap_ref_silva = "${params.nodes_export_database}/bbmap/silva_release138_LSU-SSU_NR99_rRNA"
+
+    // CheckM / CheckM2 / CheckV
+    checkm_data_dir = "${params.export_database}/checkm"
+    checkm2_db      = "${params.export_database}/checkm2/CheckM2_database/uniref100.KO.1.dmnd"
+    checkv_db       = "${params.export_database}/checkv/checkv-db-v1.5"
+
+    // DIAMOND / MEGAN / VirusSeeker
+    diamond_dbdir             = "${params.nodes_export_database}/blastdb/nr/nr"
+    diamond_dbdir_small_toxin = "${params.nodes_export_database}/small_toxin/protein/small_toxins_db"
+    megandb                   = "${params.nodes_export_database}/nf_taxonomy_sqlite/megan_db"
+    ncbi_taxa                 = "${params.nodes_export_database}/taxonomy/taxa.sqlite"
+    vhunter                   = "${params.nodes_export_database}/nf_taxonomy_sqlite/megan_db/megan-map.updated.db"
+
+    // Repository-bundled resource
+    bad_accessions_list = "${projectDir}/scripts/bad_nt_acc.txt"
+
+    // MMseqs2
+    mmseq_tmp_dir = params.tmp_dir
+    mmseqs_nt_db  = "${params.nodes_export_database}/mmseqs/nt/nt"
+    db_BN         = "${params.nodes_export_database}/mmseqs/core_nt/core_nt"
+
+    // Read taxonomic classification
+    kraken2_db    = "${params.export_database}/kraken2/k2_core_nt"
+    krona_db      = "${params.export_database}/krona/taxonomy"
+    sourmash_db   = "${params.export_database}/sourmash/gtdb-rs226-k21.dna.rocksdb"
+    mash_db       = "${params.nodes_export_database}/mash/refseq.genomes+plasmid.k21s1000.msh"
+    metaphlan4_db = "${params.data_export_database}/metaphlan4"
+    gottcha_db    = "${params.data_export_database}/gottcha/gottcha_db"
+    vfdb          = "${params.nodes_export_database}/vfdb/VFDB_setB_pro.fas"
+
+    // Contig characterization
+    busco_db          = "${params.export_database}/busco"
+    addgeneDB         = "${params.export_database}/blastdb/addgene_plasmids/addgene_plasmids"
+    snapgeneDB        = "${params.export_database}/blastdb/snapgene_plasmids/snapgene_plasmids"
+    vfdb_nt           = "${params.export_database}/blastdb/vfdb_nt/vfdb_nt"
+    AMR_CDS           = "${params.export_database}/blastdb/AMR_CDS/AMR_CDS"
+    selectAgents_nuc  = "${params.export_database}/select_agents/select_agents_nuc/select_agents_nucleotide"
+    vfdb_prot         = "${params.export_database}/blastdb/vfdb_prot/vfdb_prot"
+    AMR_Prot          = "${params.export_database}/blastdb/AMRProt/AMRProt"
+    selectAgents_prot = "${params.export_database}/select_agents/select_agents_toxins_prot/select_agents_toxins"
+    amrfinderDB       = "${params.export_database}/amrfinderplus/latest"
+    plasme_db         = "${params.export_database}/PLASMe/DB"
+    blast_core_nt     = "${params.export_database}/blastdb/core_nt/core_nt"
+
+    // Automated read mapping
+    readmapping_auto_gcf_genomes_dir    = "${params.export_database}/GCF"
+    readmapping_auto_refseq_prok_dir    = "${params.export_database}/blastdb/ref_prok_rep_genomes"
+    readmapping_auto_refseq_viruses_dir = "${params.export_database}/blastdb/ref_viruses_rep_genomes"
+    assembly_summary_refseq             = "${params.export_database}/assembly_summary_refseq.txt"
+    assembly_summary_refseq_historical  = "${params.export_database}/assembly_summary_refseq_historical.txt"
+
+    // MOB-suite host database location
+    mobsuite_db_host = "${params.export_database}/mob_suite"
+}

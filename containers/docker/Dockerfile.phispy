@@ -1,0 +1,27 @@
+FROM ghcr.io/bdrd-genomics/allinone-conda-base:1.0.2
+
+SHELL ["/bin/bash", "-lc"]
+
+LABEL description="PhiSpy container installed from Bioconda"
+
+# Avoid dnf package conflicts from curl-minimal/coreutils-single in Alma/RHEL-based images.
+# PhiSpy is installed entirely through conda.
+RUN conda config --system --set channel_priority flexible && \
+    conda create -y -n phispy \
+        -c conda-forge \
+        -c bioconda \
+        phispy && \
+    /opt/conda/bin/conda clean -afy
+
+# Auto-activate PhiSpy env
+RUN echo 'source /opt/conda/etc/profile.d/conda.sh' > /etc/profile.d/conda_auto.sh && \
+    echo 'conda activate phispy' >> /etc/profile.d/conda_auto.sh && \
+    chmod +x /etc/profile.d/conda_auto.sh
+
+ENV BASH_ENV=/etc/profile.d/conda_auto.sh
+ENV PATH=/opt/conda/envs/phispy/bin:/opt/conda/bin:$PATH
+ENV CONDA_DEFAULT_ENV=phispy
+
+WORKDIR /data
+
+CMD ["phispy", "--help"]

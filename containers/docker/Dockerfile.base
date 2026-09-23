@@ -1,0 +1,18 @@
+FROM almalinux:9
+
+RUN dnf -y update && \
+    dnf -y install \
+        openssl \
+        openssl-libs \
+        crypto-policies \
+        crypto-policies-scripts \
+        ca-certificates \
+        bash \
+        findutils \
+        which \
+    && dnf clean all \
+    && rm -rf /var/cache/dnf
+
+ENV OPENSSL_CONF=/etc/pki/tls/openssl.cnf
+
+CMD ["/bin/bash"]

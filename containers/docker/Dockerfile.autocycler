@@ -1,0 +1,10 @@
+FROM ghcr.io/bdrd-genomics/allinone-conda-base:1.0.2
+
+COPY environment.autocycler.yml /tmp/environment.yml
+
+RUN /opt/conda/bin/mamba env create -n autocycler -f /tmp/environment.yml \
+    && /opt/conda/bin/conda clean -afy \
+    && rm -f /tmp/environment.yml
+
+ENV PATH=/opt/conda/envs/autocycler/bin:$PATH
+SHELL ["/bin/bash", "-lc"]

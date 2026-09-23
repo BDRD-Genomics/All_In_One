@@ -9,7 +9,7 @@ nextflow.enable.dsl=2
 process Subassembly {
     tag {sample_id}
     //errorStrategy 'ignore'
-    publishDir "${params.outdir}/${params.project_id}/${sample_id}/subassembly/", mode: 'copy'
+    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/subassembly/" }, mode: 'copy'
     label 'normal'
     conda './env/md.yml'
 
@@ -29,8 +29,6 @@ process Subassembly {
     elif [ "${params.hybrid}" == "true" ]; then 
         echo "skip this process" > SPADES_skipped.txt
     else
-        eval \"\$(command conda 'shell.bash' 'hook' 2> /dev/null)\"
-        conda activate md   
         seqkit sample -s 5 \
                 -1 ${qc_SR_Read1} \
                 -n 25000

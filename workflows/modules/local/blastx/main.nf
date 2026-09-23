@@ -1,22 +1,18 @@
 #!/usr/bin/ nextflow
 
+
 nextflow.enable.dsl=2
 
 /*
 ========================================================================================
    BlastX
 ========================================================================================
-   Github   : 
-   Contact  :     
-----------------------------------------------------------------------------------------
-
 */
 
 process BlastX_contigs {
     tag { "${assembler} | ${sample_id}" }
-    publishDir "${params.outdir}/${params.project_id}/${sample_id}/blast/", mode: 'copy'
+    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/blast/" }, mode: 'copy'
     label 'optimized_blastx_contigs'
-    conda "${baseDir}/env/diamond.yml"
     errorStrategy 'ignore'
     input:
     tuple val(sample_id), val(assembler), path(contigs_fasta)
@@ -43,13 +39,12 @@ process BlastX_contigs {
 
 process BlastX_reads {
     tag { "${sample_id}_${mode}" }
-    publishDir "${params.outdir}/${params.project_id}/${sample_id}/blast/", mode: 'copy'
+    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/blast/" }, mode: 'copy'
     label 'optimized_blastx_reads'
-    conda "${baseDir}/env/diamond.yml"
     errorStrategy 'ignore'
 
     input:
-    tuple val(sample_id), val(fastq_file), val(mode)
+    tuple val(sample_id), file(fastq_file), val(mode)
 
     output:
     tuple val(sample_id), file("*"), emit: blastx_reads_ch
@@ -61,26 +56,23 @@ process BlastX_reads {
 
     script:
     """
-    mkdir -p logs
 
     if [[ "$mode" == "long" && -s "$fastq_file" ]]; then
-        echo "Running diamond on long read: $fastq_file" | tee logs/blastx_long.log
         diamond blastx ${params.diamond_args} \\
             --threads ${task.cpus} \\
             --db ${params.diamond_dbdir} \\
             --query "$fastq_file" \\
             --evalue 1e-5 \\
             --outfmt 100 \\
-            --out "${sample_id}_long_reads_blastx.daa" >> BlastX_longreads.log 2>&1
+            --out "${sample_id}_long_reads_blastx.daa"
     elif [[ "$mode" == "short" && -s "$fastq_file" ]]; then 
-        echo "Running diamond on short reads: $fastq_file" | tee logs/blastx_short.log
         diamond blastx ${params.diamond_args} \\
             --threads ${task.cpus} \\
             --db ${params.diamond_dbdir} \\
             --query "$fastq_file" \\
             --evalue 1e-5 \\
             --outfmt 100 \\
-            --out "${sample_id}_short_reads_blastx.daa" >> BlastX_shortreads.log 2>&1
+            --out "${sample_id}_short_reads_blastx.daa"
     else
         echo "SKIP: No valid reads provided for $mode mode" > "${sample_id}_blastx.skipped.txt"
     fi
@@ -94,8 +86,7 @@ process BlastX_reads {
 process DAA2INFO_contigs_daa_file {
     tag {sample_id}
     errorStrategy 'ignore'
-    publishDir "${params.outdir}/${params.project_id}/${sample_id}/blast/", mode: 'copy'
-    conda "${baseDir}/env/diamond.yml"
+    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/blast/" }, mode: 'copy'
     label 'normal'
 
     input:
@@ -143,12 +134,10 @@ process DAA2INFO_contigs_daa_file {
 process Meganize_ShortReads_BlastX {
     tag { sample_id }
     errorStrategy 'ignore'
-    publishDir "${params.outdir}/${params.project_id}/${sample_id}/blast/meganized_reads", mode: 'copy'
-    label 'optimized_blastx_reads'
-    conda "${baseDir}/env/diamond.yml"
-    
-    cpus { 64 }
-    memory { '260 GB'}
+    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/blast/meganized_reads" }, mode: 'copy'
+    label 'megan'
+    cpus { 32 }
+    memory { '128 GB'}
     time '36h'
 
     input:
@@ -169,13 +158,13 @@ process Meganize_ShortReads_BlastX {
     ${params.meganpath}/daa-meganizer \\
         --in ${blastx_short} \\
         --only Taxonomy \\
-        --mapDB ${params.megandb}/megan-map.db \\
+        --mapDB ${params.megandb}/megan-map.updated.db \\
         --threads ${task.cpus} \\
         --minSupportPercent 0 \\
         --topPercent 0.5 \\
         --lcaAlgorithm weighted \\
         --longReads false \\
-        --verbose >> meganize_short_reads.log 2>&1
+        --verbose
 
     paste <(${params.meganpath}/daa2info -P ${params.meganpath}/.MEGAN.def -i ${blastx_short} -c2c Taxonomy | awk '{print \$1}') \\
           <(${params.meganpath}/daa2info -P ${params.meganpath}/.MEGAN.def -i ${blastx_short} -p -c2c Taxonomy | awk '{print \$1,\$2}' FS='\\t' OFS='\\t') \\
@@ -185,7 +174,7 @@ process Meganize_ShortReads_BlastX {
         -c2c Taxonomy -o ${sample_id}_shortreads_blastx.tsv
 
     ktImportTaxonomy \
-        -tax /export/database/krona/taxonomy \
+        -tax ${params.krona_db} \
         -t 1 -m 2 ${sample_id}_shortreads_blastx.tsv -o ${sample_id}_shortreads_krona.html
     """
 }
@@ -193,13 +182,8 @@ process Meganize_ShortReads_BlastX {
 process Meganize_LongReads_BlastX {
     tag { sample_id }
     errorStrategy 'ignore'
-    publishDir "${params.outdir}/${params.project_id}/${sample_id}/blast/meganized_reads", mode: 'copy'
-    label 'optimized_blastx_reads'
-    conda "${baseDir}/env/diamond.yml"
-    cpus { 64 }
-    memory { '260 GB'}
-    time '36h'
-
+    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/blast/meganized_reads" }, mode: 'copy'
+    label 'megan'
     input:
     tuple val(sample_id), file(blastx_long)
 
@@ -218,13 +202,13 @@ process Meganize_LongReads_BlastX {
     ${params.meganpath}/daa-meganizer \\
         --in ${blastx_long} \\
         --only Taxonomy \\
-        --mapDB ${params.megandb}/megan-map.db \\
+        --mapDB ${params.megandb}/megan-map.updated.db \\
         --threads ${task.cpus} \\
         --minSupportPercent 0 \\
         --topPercent 0.5 \\
         --lcaAlgorithm weighted \\
         --longReads false \\
-        --verbose >> meganize_longreads.log 2>&1
+        --verbose 
 
     paste <(${params.meganpath}/daa2info -P ${params.meganpath}/.MEGAN.def -i ${blastx_long} -c2c Taxonomy | awk '{print \$1}') \\
           <(${params.meganpath}/daa2info -P ${params.meganpath}/.MEGAN.def -i ${blastx_long} -p -c2c Taxonomy | awk '{print \$1,\$2}' FS='\\t' OFS='\\t') \\
@@ -236,7 +220,7 @@ process Meganize_LongReads_BlastX {
 
 
     ktImportTaxonomy \
-        -tax /export/database/krona/taxonomy \
+        -tax ${params.krona_db} \
         -t 1 -m 2 ${sample_id}_longreads_blastx.tsv -o ${sample_id}_longreads_blastx_krona.html
 
     """
@@ -244,9 +228,8 @@ process Meganize_LongReads_BlastX {
 
 process Meganize_BlastX_Contigs {
     tag { "${assembler} | ${sample_id}" }
-    publishDir "${params.outdir}/${params.project_id}/${sample_id}/blast/meganized_contigs/", mode: 'copy'
+    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/blast/meganized_contigs/" }, mode: 'copy'
     label 'optimized_Meganize_Contigs_BlastX'
-    conda "${baseDir}/env/diamond.yml"
     errorStrategy 'ignore'
     input:
     tuple val(sample_id), val(assembler), path(daa_file)
@@ -257,7 +240,6 @@ process Meganize_BlastX_Contigs {
     tuple val(sample_id), val(assembler), file("${sample_id}_${assembler}_contigs_blastx.tsv"), emit: megan_tax_tsv_ch
     tuple val(sample_id), val(assembler), file("${sample_id}_${assembler}_contigs_blastx_krona.html"), optional: true, emit: krona_html_ch
     tuple val(sample_id), val(assembler), file("${sample_id}_${assembler}_blastx.daa"), optional: true, emit: krona_daa_ch
-    tuple val(sample_id), val(assembler), file("Meganize_BlastX_${assembler}.log"), optional: true, emit: log_ch
 
     script:
     """
@@ -266,13 +248,13 @@ process Meganize_BlastX_Contigs {
 
     ${params.meganpath}/daa-meganizer \\
         --in ${daa_file} \\
-        --mapDB ${params.megandb}/megan-map.db \\
+        --mapDB ${params.megandb}/megan-map.updated.db \\
         --threads ${task.cpus} \\
         --topPercent 0.5 \\
         --minSupportPercent 0 \\
         --lcaAlgorithm longReads \\
         --longReads true \\
-        --verbose >> Meganize_BlastX_${assembler}.log 2>&1
+        --verbose 
 
     # DAA summary counts (ID + counts)
     paste <(${params.meganpath}/daa2info -P ${params.meganpath}/.MEGAN.def -i ${daa_file} -c2c Taxonomy | awk '{print \$1}') \\
@@ -291,7 +273,7 @@ process Meganize_BlastX_Contigs {
 
     # Krona 
     ktImportTaxonomy \\
-        -tax /export/database/krona/taxonomy \\
+        -tax ${params.krona_db} \\
         -t 1 -m 2 \\
         ${sample_id}_${assembler}_contigs_blastx.tsv \\
         -o ${sample_id}_${assembler}_contigs_blastx_krona.html
@@ -300,30 +282,28 @@ process Meganize_BlastX_Contigs {
 
 process Parse_BlastX_Contigs {
     tag { "${assembler} | ${sample_id}" }
-    publishDir "${params.outdir}/${params.project_id}/${sample_id}/blast/", mode: 'copy'
+    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/blast/" }, mode: 'copy'
     label 'lowmem'
-    conda "${baseDir}/env/vs.yml"
-
+    errorStrategy 'ignore'
     input:
     tuple val(sample_id), val(assembler), val(diamondview_file)
 
     output:
     tuple val(sample_id), val(assembler), file("*"), emit: parse_blastx_ch
 
-
-    when:
     script:
     """
     # TMP FIX
     #
-    #source /opt/conda/etc/profile.d/conda.sh
-    #conda activate all_in_one_pipeline
-    /opt/conda/envs/all_in_one_pipeline/bin/python ${params.scripts}/VS_MD_diamond_parser_linFilt_pandas_v4.py \\
+    export OMP_NUM_THREADS=${task.cpus}
+    export OPENBLAS_NUM_THREADS=${task.cpus}
+    export MKL_NUM_THREADS=${task.cpus}
+    export NUMEXPR_NUM_THREADS=${task.cpus}
+    export VECLIB_MAXIMUM_THREADS=${task.cpus}
+    python ${params.scripts}/VS_MD_diamond_parser_linFilt_Mar2026_fast.py \\
       -i ${diamondview_file} \\
       -t blastx \\
-      -r allRanks \\
       -v ${params.vhunter} \\
-      -n ${params.ncbi_taxa} \\
-      >> "Parse_BLASTX_${assembler}.log" 2>&1
+      -n ${params.ncbi_taxa}
     """
 }

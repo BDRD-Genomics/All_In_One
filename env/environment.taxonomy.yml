@@ -1,0 +1,16 @@
+name: aio_taxonomy
+channels:
+  - conda-forge
+  - bioconda
+channel_priority: strict
+dependencies:
+  - kraken2
+  - bracken
+  - krona
+  - sourmash
+  - mash
+  - metaphlan
+  - gottcha2
+  - taxpasta
+  - python
+  - pandas

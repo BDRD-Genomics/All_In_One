@@ -11,26 +11,26 @@ include { Split_BamFiles_Workflow }             from './workflows/dorado_polish.
 include { Dorado_Aligner }                      from './workflows/modules/local/dorado_polish/main.nf'
 include { Dorado_Polisher }                     from './workflows/modules/local/dorado_polish/main.nf'
 include { DAA2INFO_contigs_daa_file }           from './workflows/modules/local/blastx/main.nf'
-include { Hecatomb} 		                    from './workflows/modules/local/hecatomb/main.nf'
-include { Quast } 	                            from './workflows/modules/local/quast/main.nf'
 include { BlastX_contigs }                      from './workflows/modules/local/blastx/main.nf'
 include { Meganize_BlastX_Contigs }             from './workflows/modules/local/blastx/main.nf'
 include { Parse_BlastX_Contigs }                from './workflows/modules/local/blastx/main.nf'
 include { Parse_MMSEQ_Contigs }                 from './workflows/modules/local/mmseq/mmseq_main.nf'
 include { Remove_rRNA_Reads_Workflow }          from './workflows/Remove_rRNA_wf.nf'
-include { CheckM_Assemblies }                   from './workflows/modules/local/checkm/main.nf'
 include { MMSEQ_AllAssemblers }                 from './workflows/mmseqs/mmseq_allassemblers.nf'
-//include { Split_Short_Reads }                   from './workflows/modules/local/seqkit_split_reads/main.nf'
-//include { Split_Long_Reads }                    from './workflows/modules/local/seqkit_split_reads/main.nf'
 include { Megan_ShortReads_WF }                 from './workflows/megan_workflow/main.nf'
 include { Megan_LongReads_WF }                  from './workflows/megan_workflow/main.nf'
 include { VS_Workflow }				            from './workflows/VS_calls.nf'
 include { Read_Distribution }                   from './workflows/modules/local/qc/main.nf'
+include { Posttrim_NanoPlot as Posttrim_NanoPlot_After_ReadDistribution } from './workflows/modules/local/qc/main.nf'
 include { Autocycler_Workflow }                 from './workflows/autocycler_wf.nf'
-
-Channel.value(file(params.mmseqs_nt_db)).set { nt_db_ch }
+include { CONTIG_based_analysis } 		        from './workflows/contigs_based_analysis.nf'
+include { Exercise_Report_Full }                from './workflows/modules/local/reporting/main.nf'
+include { LongRead_NanoPlot_QC_Stats }          from './workflows/modules/local/qc/main.nf'
+include { Reads_Taxonomic_Classifier_Workflow } from './workflows/reads_taxonomic_classifier.nf'
 // ─── Main Workflow ─────────────────────────────────────
 workflow {
+
+    def nt_db_ch = Channel.value(file(params.mmseqs_nt_db))
 
     def raw_samples_ch = Channel
         .fromPath(params.samplesheet)
@@ -50,12 +50,12 @@ workflow {
             def total_size_gb = read_files.sum { it?.size() ?: 0 } / 1e9
 
             // Dynamically assign cpus and memory
-            def cpus = total_size_gb < 1 ? 2 :
-                       total_size_gb < 5 ? 8 :
-                       total_size_gb < 10 ? 12 : 16
-            def mem = total_size_gb < 1 ? '8 GB' :
-                       total_size_gb < 5 ? '16 GB' :
-                       total_size_gb < 10 ? '32 GB' : '64 GB'
+            def cpus = total_size_gb < 1 ? 128 :
+                       total_size_gb < 5 ? 16 :
+                       total_size_gb < 10 ? 24 : 32
+            def mem = total_size_gb < 1 ? '128 GB' :
+                       total_size_gb < 5 ? '32 GB' :
+                       total_size_gb < 10 ? '48 GB' : '64 GB'
                        
             tuple(row.sample_id, fq1, fq2, lr, mode, cpus, mem)
         }
@@ -146,26 +146,11 @@ workflow {
             long_ch_final = Remove_rRNA_Reads_Workflow.out.rRNA_host_remove_long
                 .map { sample_id, lr -> tuple(sample_id, lr) }  
 
-            //def split_input_ch = Remove_rRNA_Reads_Workflow.out.rRNA_host_remove_short
-            //    .filter { sample_id, fq -> fq != null }
-            //    .map { sample_id, fq -> tuple(sample_id, fq, 'short') } 
-
-            //Split_Interleave(split_input_ch)    
-
 
             short_ch_final = 
                 Remove_rRNA_Reads_Workflow.out.rRNA_host_remove_short_r1
                     .join( Remove_rRNA_Reads_Workflow.out.rRNA_host_remove_short_r2, by: 0)
                     .map { sid, r1, r2 -> tuple(sid, r1, r2) }
-
-            //short_ch_final = Split_Interleave.out.split_interleave_ch
-            //    .map { sample_id, r1, r2 -> tuple(sample_id, r1, r2) }  
-
-            //short_ch_final = 
-            //    MapReads_2_RefSeq.out.host_removed_fq_ch_r1
-            //        .join( MapReads_2_RefSeq.out.host_removed_fq_ch_r2, by: 0)
-            //        .map { sid, r1, r2 -> tuple(sid, r1, r2) }
-
 	     
             short_ch_final.view { "short_ch_final: $it" } 
 
@@ -189,11 +174,6 @@ workflow {
                 .filter { sample_id, fq -> fq != null }
                 .map { sample_id, fq -> tuple(sample_id, fq, 'short') } 
 
-            //Split_Interleave(split_input_ch)    
-
-            //short_ch_final = Split_Interleave.out.split_interleave_ch
-            //    .map { sample_id, r1, r2 -> tuple(sample_id, r1, r2) }
-
             short_ch_final = 
                 MapReads_2_RefSeq.out.host_removed_fq_ch_r1
                     .join( MapReads_2_RefSeq.out.host_removed_fq_ch_r2, by: 0)
@@ -203,34 +183,98 @@ workflow {
         }   
 
     } else {
+
+        /*
+         * No host-removal path.
+         *
+         * If --remove_rRNA_reads is true, run rRNA removal directly on
+         * the QC outputs. This is the path needed for testing Ribodetector
+         * without also enabling --map2reads.
+         */
+        if (params.remove_rRNA_reads) {
+
+            def rrna_input_ch = QC_Workflow.out.interleaved_trimmed_short_ch
+                .map { id, sr -> tuple(id, [sr, null]) }
+                .mix(
+                    QC_Workflow.out.trimmed_long_ch
+                        .map { id, lr -> tuple(id, [null, lr]) }
+                )
+                .groupTuple()
+                .map { id, values ->
+                    def sr_file = values.collect { it[0] }.find { it != null }
+                    def lr_file = values.collect { it[1] }.find { it != null }
+
+                    def files = [sr_file, lr_file].findAll()
+                    def total_size_gb = files.sum { it?.size() ?: 0 } / 1e9
+
+                    def cpus = total_size_gb < 1 ? 8 :
+                               total_size_gb < 5 ? 16 :
+                               total_size_gb < 10 ? 32 :
+                               total_size_gb < 20 ? 48 :
+                               total_size_gb < 40 ? 64 : 80
+
+                    def mem = total_size_gb < 1 ? '32 GB' :
+                              total_size_gb < 5 ? '64 GB' :
+                              total_size_gb < 10 ? '128 GB' :
+                              total_size_gb < 20 ? '256 GB' :
+                              total_size_gb < 40 ? '384 GB' : '512 GB'
+
+                    tuple(id, sr_file, lr_file, cpus, mem)
+                }
+
+            rrna_input_ch.view { "rRNA input tuple from QC outputs: $it" }
+
+            Remove_rRNA_Reads_Workflow(rrna_input_ch)
+
+            short_ch = Remove_rRNA_Reads_Workflow.out.rRNA_host_remove_short
+                .filter { sample_id, fq -> fq != null }
+                .map { sample_id, fq -> tuple(sample_id, fq, 'short') }
+
+            blast_short_ch = Remove_rRNA_Reads_Workflow.out.rRNA_host_remove_short
+                .filter { sample_id, fq -> fq != null }
+                .map { sample_id, fq -> tuple(sample_id, fq, 'short') }
+
+            long_ch = Remove_rRNA_Reads_Workflow.out.rRNA_host_remove_long
+                .filter { sample_id, fq -> fq != null }
+                .map { sample_id, fq -> tuple(sample_id, fq, 'long') }
+
+            long_ch_final = Remove_rRNA_Reads_Workflow.out.rRNA_host_remove_long
+                .filter { sample_id, fq -> fq != null }
+                .map { sample_id, fq -> tuple(sample_id, fq) }
+
+            short_ch_final =
+                Remove_rRNA_Reads_Workflow.out.rRNA_host_remove_short_r1
+                    .join(Remove_rRNA_Reads_Workflow.out.rRNA_host_remove_short_r2, by: 0)
+                    .map { sid, r1, r2 -> tuple(sid, r1, r2) }
+
+            short_ch_final.view { "short_ch_final after rRNA removal: $it" }
+        }
+
+        /*
+         * Original no-host-removal / no-rRNA-removal path.
+         */
+        else {
             short_ch = QC_Workflow.out.interleaved_trimmed_short_ch
                 .filter { sample_id, fq -> fq != null }
-                .map { sample_id, fq -> tuple(sample_id, fq, 'short') }     
-            
+                .map { sample_id, fq -> tuple(sample_id, fq, 'short') }
+
             blast_short_ch = QC_Workflow.out.interleaved_trimmed_short_ch
                 .filter { sample_id, fq -> fq != null }
-                .map { sample_id, fq -> tuple(sample_id, fq, 'short') }     
+                .map { sample_id, fq -> tuple(sample_id, fq, 'short') }
 
             long_ch = QC_Workflow.out.trimmed_long_ch
                 .filter { sample_id, fq -> fq != null }
-                .map { sample_id, fq -> tuple(sample_id, fq, 'long') }      
+                .map { sample_id, fq -> tuple(sample_id, fq, 'long') }
 
             long_ch_final = QC_Workflow.out.trimmed_long_ch
                 .filter { sample_id, fq -> fq != null }
-                .map { sample_id, fq -> tuple(sample_id, fq) }      
+                .map { sample_id, fq -> tuple(sample_id, fq) }
 
-            //def split_input_ch = QC_Workflow.out.interleaved_trimmed_short_ch
-            //    .filter { sample_id, fq -> fq != null }
-            //    .map { sample_id, fq -> tuple(sample_id, fq, 'short') }     
-
-            //Split_Interleave(split_input_ch)        
-
-            //short_ch_final = Split_Interleave.out.split_interleave_ch
-            //    .map { sample_id, r1, r2 -> tuple(sample_id, r1, r2) }
-
-            short_ch_final = 
+            short_ch_final =
                 QC_Workflow.out.trimmed_short_ch
-            short_ch_final.view { "short_ch_final: $it" }             
+
+            short_ch_final.view { "short_ch_final: $it" }
+        }
     }
     // ─── Enforce tuple structure ──────────────────────────────────────────────   
 
@@ -243,7 +287,41 @@ workflow {
     // Optional: debug before building hybrid
     short_ch_final.view { "short_ch_final (tuple): $it" }
     long_ch_final.view  { "long_ch_final (tuple): $it" }  
-    
+   
+    if (params.run_reads_taxonomic_classifier) {
+
+    def taxonomic_short_reads_ch =
+        (params.shortreads || params.hybrid) ?
+            short_ch_final
+                .filter { sid, r1, r2 -> r1 != null && r2 != null }
+                .map { sid, r1, r2 ->
+                    tuple("${sid}_short", [r1, r2])
+                } :
+            Channel.empty()
+
+    def taxonomic_long_reads_ch =
+        (params.longreads || params.hybrid) ?
+            long_ch_final
+                .filter { sid, lr -> lr != null }
+                .map { sid, lr ->
+                    tuple("${sid}_long", [lr])
+                } :
+            Channel.empty()
+
+    def reads_taxonomic_classifier_input_ch =
+        taxonomic_short_reads_ch.mix(taxonomic_long_reads_ch)
+
+    reads_taxonomic_classifier_input_ch.view {
+        "reads_taxonomic_classifier_input_ch: ${it}"
+    }
+
+    Reads_Taxonomic_Classifier_Workflow(
+        reads_taxonomic_classifier_input_ch
+    )
+    }
+
+
+ 
     // ─── Build conditional assembly input ─────────────────────────────────────   
 
     // Short-only input channel: (sample_id, R1, R2, null, null, 'short')
@@ -251,30 +329,40 @@ workflow {
         tuple(id, r1, r2, null, null, 'short')
     }   
 
-    // Long-only input channel: (sample_id, null, null, LR, 'long')
-    //def long_only_ch = final_long_ch.map { id, lr ->
-    //    tuple(id, null, null, lr, q2, 'long')
-    //} 
-
     // ensure sample_id is a plain String in both channels
     short_ch_final = short_ch_final.map { it -> tuple(it[0], it[1], it[2]) }
     long_ch_final  = long_ch_final.map { it -> tuple(it[0], it[1]) }
 
     // ─── Read Distribution Statistics ─────────────────────────────────────────
+    
     Read_Distribution(long_ch_final)
-    q2_value_ch = Read_Distribution.out.read_distribution_ch.map { row ->
-	def (sample_id, png_file, summary_file, csv_file) = row
-	def lines = csv_file.text.readLines()
-	def header = lines[0].trim()
-	def q2 = lines[1].trim()
-	if (header != 'Q1') {
-		throw new RuntimeException("Expected header Q2 but found ${header} in ${csv_file}")
-	}
-	[ sample_id, q2 ]
-    }
-    //final_long_ch = long_ch_final.join(q2_value_ch, by: 0 )
-    //	.map { sample_id, lr, q2 -> [ sample_id, lr, q2 ] }	
-    final_long_ch = long_ch_final.join(q2_value_ch, by: 0) // this is now what get's passed to assembly workflow
+    q2_value_ch = Read_Distribution.out.read_distribution_ch.map { sample_id, png_file, summary_file, csv_file, trimmed_fastq ->
+            def lines = csv_file.text.readLines()
+            def header = lines[0].trim()
+            def q2 = lines[1].trim()
+
+            if (header != 'Q1') {
+                throw new RuntimeException("Expected header Q1 but found ${header} in ${csv_file}")
+            }
+
+            tuple(sample_id, q2)
+        }
+
+    post_distribution_long_ch = Read_Distribution.out.read_distribution_fastq_ch
+            .map { sample_id, fq -> tuple(sample_id, fq) }
+    if (params.longreads || params.hybrid) {
+    	Posttrim_NanoPlot_After_ReadDistribution(post_distribution_long_ch)
+
+    	LongRead_NanoPlot_QC_Stats(
+            QC_Workflow.out.nanoplot_pre_ch.collect(),
+            Posttrim_NanoPlot_After_ReadDistribution.out.posttrim_nanoplot_ch.collect()
+        )
+        final_long_ch = post_distribution_long_ch.join(q2_value_ch, by: 0)
+        } else {
+	
+	    final_long_ch = Channel.empty()
+     }
+
     final_long_ch.map { sample_id, lr, q2 -> 
 	println "Sample: ${sample_id} LR: ${lr} Q2: ${q2}"
     }
@@ -395,46 +483,55 @@ workflow {
         Dorado_Polisher.out.dorado_polisher_ch.view { " Dorado_Polisher output: $it" }
     }
 
+    // Map2Assembly (waits on assembly steps to finish)
+    //if ( params.dragonflye || params.medaka || params.metaspades || params.unicycler || params.raven ) {
+    if ( params.characterize_contigs ) {
+        def only_reads_ch = assembly_input_ch.map { sid, fq1, fq2, lr, q2, mode -> tuple(sid, fq1, fq2, lr, mode)}
+        def characterize_contigs_ch = Channel.empty()
+        if (params.dragonflye) {
+            def dragonflye_readsAndContigs = only_reads_ch.join(Assembly_Workflow.out.dragonflye_assembly_ch).map {sid, fq1, fq2, lr, mode, contigs -> tuple(sid, fq1, fq2, lr, contigs, mode, 'dragonflye') } 
+            characterize_contigs_ch = characterize_contigs_ch.mix(dragonflye_readsAndContigs) }
+        if (params.medaka) { 
+            def medaka_readsAndContigs =only_reads_ch.join(Assembly_Workflow.out.dragonflye_medaka_assembly_ch).map {sid, fq1, fq2, lr, mode, contigs -> tuple(sid, fq1, fq2, lr, contigs, mode, 'medaka') }
+            characterize_contigs_ch = characterize_contigs_ch.mix(medaka_readsAndContigs) }
+        if (params.metaspades) { 
+            def metaspades_readsAndContigs = only_reads_ch.join(Assembly_Workflow.out.metaspades_assembly_ch).map {sid, fq1, fq2, lr, mode, contigs -> tuple(sid, fq1, fq2, lr, contigs, mode, 'metaspades') }
+            characterize_contigs_ch = characterize_contigs_ch.mix(metaspades_readsAndContigs) }
+        if (params.unicycler) { 
+            def unicycler_readsAndContigs = only_reads_ch.join(Assembly_Workflow.out.unicycler_assembly_ch).map {sid, fq1, fq2, lr, mode, contigs -> tuple(sid, fq1, fq2, lr, contigs, mode, 'unicycler') }
+            characterize_contigs_ch = characterize_contigs_ch.mix(unicycler_readsAndContigs) }
+        if (params.raven) { 
+            def raven_readsAndContigs = only_reads_ch.join(Assembly_Workflow.out.dragonflye_raven_assembly_ch).map {sid, fq1, fq2, lr, mode, contigs -> tuple(sid, fq1, fq2, lr, contigs, mode, 'raven') }
+            characterize_contigs_ch = characterize_contigs_ch.mix(raven_readsAndContigs) }
 
-    // CheckM (waits on assembly steps to finish)
-    if ( params.dragonflye || params.medaka || params.metaspades || params.unicycler) {
-        Channel.empty()
-        .mix( params.dragonflye && Assembly_Workflow.out.dragonflye_assembly_ch ? Assembly_Workflow.out.dragonflye_assembly_ch.map { sid, fa -> tuple(sid, 'dragonflye', fa) } : Channel.empty() )
-        .mix( params.medaka && Assembly_Workflow.out.dragonflye_medaka_assembly_ch ? Assembly_Workflow.out.dragonflye_medaka_assembly_ch.map { sid, fa -> tuple(sid, 'dragonflye_medaka', fa) } : Channel.empty() )
-        .mix( params.unicycler && Assembly_Workflow.out.unicycler_assembly_ch ? Assembly_Workflow.out.unicycler_assembly_ch.map { sid, fa -> tuple(sid, 'unicycler', fa) } : Channel.empty() )
-        .mix( params.metaspades && Assembly_Workflow.out.metaspades_assembly_ch ? Assembly_Workflow.out.metaspades_assembly_ch.map { sid, fa -> tuple(sid, 'metaspades', fa) } : Channel.empty() )
-        .set { checkm_input_ch }
-        CheckM_Assemblies( checkm_input_ch )
-    }
+        if (params.myloasm) {
+            def myloasm_readsAndContigs = only_reads_ch
+                .join(Assembly_Workflow.out.myloasm_assembly_ch)
+                .map { sid, fq1, fq2, lr, mode, contigs ->
+                    tuple(sid, fq1, fq2, lr, contigs, mode, 'myloasm')
+                }
 
+            characterize_contigs_ch = characterize_contigs_ch.mix(myloasm_readsAndContigs)
+        }
+        characterize_contigs_ch.view { " characterize_contigs_ch input: $it" }
 
+        CONTIG_based_analysis( characterize_contigs_ch )
 
-    if ( params.nanopore_assembly ) {
-        
-	// Remove 'mode' field from assembly_input_ch before passing to Hecatomb
-	def hecatomb_input_ch = assembly_input_ch.map { id, r1, r2, lr, q2,  mode -> 
-	    tuple(id, r1, r2, lr)
-	}	
+        def full_report_ch = Exercise_Report_Full(CONTIG_based_analysis.out.checkm_out_ch.map{sid, asm, file -> tuple(sid, asm)},
+            CONTIG_based_analysis.out.blastn_contigs_out_ch.collect(),
+            CONTIG_based_analysis.out.rgi_out_ch.collect(),
+            CONTIG_based_analysis.out.busco_out_ch.collect(),
+            CONTIG_based_analysis.out.amrfinder_out_ch.collect())
+        }
 
-	Hecatomb(hecatomb_input_ch)
-        
-    // Input to Stage_7a_quast: tuple(sample_id, merged_fasta_path)
-	def quast_input_ch = assembly_input_ch
-        	.map { sample_id, fq1, fq2, lr, mode -> tuple(sample_id, fq1, fq2, q2, lr) } // remove mode
-        	.join(Hecatomb.out.hecatomb_merged_fasta)
-        	.map { sample_id, fq1, fq2, lr, merged_fasta ->
-            	tuple(sample_id, fq1, fq2, lr, merged_fasta)
-      	} 
-
-	Quast(quast_input_ch)
-    
-    }
 
     Assembly_Workflow.out.dragonflye_assembly_ch.view { " Dragonflye output: $it" }
     Assembly_Workflow.out.spades_assembly_ch.view { " SPAdes output: $it" }
     Assembly_Workflow.out.metaspades_assembly_ch.view { " MetaSPAdes output: $it" }
     Assembly_Workflow.out.unicycler_assembly_ch.view { " Unicycler output: $it" }
     Assembly_Workflow.out.plasmidspades_assembly_ch.view { " PlasmidSPAdes output: $it" }
+    Assembly_Workflow.out.dragonflye_raven_assembly_ch.view { " Dragonflye Raven output: $it" }
+    Assembly_Workflow.out.myloasm_assembly_ch.view { " Myloasm output: $it" } 
 
 if ( params.run_blastx ) {
 
@@ -454,8 +551,13 @@ if ( params.run_blastx ) {
         // Unicycler
         .mix( params.unicycler && Assembly_Workflow.out.unicycler_assembly_ch ?
         Assembly_Workflow.out.unicycler_assembly_ch.map { sid, fa -> tuple(sid, 'unicycler', fa) } : Channel.empty() )
+	    // Raven
+	    .mix( params.raven && Assembly_Workflow.out.dragonflye_raven_assembly_ch ?
+        Assembly_Workflow.out.dragonflye_raven_assembly_ch.map { sid, fa -> tuple(sid, 'raven', fa) } : Channel.empty() )
+        .mix( params.myloasm && Assembly_Workflow.out.myloasm_assembly_ch ?
+        Assembly_Workflow.out.myloasm_assembly_ch.map { sid, fa -> tuple(sid, 'myloasm', fa) } : Channel.empty() )
         .set { blastx_input_ch }
-
+        blastx_input_ch.view { it -> "BLASTX input channel: $it" }
 
         BlastX_contigs( blastx_input_ch )
 
@@ -493,6 +595,8 @@ if ( params.run_blastx ) {
         Megan_LongReads_WF( BlastX_Reads_Workflow.out.long_reads_blastx_channel ) 
     }
 
+
+
     // place holder for VirusSeeker Workflow
     // Build one mixed stream of all enabled assemblers:
     // each must be (asm, sid, contigs.fa)
@@ -521,11 +625,24 @@ if ( params.run_blastx ) {
         Assembly_Workflow.out.unicycler_assembly_ch.map { sid, fa -> tuple('unicycler', sid, fa) }
       )
     }   
+    if (params.raven) {
+      contigs_all = contigs_all.mix(
+        Assembly_Workflow.out.dragonflye_raven_assembly_ch.map { sid, fa -> tuple('raven', sid, fa) }
+      )
+    }	
+    if (params.myloasm) {
+      contigs_all = contigs_all.mix(
+        Assembly_Workflow.out.myloasm_assembly_ch.map { sid, fa -> tuple('myloasm', sid, fa) }
+      )
+    }
+
 
     def mmseqs_dragonflye_contigs_ch = Channel.empty()
     def mmseqs_dragonflye_medaka_contigs_ch = Channel.empty()
     def mmseqs_metaspades_contigs_ch = Channel.empty()
     def mmseqs_unicycler_contigs_ch = Channel.empty()
+    def mmseqs_raven_contigs_ch = Channel.empty()
+
 
     if (params.run_mmseqs) {
     MMSEQ_AllAssemblers(contigs_all, nt_db_ch)
@@ -534,12 +651,14 @@ if ( params.run_blastx ) {
     def medakaCh = MMSEQ_AllAssemblers.out.medaka ?: Channel.empty()
     def metaCh = MMSEQ_AllAssemblers.out.meta ?: Channel.empty()
     def uniCh = MMSEQ_AllAssemblers.out.uni ?: Channel.empty()
+    def ravenCh = MMSEQ_AllAssemblers.out.raven ?: Channel.empty()
 
     def mmseq_parse_in = Channel.empty()
     .mix( dragonCh.map { sid, tsv -> tuple(sid, 'dragonflye', tsv) } )
     .mix( medakaCh.map { sid, tsv -> tuple(sid, 'dragonflye_medaka', tsv) } )
     .mix( metaCh .map { sid, tsv -> tuple(sid, 'metaspades', tsv) } )
     .mix( uniCh .map { sid, tsv -> tuple(sid, 'unicycler', tsv) } )
+    .mix( ravenCh .map { sid, tsv -> tuple(sid, 'raven', tsv) } )
 
     Parse_MMSEQ_Contigs( mmseq_parse_in )
 
@@ -562,60 +681,268 @@ if ( params.run_blastx ) {
     Parse_MMSEQ_Contigs.out.mmseqs_parsed_ch
     .filter { sid, asm, f -> asm == 'unicycler' }
     .map { sid, asm, f -> tuple(sid, f) }
+
+    mmseqs_raven_contigs_ch =
+    Parse_MMSEQ_Contigs.out.mmseqs_parsed_ch
+    .filter { sid, asm, f -> asm == 'raven' }
+    .map { sid, asm, f -> tuple(sid, f) }
+
 }
 
-    if (params.vs) {    
-        def reads_min_ch = assembly_input_ch.map { sid, fq1, fq2, lr, q2, mode ->
-        tuple(sid, fq1, fq2, lr) // (sid, fq1, fq2, lr)
-        }
-        def vs_calls_inputs = Channel.empty()
-        // DRAGONFLYE
-        if (params.dragonflye) {
-            def vs_dragon = reads_min_ch
-                .join(Assembly_Workflow.out.dragonflye_assembly_ch) // (sid, fq1,fq2,lr, contigs)
-                .join(mmseqs_dragonflye_contigs_ch) // (sid, fq1,fq2,lr, contigs, mmseqs_parsed)
-                .map { sid, fq1, fq2, lr, contigs, mmseqs_parsed ->
-                // add assembler tag as 7th field
-                tuple(sid, fq1, fq2, lr, contigs, mmseqs_parsed, 'dragonflye')
-            }
-            vs_calls_inputs = vs_calls_inputs.mix(vs_dragon)
-            }
-        // MEDAKA
-        if (params.medaka) {
-            def vs_medaka = reads_min_ch
-                .join(Assembly_Workflow.out.dragonflye_medaka_assembly_ch)
-                .join(mmseqs_dragonflye_medaka_contigs_ch)
-                .map { sid, fq1, fq2, lr, contigs, mmseqs_parsed ->
-                tuple(sid, fq1, fq2, lr, contigs, mmseqs_parsed, 'medaka')
-            }
-            vs_calls_inputs = vs_calls_inputs.mix(vs_medaka)
-            }
-
-        // METASPADES
-        if (params.metaspades) {
-            def vs_meta = reads_min_ch
-                .join(Assembly_Workflow.out.metaspades_assembly_ch)
-                .join(mmseqs_metaspades_contigs_ch)
-                .map { sid, fq1, fq2, lr, contigs, mmseqs_parsed ->
-                tuple(sid, fq1, fq2, lr, contigs, mmseqs_parsed, 'metaspades')
-            }
-            vs_calls_inputs = vs_calls_inputs.mix(vs_meta)
-            }
-
-        // UNICYCLER
-        if (params.unicycler) {
-            def vs_uni = reads_min_ch
-                .join(Assembly_Workflow.out.unicycler_assembly_ch)
-                .join(mmseqs_unicycler_contigs_ch)
-                .map { sid, fq1, fq2, lr, contigs, mmseqs_parsed ->
-                tuple(sid, fq1, fq2, lr, contigs, mmseqs_parsed, 'unicycler')
-            }
-            vs_calls_inputs = vs_calls_inputs.mix(vs_uni)
-        }
-
-        // optional: peek
-        vs_calls_inputs.view { "vs_calls_input (all assemblers): $it" }
-        VS_Workflow( vs_calls_inputs )
+if (params.vs) {
+    def reads_min_ch = assembly_input_ch.map { sid, fq1, fq2, lr, q2, mode ->
+        tuple(sid, fq1, fq2, lr)
     }
 
+    def blastx_dragonflye_parsed_ch = Parse_BlastX_Contigs.out.parse_blastx_ch
+        .filter { sid, assembler, parsed -> assembler == 'dragonflye' }
+        .map    { sid, assembler, parsed -> tuple(sid, parsed) }
+
+    def blastx_medaka_parsed_ch = Parse_BlastX_Contigs.out.parse_blastx_ch
+        .filter { sid, assembler, parsed -> assembler == 'dragonflye_medaka' || assembler == 'medaka' }
+        .map    { sid, assembler, parsed -> tuple(sid, parsed) }
+
+    def blastx_metaspades_parsed_ch = Parse_BlastX_Contigs.out.parse_blastx_ch
+        .filter { sid, assembler, parsed -> assembler == 'metaspades' }
+        .map    { sid, assembler, parsed -> tuple(sid, parsed) }
+
+    def blastx_unicycler_parsed_ch = Parse_BlastX_Contigs.out.parse_blastx_ch
+        .filter { sid, assembler, parsed -> assembler == 'unicycler' }
+        .map    { sid, assembler, parsed -> tuple(sid, parsed) }
+
+    def blastx_raven_parsed_ch = Parse_BlastX_Contigs.out.parse_blastx_ch
+        .filter { sid, assembler, parsed -> assembler == 'raven' }
+        .map    { sid, assembler, parsed -> tuple(sid, parsed) }
+
+
+    def sample_keys_for_vs = reads_min_ch
+        .map { sid, fq1, fq2, lr ->
+            tuple(sid, true)
+        }
+
+    def short_daa_default_ch = sample_keys_for_vs
+        .map { sid, dummy ->
+            tuple(sid, null)
+        }
+
+    def long_daa_default_ch = sample_keys_for_vs
+        .map { sid, dummy ->
+            tuple(sid, null)
+        }
+
+    def short_daa_real_ch = Megan_ShortReads_WF.out.meganized_short_daa_ch
+        .map { sid, daa ->
+            tuple(sid, daa)
+        }
+
+    def long_daa_real_ch = Megan_LongReads_WF.out.meganized_long_daa_ch
+        .map { sid, daa ->
+            tuple(sid, daa)
+        }
+
+    def short_daa_any_ch = short_daa_default_ch
+        .mix(short_daa_real_ch)
+        .groupTuple()
+        .map { sid, vals ->
+            def got = vals.find { it != null } ?: null
+            tuple(sid, got)
+        }
+
+    def long_daa_any_ch = long_daa_default_ch
+        .mix(long_daa_real_ch)
+        .groupTuple()
+        .map { sid, vals ->
+            def got = vals.find { it != null } ?: null
+            tuple(sid, got)
+        }
+
+    def reads_daa_pair_ch = short_daa_any_ch
+        .join(long_daa_any_ch)
+        .map { sid, short_daa, long_daa ->
+            tuple(sid, short_daa, long_daa)
+        }
+
+    reads_daa_pair_ch.view {
+        "VS READS DAA PAIR: $it"
+    }
+
+
+    def vs_calls_inputs = Channel.empty()
+
+
+    if (params.dragonflye) {
+        def vs_dragon = reads_min_ch
+            .join(Assembly_Workflow.out.dragonflye_assembly_ch)
+            .join(mmseqs_dragonflye_contigs_ch)
+            .join(blastx_dragonflye_parsed_ch)
+            .join(reads_daa_pair_ch)
+            .map { sid,
+                   fq1,
+                   fq2,
+                   lr,
+                   contigs,
+                   mmseqs_parsed,
+                   diamond_parsed,
+                   short_daa,
+                   long_daa ->
+
+                tuple(
+                    sid,
+                    fq1,
+                    fq2,
+                    lr,
+                    contigs,
+                    mmseqs_parsed,
+                    'dragonflye',
+                    diamond_parsed,
+                    short_daa,
+                    long_daa
+                )
+            }
+
+        vs_calls_inputs = vs_calls_inputs.mix(vs_dragon)
+    }
+
+
+    if (params.medaka) {
+        def vs_medaka = reads_min_ch
+            .join(Assembly_Workflow.out.dragonflye_medaka_assembly_ch)
+            .join(mmseqs_dragonflye_medaka_contigs_ch)
+            .join(blastx_medaka_parsed_ch)
+            .join(reads_daa_pair_ch)
+            .map { sid,
+                   fq1,
+                   fq2,
+                   lr,
+                   contigs,
+                   mmseqs_parsed,
+                   diamond_parsed,
+                   short_daa,
+                   long_daa ->
+
+                tuple(
+                    sid,
+                    fq1,
+                    fq2,
+                    lr,
+                    contigs,
+                    mmseqs_parsed,
+                    'medaka',
+                    diamond_parsed,
+                    short_daa,
+                    long_daa
+                )
+            }
+
+        vs_calls_inputs = vs_calls_inputs.mix(vs_medaka)
+    }
+
+
+    if (params.metaspades) {
+        def vs_meta = reads_min_ch
+            .join(Assembly_Workflow.out.metaspades_assembly_ch)
+            .join(mmseqs_metaspades_contigs_ch)
+            .join(blastx_metaspades_parsed_ch)
+            .join(reads_daa_pair_ch)
+            .map { sid,
+                   fq1,
+                   fq2,
+                   lr,
+                   contigs,
+                   mmseqs_parsed,
+                   diamond_parsed,
+                   short_daa,
+                   long_daa ->
+
+                tuple(
+                    sid,
+                    fq1,
+                    fq2,
+                    lr,
+                    contigs,
+                    mmseqs_parsed,
+                    'metaspades',
+                    diamond_parsed,
+                    short_daa,
+                    long_daa
+                )
+            }
+
+        vs_calls_inputs = vs_calls_inputs.mix(vs_meta)
+    }
+
+
+    if (params.unicycler) {
+        def vs_uni = reads_min_ch
+            .join(Assembly_Workflow.out.unicycler_assembly_ch)
+            .join(mmseqs_unicycler_contigs_ch)
+            .join(blastx_unicycler_parsed_ch)
+            .join(reads_daa_pair_ch)
+            .map { sid,
+                   fq1,
+                   fq2,
+                   lr,
+                   contigs,
+                   mmseqs_parsed,
+                   diamond_parsed,
+                   short_daa,
+                   long_daa ->
+
+                tuple(
+                    sid,
+                    fq1,
+                    fq2,
+                    lr,
+                    contigs,
+                    mmseqs_parsed,
+                    'unicycler',
+                    diamond_parsed,
+                    short_daa,
+                    long_daa
+                )
+            }
+
+        vs_calls_inputs = vs_calls_inputs.mix(vs_uni)
+    }
+
+
+    if (params.raven) {
+        def vs_raven = reads_min_ch
+            .join(Assembly_Workflow.out.dragonflye_raven_assembly_ch)
+            .join(mmseqs_raven_contigs_ch)
+            .join(blastx_raven_parsed_ch)
+            .join(reads_daa_pair_ch)
+            .map { sid,
+                   fq1,
+                   fq2,
+                   lr,
+                   contigs,
+                   mmseqs_parsed,
+                   diamond_parsed,
+                   short_daa,
+                   long_daa ->
+
+                tuple(
+                    sid,
+                    fq1,
+                    fq2,
+                    lr,
+                    contigs,
+                    mmseqs_parsed,
+                    'raven',
+                    diamond_parsed,
+                    short_daa,
+                    long_daa
+                )
+            }
+
+        vs_calls_inputs = vs_calls_inputs.mix(vs_raven)
+    }
+
+    vs_calls_inputs.view {
+        "vs_calls_input (all assemblers): $it"
+    }
+
+    VS_Workflow(vs_calls_inputs)
+}
 }

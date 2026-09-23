@@ -1,0 +1,3 @@
+Family	Genome Size
+Totiviridae	7990
+Abyssoviridae	3

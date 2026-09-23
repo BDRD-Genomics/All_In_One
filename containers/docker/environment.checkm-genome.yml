@@ -1,0 +1,17 @@
+name: checkm-genome
+channels:
+  - conda-forge
+  - bioconda
+  - anaconda
+  - r
+  - compbiocore
+  - nanoporetech
+  - gurobi
+dependencies:
+  - checkm-genome
+  - ca-certificates
+  - certifi
+  - openssl
+variables:
+  CHECKM_DATA_PATH: /export/database/checkm
+prefix: /export/miniforge3/envs/checkm-genome

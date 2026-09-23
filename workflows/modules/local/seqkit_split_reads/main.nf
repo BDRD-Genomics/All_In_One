@@ -14,7 +14,7 @@ nextflow.enable.dsl=2
 process Split_Short_Reads {
 
     tag { sample_id }
-    publishDir "${params.outdir}/${params.project_id}/${sample_id}/trim/quality_control/", mode: 'copy'
+    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/trim/quality_control/" }, mode: 'copy'
     label 'seqkit_split_reads'
     input:
     tuple val(sample_id), path(fastq)
@@ -24,8 +24,6 @@ process Split_Short_Reads {
 
     script:
     """
-    eval "\$(command conda 'shell.bash' 'hook' 2> /dev/null)"
-    conda activate seqkit
     seqkit split2 --threads ${task.cpus} \
 	${fastq} \
 	-l 435M \
@@ -37,7 +35,7 @@ process Split_Short_Reads {
 process Split_Long_Reads {
 
     tag { sample_id }
-    publishDir "${params.outdir}/${params.project_id}/${sample_id}/trim/quality_control/", mode: 'copy'
+    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/trim/quality_control/" }, mode: 'copy'
     label 'seqkit_split_reads'
     input:
     tuple val(sample_id), path(fastq)
@@ -47,8 +45,6 @@ process Split_Long_Reads {
 
     script:
     """
-    eval "\$(command conda 'shell.bash' 'hook' 2> /dev/null)"
-    conda activate seqkit
     seqkit split2 --threads ${task.cpus} \
         ${fastq} \
         -l 435M \

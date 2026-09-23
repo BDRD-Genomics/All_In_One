@@ -1,0 +1,31 @@
+FROM ghcr.io/bdrd-genomics/allinone-conda-base:1.0.2
+
+SHELL ["/bin/bash", "-lc"]
+
+USER root
+
+RUN dnf install -y \
+        procps-ng \
+        findutils \
+        which \
+        gzip \
+        tar \
+        bzip2 \
+        xz \
+        ca-certificates \
+        fontconfig \
+    && dnf clean all \
+    && rm -rf /var/cache/dnf
+
+RUN mamba create -y -n fastqc \
+        -c conda-forge \
+        -c bioconda \
+        fastqc \
+    && mamba clean -a -y
+
+ENV CONDA_DEFAULT_ENV=fastqc
+ENV PATH=/opt/conda/envs/fastqc/bin:/opt/conda/bin:$PATH
+
+WORKDIR /data
+
+CMD ["/bin/bash"]

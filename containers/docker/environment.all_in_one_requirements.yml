@@ -1,0 +1,78 @@
+name: all_in_one_pipeline
+channels:
+  - conda-forge
+  - bioconda
+  - anaconda
+  - r
+  - compbiocore
+  - nanoporetech
+  - gurobi
+
+dependencies:
+  # core language/runtime
+  - python
+  - r-base
+
+  # QC / trimming
+  - fastp
+  - fastqc
+  - multiqc
+  - bbmap
+
+  # mapping / assembly utilities
+  - minimap2
+  - bowtie2
+  - bwa
+  - samtools
+  - bedtools
+  - seqtk
+  - seqkit
+
+  # assemblers / polishers
+  - dragonflye
+  - autocycler
+  - spades
+  - unicycler
+  - plassembler
+  - flye
+  - racon
+  - pilon
+  - medaka
+  - canu
+
+  # classification / search
+  - diamond
+  - mmseqs2
+  - blast
+  - entrez-direct
+  - ncbi-vdb
+  - krona
+
+  # QC / evaluation
+  - quast
+  - csvtk
+  - circos
+  - glimmerhmm
+  - checkm-genome
+
+  # Python scientific stack
+  - numpy
+  - pandas
+  - biopython
+  - h5py
+  - ont-fast5-api
+  - pyarrow
+
+  # R packages from aio_qc
+  - r-openxlsx
+  - r-scales
+  - r-optparse
+  - r-readxl
+  - r-dplyr
+  - r-tidyr
+  - r-ggplot2
+  - r-readr
+  - r-ggpubr
+  - r-pheatmap
+  - r-reshape2
+

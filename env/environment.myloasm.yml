@@ -1,0 +1,8 @@
+name: myloasm
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+channel_priority: strict
+dependencies:
+  - myloasm=0.7.0

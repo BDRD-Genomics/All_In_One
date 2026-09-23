@@ -1,0 +1,23 @@
+name: aio_qc
+channels:
+  - conda-forge
+  - bioconda
+channel_priority: strict
+dependencies:
+  - bbmap
+  - fastp
+  - fastqc
+  - multiqc
+  - seqkit
+  - r-base
+  - r-optparse
+  - r-openxlsx
+  - r-readxl
+  - r-dplyr
+  - r-tidyr
+  - r-ggplot2
+  - r-readr
+  - r-ggpubr
+  - r-pheatmap
+  - r-reshape2
+  - r-scales

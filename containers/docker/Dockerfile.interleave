@@ -1,0 +1,30 @@
+FROM ghcr.io/bdrd-genomics/allinone-conda-base:1.0.2
+
+SHELL ["/bin/bash", "-lc"]
+
+USER root
+
+RUN dnf install -y \
+        procps-ng \
+        findutils \
+        which \
+        gzip \
+        tar \
+        bzip2 \
+        xz \
+        ca-certificates \
+    && dnf clean all \
+    && rm -rf /var/cache/dnf
+
+RUN mamba create -y -n interleave \
+        -c conda-forge \
+        -c bioconda \
+        bbmap \
+    && mamba clean -a -y
+
+ENV CONDA_DEFAULT_ENV=interleave
+ENV PATH=/opt/conda/envs/interleave/bin:/opt/conda/bin:$PATH
+
+WORKDIR /data
+
+CMD ["/bin/bash"]

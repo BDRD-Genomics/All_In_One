@@ -1,0 +1,29 @@
+#0 building with "default" instance using docker driver
+
+#1 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:1.0.2
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile.aio_qc
+#2 transferring dockerfile: 478B done
+#2 DONE 0.1s
+
+#3 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:1.0.2
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.0s
+
+#5 [3/3] RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml &&     /opt/conda/bin/conda clean -a -y
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 494B 0.0s done
+#6 DONE 0.0s
+
+#7 exporting to image
+#7 exporting layers
+#7 exporting layers 1193.4s done
+#7 writing image sha256:fdfd8dfaaef5ae4e0799fb010563ca21a275c269d76fc23e042abf1b2950e61e done
+#7 naming to ghcr.io/bdrd-genomics/allinone-aio_qc:1.0.1 0.0s done
+#7 DONE 1193.5s

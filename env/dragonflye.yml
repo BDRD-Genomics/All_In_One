@@ -252,4 +252,3 @@ dependencies:
   - zlib
   - zstandard
   - zstd
-prefix: /export/miniforge3/envs/dragonflye

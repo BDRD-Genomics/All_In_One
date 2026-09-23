@@ -24,4 +24,3 @@ dependencies:
   - r-ggpubr
   - r-pheatmap
   - r-reshape2
-prefix: /export/miniforge3/envs/aio_qc

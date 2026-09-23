@@ -1,0 +1,14 @@
+FROM ghcr.io/bdrd-genomics/allinone-conda-base:1.0.2
+
+SHELL ["/bin/bash", "-lc"]
+
+COPY environment.vs.yml /tmp/environment.yml
+
+RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml && \
+    /opt/conda/bin/conda clean -a -y
+
+ENV CONDA_DEFAULT_ENV=vs
+ENV CONDA_PREFIX=/opt/conda/envs/vs
+ENV PATH=/opt/conda/envs/vs/bin:/opt/conda/bin:$PATH
+
+CMD ["bash"]

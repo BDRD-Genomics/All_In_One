@@ -1,0 +1,28 @@
+FROM ghcr.io/bdrd-genomics/allinone-base:1.0.0
+
+RUN dnf -y install \
+        wget \
+        bzip2 \
+        tar \
+        gzip \
+        xz \
+    && dnf clean all \
+    && rm -rf /var/cache/dnf
+
+RUN wget -O /tmp/miniforge.sh \
+        https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh \
+    && bash /tmp/miniforge.sh -b -p /opt/conda \
+    && rm -f /tmp/miniforge.sh
+
+# Keep system tools ahead of Conda tools
+ENV PATH="/usr/bin:/usr/sbin:/opt/conda/bin:/opt/conda/condabin"
+
+RUN /opt/conda/bin/conda --version && \
+    /opt/conda/bin/conda install -n base -y mamba && \
+    /opt/conda/bin/conda clean -a -y
+
+SHELL ["/bin/bash", "-lc"]
+
+CMD ["/bin/bash"]
+# Nextflow task metrics
+RUN dnf install -y procps-ng && dnf clean all
