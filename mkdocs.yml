@@ -31,6 +31,7 @@ nav:
   - Home: index.md
   - Usage: usage.md
   - Parameters: parameters.md
+  - Containers: containers.md
   - Configuration: configuration.md
 
 markdown_extensions:
