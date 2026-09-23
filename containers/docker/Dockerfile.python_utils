@@ -1,0 +1,10 @@
+FROM ghcr.io/bdrd-genomics/allinone-conda-base:1.0.2
+
+COPY environment.python_utils.yml /tmp/environment.yml
+
+RUN /opt/conda/bin/mamba env create -n python_utils -f /tmp/environment.yml \
+    && /opt/conda/bin/conda clean -afy \
+    && rm -f /tmp/environment.yml
+
+ENV PATH=/opt/conda/envs/python_utils/bin:$PATH
+SHELL ["/bin/bash", "-lc"]

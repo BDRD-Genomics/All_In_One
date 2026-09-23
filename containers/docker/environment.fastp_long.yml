@@ -1,0 +1,7 @@
+name: fastp_long
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - fastp
+  - fastplong

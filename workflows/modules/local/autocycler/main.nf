@@ -3,8 +3,7 @@ nextflow.enable.dsl=2
 /*
 ===============================================================================
  processes_autocycler.nf
- - Only process definitions (no workflow)
- - All processes keep sample_id as the first tuple element
+
 ===============================================================================
 */
 
@@ -13,7 +12,6 @@ process EstimateGenomeSize {
   errorStrategy 'ignore'
   tag { sample_id }
   label 'small'
-  conda "${baseDir}/env/autocycler.yml"
   publishDir { "${params.outdir}/${params.project_id}/${sample_id}/00_genome_size" }, mode: 'copy'
 
   input:
@@ -34,7 +32,6 @@ process SubsampleReads {
   tag { sample_id }
   label 'small'
   errorStrategy 'ignore'
-  conda "${baseDir}/env/autocycler.yml"
   publishDir { "${params.outdir}/${params.project_id}/${sample_id}/01_subsamples" }, mode: 'copy'
 
   input:
@@ -77,7 +74,6 @@ process AssembleFlye {
   errorStrategy 'ignore'
   label 'autocycler_mem'
   publishDir { "${params.outdir}/${params.project_id}/${sample_id}/02_assemblies/flye/sub${subid}" }, mode: 'copy'
-  conda "${baseDir}/env/autocycler.yml"
   input:
   tuple val(sample_id), val(subid), path(subreads), val(genome_size)
 
@@ -104,7 +100,6 @@ process AssembleMyloasm {
   //time '36h'
   errorStrategy 'ignore'
   label 'autocycler_mem'
-  conda "${baseDir}/env/autocycler.yml" 
   publishDir { "${params.outdir}/${params.project_id}/${sample_id}/02_assemblies/myloasm/sub${subid}" }, mode: 'copy'
 
   input:
@@ -125,7 +120,7 @@ process AssembleMyloasm {
   """
 }
 
-/* ---------------------------- AssembleMiniasm ----------------------------- */
+/*  AssembleMiniasm  */
 process AssembleMiniasm {
   tag { "${sample_id}_miniasm_sub${subid}" }
   //cpus { 64 }
@@ -133,7 +128,6 @@ process AssembleMiniasm {
   //time '36h'
   errorStrategy 'ignore'
   label 'autocycler_mem'
-  conda "${baseDir}/env/autocycler.yml"
   publishDir { "${params.outdir}/${params.project_id}/${sample_id}/02_assemblies/miniasm/sub${subid}" }, mode: 'copy'
 
   input:
@@ -154,12 +148,11 @@ process AssembleMiniasm {
   """
 }
 
-/* ---------------------------- CompressAssemblies -------------------------- */
+/*  CompressAssemblies  */
 process CompressAssemblies {
   tag { sample_id }
   label 'medium'
   errorStrategy 'ignore'
-  conda "${baseDir}/env/autocycler.yml"
   publishDir { "${params.outdir}/${params.project_id}/${sample_id}/03_compress" }, mode: 'copy'
 
   input:
@@ -218,12 +211,11 @@ EOF
 }
 
 
-/* ------------------------------ ClusterAssemblies ------------------------- */
+/*  ClusterAssemblies  */
 process ClusterAssemblies {
   tag { sample_id }
   label 'medium'
   errorStrategy 'ignore'
-  conda "${baseDir}/env/autocycler.yml"
   publishDir { "${params.outdir}/${params.project_id}/${sample_id}/04_cluster" }, mode: 'copy'
 
   input:
@@ -240,12 +232,11 @@ process ClusterAssemblies {
 }
 
 
-/* ------------------------------- TrimClusters ----------------------------- */
+/*  TrimClusters  */
 process TrimClusters {
   tag { sample_id }
   label 'small'
   errorStrategy 'ignore'
-  conda "${baseDir}/env/autocycler.yml" 
   publishDir { "${params.outdir}/${params.project_id}/${sample_id}/05_trim" }, mode: 'copy'
 
   input:
@@ -265,12 +256,11 @@ process TrimClusters {
 }
 
 
-/* ------------------------------ ResolveClusters --------------------------- */
+/*  ResolveClusters  */
 process ResolveClusters {
   tag { sample_id }
   label 'small'
   errorStrategy 'ignore'
-  conda "${baseDir}/env/autocycler.yml"
   publishDir { "${params.outdir}/${params.project_id}/${sample_id}/06_resolve" }, mode: 'copy'
 
   input:
@@ -287,12 +277,11 @@ process ResolveClusters {
   """
 }
 
-/* ------------------------------ CombineResolved --------------------------- */
+/*  CombineResolved  */
 process CombineResolved {
   tag { sample_id }
   label 'tiny'
   errorStrategy 'ignore'
-  conda "${baseDir}/env/autocycler.yml"
   publishDir { "${params.outdir}/${params.project_id}/${sample_id}/07_final" }, mode: 'copy'
 
   input:

@@ -1,0 +1,10 @@
+name: chimeric_detection
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python=3.12
+  - biopython
+  - ete3
+  - blast

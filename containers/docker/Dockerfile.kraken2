@@ -1,0 +1,16 @@
+FROM ghcr.io/bdrd-genomics/allinone-conda-base:1.0.2
+
+SHELL ["/bin/bash", "-lc"]
+
+COPY environment.kraken2.yml /tmp/environment.yml
+
+RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml && \
+    /opt/conda/bin/conda clean -a -y
+
+ENV CONDA_DEFAULT_ENV=kraken2
+ENV CONDA_PREFIX=/opt/conda/envs/kraken2
+ENV PATH=/opt/conda/envs/kraken2/bin:/opt/conda/bin:$PATH
+ENV LC_ALL=C.UTF-8
+ENV LANG=C.UTF-8
+
+CMD ["bash"]

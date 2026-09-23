@@ -1,0 +1,8 @@
+Common issue
+ICTV is typically more up to date with viral taxonomy than NCBI. This may result in a taxa not being found due to outdated naming schemes. 
+For example NCBI may call an organism Herpesviridae whereas ICTV has already updated the family to Orthoherpesviridae. 
+Because of this, we recommend joining newly generated ICTV viral family genome sizes with whatever your current ICTV viral family genome sizes file is.
+
+This can be done with a simple join. We have provided a python script to add any families not found in the newly generated text file from the previous viral families text file.
+	`python merge_viralFamily_genomeSizes.py -n new_viral_genome_sizes.txt -o old_viral_genome_sizes.txt`
+This will output a file called "viralFamily_genomeSizes.txt" that you can now use with as your final viralFamily_genomeSizes.txt file

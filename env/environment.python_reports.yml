@@ -1,0 +1,13 @@
+name: python_reports
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+channel_priority: strict
+dependencies:
+  - python=3.12
+  - pandas
+  - ete3
+  - python-docx
+  - docxtpl
+  - jinja2

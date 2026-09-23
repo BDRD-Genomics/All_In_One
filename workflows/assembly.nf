@@ -11,8 +11,10 @@ include {
     Dragonflye_Medaka as Dragonflye_Medaka_Hybrid;
     Unicycler_Assembly as Unicycler_Assembly_Short;
     Unicycler_Assembly as Unicycler_Assembly_Hybrid;
-
-} from './modules/local/assembler/main_working.nf'
+    Dragonflye_Raven as Dragonflye_Raven_LR;
+    Dragonflye_Raven as Dragonflye_Raven_Hybrid;
+    Myloasm
+} from './modules/local/assembler/main.nf'
 
 workflow Assembly_Workflow {
 
@@ -127,6 +129,46 @@ workflow Assembly_Workflow {
         }
     }
 
+    def dragonflye_raven_ch = Channel.empty()
+
+    if (params.raven) {
+        if (long_input_ch) {
+            def raven_input_long =
+            long_input_ch
+                .map { t ->
+                def ( sample_id, fq1, fq2, lr, q2, mode ) = ( t as List )
+                tuple(sample_id, null, null, lr, q2) }
+
+            Dragonflye_Raven_LR(raven_input_long)
+            dragonflye_raven_ch = Dragonflye_Raven_LR.out.dragonflye_assembly_raven_ch
+        }
+
+        if (hybrid_input_ch) {
+            hybrid_input_ch
+                .map { sample_id, fq1, fq2, lr, q2, mode -> tuple(sample_id, fq1, fq2, lr, q2) }
+                .set { raven_input_hybrid }
+
+            Dragonflye_Raven_Hybrid(raven_input_hybrid)
+            dragonflye_raven_ch = dragonflye_raven_ch.mix(Dragonflye_Raven_Hybrid.out.dragonflye_assembly_raven_ch)
+        }
+    }
+    
+
+    def myloasm_ch = Channel.empty()
+
+    if (params.myloasm) {
+        def myloasm_input_ch = assembly_input_ch
+            .filter { sample_id, fq1, fq2, lr, q2, mode ->
+                mode in ['long', 'hybrid'] && lr != null
+            }
+            .map { sample_id, fq1, fq2, lr, q2, mode ->
+                tuple(sample_id, lr)
+            }
+
+        Myloasm(myloasm_input_ch)
+        myloasm_ch = Myloasm.out.myloasm_assembly_ch
+    }
+
     def unicycler_ch = Channel.empty()
 
     if (params.unicycler) {
@@ -155,5 +197,7 @@ workflow Assembly_Workflow {
     unicycler_assembly_ch     = unicycler_ch
     plasmidspades_assembly_ch = params.plasmidspades ? Plasmid_Spades.out.plasmidspades_assembly_ch : Channel.empty()
     dragonflye_medaka_assembly_ch = params.medaka ? dragonflye_medaka_ch : Channel.empty()
+    dragonflye_raven_assembly_ch = params.raven ? dragonflye_raven_ch : Channel.empty()
+    myloasm_assembly_ch = params.myloasm ? myloasm_ch : Channel.empty()
 }
 

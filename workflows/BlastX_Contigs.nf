@@ -15,7 +15,8 @@ workflow BlastX_Contigs_Workflow {
     BlastX_contigs(blast_input_ch)
 
     // Ensure the output tuple is: (sample_id, assembler, file)
-    def blastx_daa_ch = BlastX_contigs.out.blastx_daa_ch
+    //def blastx_daa_ch = BlastX_contigs.out.blastx_daa_ch
+    def blastx_daa_ch = BlastX_contigs.out.blastx_contigs_ch
 
     def dragonflye_blastx_contigs_ch = blastx_daa_ch.filter { it[1] == 'dragonflye' }
     def metaspades_blastx_contigs_ch = blastx_daa_ch.filter { it[1] == 'metaspades' }

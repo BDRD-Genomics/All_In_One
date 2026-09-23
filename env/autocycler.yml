@@ -323,4 +323,3 @@ dependencies:
   - paralleltask
   - minimap2
   - myloasm
-prefix: /export/miniforge3/envs/autocycler

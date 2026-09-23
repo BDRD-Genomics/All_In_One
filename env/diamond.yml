@@ -12,4 +12,3 @@ dependencies:
   - ca-certificates
   - openssl
   - krona
-prefix: /export/miniforge3/envs/diamond

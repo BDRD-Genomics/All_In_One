@@ -50,12 +50,10 @@ workflow Autocycler_Workflow {
             /sub[_-]?(\d+)\.(?:fastq|fq)(?:\.gz)?$/, // SampleA-sub3.fastq.gz
             /[_-](\d{2,})\.(?:fastq|fq)(?:\.gz)?$/,  // SampleA-03.fastq.gz
         ]
-        String subid = null
-        for (p in patterns) {
-            def m = (name =~ p)
-            if (m) { subid = m[0][1]; break }
-        }
-        if (!subid) subid = '01'  // final fallback
+        String subid = patterns.collect { pattern ->
+            def match = (name =~ pattern)
+            match ? match[0][1] : null
+        }.find { candidate -> candidate != null } ?: '01'
         tuple(sid, subid, subreads, gs)
     }
     

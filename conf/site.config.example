@@ -1,0 +1,44 @@
+/*
+ * ============================================================
+ * SITE / INSTALLATION CONFIGURATION EXAMPLE
+ * ============================================================
+ *
+ * Copy this file to site.config and edit it for your system.
+ * Do NOT commit site.config.
+ *
+ * These are installation locations for large external resources.
+ * They intentionally do NOT use projectDir.
+ */
+
+params {
+    container_dir = System.getenv('AIO_CONTAINER_DIR') ?: "${projectDir}/containers"
+
+    // Current pipeline supports three storage roots because the existing
+    // installation uses /export/database, /database, and /data/database.
+    database_dir        = System.getenv('AIO_DATABASE_DIR') ?: "${projectDir}/database"
+    legacy_database_dir = System.getenv('AIO_LEGACY_DATABASE_DIR') ?: params.database_dir
+    data_database_dir   = System.getenv('AIO_DATA_DATABASE_DIR') ?: params.database_dir
+
+    tmp_dir = System.getenv('AIO_TMP_DIR') ?: "${launchDir}/tmp"
+
+    // Software backends
+    docker_image  = 'your-registry/all_in_one_pipeline:latest'
+    conda_env_dir = "${projectDir}/env"
+
+    conda_cache_dir = System.getenv('AIO_CONDA_CACHE_DIR') ?: "${launchDir}/.conda"
+    mamba_path      = System.getenv('AIO_MAMBA_PATH') ?: 'mamba'
+
+    dorado_software      = '/path/to/dorado'
+    dorado_polish_model  = '/path/to/dorado/models/dna_r10.4.1_e8.2_400bps_polish_bacterial_methylation_v5.0.0'
+    meganpath            = '/path/to/megan7/tools'
+    vf_classifier_root   = System.getenv('VF_CLASSIFIER_ROOT') ?: '/opt/vf/vf_classifier_v1.0'
+
+    clc_server_host = System.getenv('CLC_SERVER_HOST') ?: ''
+    clc_server_port = System.getenv('CLC_SERVER_PORT') ?: '7777'
+    clc_cli         = System.getenv('CLC_CLI') ?: 'clcserver'
+    clc_root        = System.getenv('CLC_ROOT') ?: ''
+    clc_server_user = System.getenv('CLC_SERVER_USER') ?: ''
+    clc_server_pass = System.getenv('CLC_SERVER_PASS') ?: ''
+
+    virus_genome_sizes = "${projectDir}/ICTV/viralFamily_genomeSize.txt"
+}

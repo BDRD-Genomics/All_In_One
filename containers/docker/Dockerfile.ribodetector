@@ -1,0 +1,50 @@
+FROM ghcr.io/bdrd-genomics/allinone-conda-base:1.0.2
+
+LABEL description="RiboDetector CPU/GPU container for rRNA removal in the all-in-one Nextflow pipeline"
+
+SHELL ["/bin/bash", "-lc"]
+
+USER root
+
+RUN dnf install -y \
+        procps-ng \
+        findutils \
+        which \
+        gzip \
+        tar \
+        bzip2 \
+        xz \
+        ca-certificates \
+        git \
+    && dnf clean all \
+    && rm -rf /var/cache/dnf
+
+# Install Ribodetector and helper tools.
+# Bioconda Ribodetector may pull CPU-only torch, so we replace torch afterward.
+RUN mamba create -y -n ribodetector \
+        -c conda-forge \
+        -c bioconda \
+        python=3.10 \
+        ribodetector=0.3.3 \
+        bbmap \
+        pigz \
+        pip \
+    && mamba clean -a -y
+
+# Replace CPU-only PyTorch with CUDA-enabled PyTorch.
+# CUDA 12.4 build. If your GPU node driver is older, use cu121 instead.
+RUN source /opt/conda/etc/profile.d/conda.sh \
+    && conda activate ribodetector \
+    && pip uninstall -y torch torchvision torchaudio || true \
+    && pip install --no-cache-dir \
+        torch==2.6.0+cu124 \
+        torchvision==0.21.0+cu124 \
+        torchaudio==2.6.0+cu124 \
+        --index-url https://download.pytorch.org/whl/cu124
+
+ENV CONDA_DEFAULT_ENV=ribodetector
+ENV PATH=/opt/conda/envs/ribodetector/bin:/opt/conda/bin:$PATH
+
+WORKDIR /data
+
+CMD ["/bin/bash"]

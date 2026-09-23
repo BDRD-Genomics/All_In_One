@@ -1,0 +1,10 @@
+FROM ghcr.io/bdrd-genomics/allinone-conda-base:1.0.2
+
+COPY environment.readmapping_auto.yml /tmp/environment.yml
+
+RUN /opt/conda/bin/mamba env create -n readmapping_auto -f /tmp/environment.yml \
+    && /opt/conda/bin/conda clean -afy \
+    && rm -f /tmp/environment.yml
+
+ENV PATH=/opt/conda/envs/readmapping_auto/bin:$PATH
+SHELL ["/bin/bash", "-lc"]

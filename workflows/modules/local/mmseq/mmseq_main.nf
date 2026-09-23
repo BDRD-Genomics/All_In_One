@@ -1,5 +1,7 @@
 #!/usr/bin/env nextflow
 
+
+
 nextflow.enable.dsl=2
 
 /*
@@ -11,20 +13,20 @@ Defines:
 */
 
 // Helpers for publishDir paths 
-def cleanSid = { id -> 
+def cleanSid(id) {
   def s = id.toString()
   s.contains('__') ? s.split('__', 2)[1] : s
 }
-def compId = { id -> id.toString() }
+def compId(id) {
+  id.toString()
+}
 
 
 process MMSEQS_CREATEDB_QUERY {
   tag {sample_id}
   errorStrategy 'ignore'
-  //publishDir "${params.outdir}/${params.project_id}/${sample_id}/mmseq/", mode: 'copy'
-  publishDir "${params.outdir}/${params.project_id}/${ cleanSid(sample_id) }/mmseqs/${ compId(sample_id) }", mode: 'copy'
+  publishDir { "${params.outdir}/${params.project_id}/${ cleanSid(sample_id) }/mmseqs/${ compId(sample_id) }" }, mode: 'copy'
   label 'lowmem'
-  conda "$baseDir/env/mmseqs2.yml"
 
   input:
   tuple val(sample_id), path(query_fa)
@@ -43,11 +45,8 @@ process MMSEQS_CREATEDB_QUERY {
 process MMSEQS_SEARCH {
   tag {sample_id}
   errorStrategy 'ignore'
-  //maxRetries 1
-  //publishDir "${params.outdir}/${params.project_id}/${sample_id}/mmseq/", mode: 'copy'
-  publishDir "${params.outdir}/${params.project_id}/${ cleanSid(sample_id) }/mmseqs/${ compId(sample_id) }", mode: 'copy'
+  publishDir { "${params.outdir}/${params.project_id}/${ cleanSid(sample_id) }/mmseqs/${ compId(sample_id) }" }, mode: 'copy'
   label 'optimized_MMSEQ_SEARCH'
-  conda "$baseDir/env/mmseqs2.yml"
 
   input:
   tuple val(sample_id), path(qdb, stageAs: 'input_qdb')
@@ -64,21 +63,30 @@ process MMSEQS_SEARCH {
   script:
   """
   set -euo pipefail
-  mkdir -p alnDB_dir
+  mkdir -p alnDB_dir_pre
   #[[ -f input_qdb/queryDB.dbtype ]] \
   #  || { echo "ERROR: input_qdb/queryDB.dbtype not staged"; ls -la input_qdb/ || true; exit 1; }
-  cp -rL input_qdb real_qdb
+  #cp -rL input_qdb/ real_qdb
+  if [ -d input_qdb/queryDB_dir ]; then
+     cp -rL input_qdb/queryDB_dir real_qdb
+  else 
+     cp -rL input_qdb real_qdb
+  fi
   # diagnostic
   ls -la real_qdb/
   mmseqs search \
         real_qdb/queryDB \
 	${params.mmseqs_nt_db} \
-	alnDB_dir/alnDB \
+	alnDB_dir_pre/alnDB_pre \
 	tmp_${sample_id} \
 	--threads ${task.cpus} \
         --local-tmp /database/tmp \
 	${params.mmseqs_search_opts ?: ''} 2>&1 | tee ${sample_id}.log
 
+
+  # Filter
+  mkdir alnDB_dir
+  mmseqs filterdb alnDB_dir_pre/alnDB_pre alnDB_dir/alnDB --extract-lines ${params.mmseqs_search_max_seqs} --filter-column 12 --sort-entries 2
   #[[ -f alnDB_dir/alnDB.dbtype ]] \
   #  || { echo "ERROR: alnDB.dbtype missing after search"; exit 1; }
   """
@@ -87,9 +95,7 @@ process MMSEQS_SEARCH {
 process MMSEQS_CONVERTALIS {
   tag {sample_id}
   errorStrategy 'ignore'
-  //maxRetries 1
-  //publishDir "${params.outdir}/${params.project_id}/${sample_id}/mmseq/", mode: 'copy'
-  publishDir "${params.outdir}/${params.project_id}/${ cleanSid(sample_id) }/mmseqs/${ compId(sample_id) }", mode: 'copy'
+  publishDir { "${params.outdir}/${params.project_id}/${ cleanSid(sample_id) }/mmseqs/${ compId(sample_id) }" }, mode: 'copy'
   label 'optimized_MMSEQ_contigs_against_NT_metaspades'
   conda "$baseDir/env/mmseqs2.yml"
 
@@ -104,8 +110,21 @@ process MMSEQS_CONVERTALIS {
   def fmt = params.mmseqs_format ?: 'query,target,evalue,bits,alnlen,pident,qstart,qend,tstart,tend'
   """
   set -euo pipefail
-  cp -rL ${queryDB_dir} real_qdb
-  cp -rL ${alnDB_dir}/alnDB_dir   real_adb
+
+  if [ -d ${queryDB_dir}/queryDB_dir ]; then
+     cp -rL ${queryDB_dir}/queryDB_dir real_qdb
+  else
+     cp -rL ${queryDB_dir} real_qdb
+  fi
+
+  #cp -rL ${alnDB_dir}/alnDB_dir   real_adb
+
+  if [ -d ${alnDB_dir}/alnDB_dir ]; then
+     cp -rL ${alnDB_dir}/alnDB_dir real_adb
+  else
+     cp -rL ${alnDB_dir} real_adb
+  fi
+
   # diagnostic
   ls -la real_adb/
   mmseqs convertalis \
@@ -126,31 +145,24 @@ process Parse_MMSEQ_Contigs {
   publishDir path: { "${params.outdir}/${params.project_id}/${sample_id}/blast/" }, mode: 'copy'
   label 'lowmem'
   errorStrategy 'ignore'
-  conda "${baseDir}/env/vs.yml"
 
   input:
   tuple val(sample_id), val(assembler), path(mmseq_out)
 
   output:
   tuple val(sample_id), val(assembler), file("*.parsed"), emit: mmseqs_parsed_ch
-  tuple val(sample_id), val(assembler), file("*.log"), emit: mmseqs_log_ch
 
   script:
   """
   set -euo pipefail
   # TMP FIX
-  #source /opt/conda/etc/profile.d/conda.sh
-  #conda activate all_in_one_pipeline
   # remove header
   tail -n +2 "${mmseq_out}" > tmp && mv tmp "${mmseq_out}"
 
-  /opt/conda/envs/all_in_one_pipeline/bin/python ${params.scripts}/VS_MD_diamond_parser_linFilt_pandas_v4.py \\
+  python ${params.scripts}/VS_MD_diamond_parser_linFilt_Mar2026_fast.py \\
     -i "${mmseq_out}" \\
     -t mmseqs \\
-    -r allRanks \\
     -v ${params.vhunter} \\
-    -n ${params.ncbi_taxa} \\
-    >> "Parse_MMSEQ_${assembler}.log" 2>&1
+    -n ${params.ncbi_taxa} 
   """
 }
-

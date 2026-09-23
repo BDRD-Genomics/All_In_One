@@ -1,0 +1,11 @@
+name: longread_qc
+channels:
+  - conda-forge
+  - bioconda
+channel_priority: strict
+dependencies:
+  - porechop
+  - nanoplot
+  - fastplong
+  - seqkit
+  - pigz

@@ -13,14 +13,13 @@ nextflow.enable.dsl=2
 
 process Map_Reads_2_RefSeq {
     tag { sample_id }
-    publishDir "${params.outdir}/${params.project_id}/${sample_id}/trim/quality_control/targeted_read_mapping/", mode: 'copy'
-    conda "$baseDir/env/md.yaml"
+    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/trim/quality_control/targeted_read_mapping/" }, mode: 'copy'
     errorStrategy 'ignore'
-    input:
-    tuple val(sample_id), file(fastq_1), file(fastq_2), file(long_read), val(mode), val(cpus), val(mem)
-
     cpus { cpus }
     memory { mem }
+
+    input:
+    tuple val(sample_id), file(fastq_1), file(fastq_2), file(long_read), val(mode), val(cpus), val(mem)
 
     output:
     tuple val(sample_id), file("${sample_id}_host_removed_sr.fastq.gz"),    optional: true, emit: host_removed_fq_ch_sr
@@ -36,14 +35,12 @@ process Map_Reads_2_RefSeq {
     script:
     """
 
-    mkdir -p ${params.outdir}/${params.project_id}/${sample_id}/status_log/
 
     if [[ "${mode}" == "long" || "${mode}" == "hybrid" ]]; then
         minimap2 -ax map-ont --secondary=no -t $task.cpus --split-prefix tmpfile ${params.host_db} \\
             ${long_read} | samtools sort -@ $task.cpus -o ${sample_id}_host_removed_LR.bam --write-index -
         samtools fastq -f 4 ${sample_id}_host_removed_LR.bam | pigz > ${sample_id}_host_removed_LR.fastq.gz
         samtools fastq -F 4 ${sample_id}_host_removed_LR.bam | pigz > ${sample_id}_host_LR.fastq.gz
-        echo "Host Removal LR complete" > ${params.outdir}/${params.project_id}/${sample_id}/status_log/LR_hostRem.finished
     fi
 
     if [[ "${mode}" == "short" || "${mode}" == "hybrid" ]]; then
@@ -58,7 +55,6 @@ process Map_Reads_2_RefSeq {
         reformat.sh in=${sample_id}_host_removed_sr.fastq.gz out1=${sample_id}_host_removed_sr_R1.fastq out2=${sample_id}_host_removed_sr_R2.fastq
         pigz ${sample_id}_host_removed_sr_R1.fastq
         pigz ${sample_id}_host_removed_sr_R2.fastq
-        echo "Host Removal SR complete" > ${params.outdir}/${params.project_id}/${sample_id}/status_log/SR_hostRem.finished
     fi
     """
 }
@@ -69,10 +65,6 @@ process Post_host_remove_fastqc {
     errorStrategy 'ignore'
     publishDir "${params.outdir}/${params.project_id}/fastqc/targeted_read_mapping", mode: 'copy'
     label 'qc'
-    conda "$baseDir/env/aio_qc.yml"
-
-    //cpus {cpus} // setting slurm allocation dynamically
-    //memory {mem} // setting slurm allocation dynamically
 
     input:
     // qc_files will be a list (grouped per sample)
@@ -95,10 +87,6 @@ process Multiqc_QC_host_removal {
     errorStrategy 'ignore'
     publishDir "${params.outdir}/${params.project_id}/", mode: 'copy'
     label 'qc'
-    conda "$baseDir/env/aio_qc.yml"
-
-    //cpus {cpus} // setting slurm allocation dynamically
-    //memory {mem} // setting slurm allocation dynamically
 
     input:
     file(post_map2refseq_files)
@@ -111,5 +99,73 @@ process Multiqc_QC_host_removal {
     multiqc ${params.outdir}/${params.project_id}/fastqc/targeted_read_mapping/ --data-format csv --outdir ${params.outdir}/${params.project_id}/multiqc/targeted_read_mapping//
     Rscript ${params.scripts}/create_host_removed_qc_stats.R -p ${params.outdir}/${params.project_id}/multiqc/targeted_read_mapping/multiqc_data/multiqc_general_stats.csv \
                                                 -o ${params.outdir}/${params.project_id}/qc_stats/targeted_read_mapping/
+    """
+}
+
+process Map_Reads_2_Contigs {
+    tag { "${sample_id}_${assembler}" }
+    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/assembly_verification/map2assembly/" },
+                mode: 'copy',
+                overwrite: true,
+                saveAs: { fn -> "${assembler}/${fn}" }
+    label 'lowmem'
+    errorStrategy 'ignore'
+
+    input:
+    tuple val(sample_id),
+          file(fastq_1),
+          file(fastq_2),
+          file(long_read),
+          file(contigs),
+          val(mode),
+          val(assembler)
+
+    output:
+    tuple val(sample_id), val(assembler), path("*_assembly_mapped_*.fastq.gz"),
+        optional: true, emit: map2assembly_ch
+
+    tuple val(sample_id),
+          path("${sample_id}_${assembler}_unmapped_LR.fastq.gz"),
+          val(assembler),
+          val(mode),
+          emit: unmap2assembly_ch
+    when:
+    params.run_assembly && mode in ['long', 'hybrid']
+
+    script:
+    """
+
+    # Empty SR placeholders preserve the six-field Assembly_Workflow input.
+    # The emitted mode is forced to 'long', so these files are never assembled.
+    printf '' | gzip -c > ${sample_id}_assembly_unmapped_SR_R1.fastq.gz
+    printf '' | gzip -c > ${sample_id}_assembly_unmapped_SR_R2.fastq.gz
+    printf '' | gzip -c > ${sample_id}_assembly_unmapped_LR.fastq.gz
+
+    if [[ "${mode}" == "long" || "${mode}" == "hybrid" ]]; then
+        minimap2 -ax map-ont -t ${task.cpus} ${contigs} ${long_read} \
+            | samtools view -b -o ${sample_id}_assembly_mapping_LR.bam
+
+        # -F 4 = mapped; -f 4 = unmapped
+        samtools fastq -F 4 ${sample_id}_assembly_mapping_LR.bam \
+            | pigz > ${sample_id}_assembly_mapped_LR.fastq.gz
+        samtools fastq -f 4 ${sample_id}_assembly_mapping_LR.bam \
+            > ${sample_id}_assembly_unmapped_LR.unfiltered.fastq
+
+        # Strictly longer than 700 bp means a minimum accepted length of 701.
+        reformat.sh \
+            in=${sample_id}_assembly_unmapped_LR.unfiltered.fastq \
+            out=${sample_id}_${assembler}_unmapped_LR.fastq.gz \
+            minlength=700 ow=t
+
+        rm ${sample_id}_assembly_unmapped_LR.unfiltered.fastq
+
+        samtools sort -o ${sample_id}_assembly_mapping_LR_sorted.bam \
+            ${sample_id}_assembly_mapping_LR.bam
+        samtools index ${sample_id}_assembly_mapping_LR_sorted.bam
+        samtools idxstats ${sample_id}_assembly_mapping_LR_sorted.bam \
+            > ${sample_id}_assembly_mapping_LR_covstats.txt
+
+    fi
+
     """
 }

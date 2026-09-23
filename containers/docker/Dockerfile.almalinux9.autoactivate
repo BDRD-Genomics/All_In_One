@@ -1,0 +1,57 @@
+FROM almalinux:9
+
+ENV LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    CONDA_DIR=/opt/conda \
+    CONDA_ENV=all_in_one_pipeline
+
+SHELL ["/bin/bash", "-lc"]
+
+# os packages
+RUN dnf install -y \
+        bash \
+        bzip2 \
+        ca-certificates \
+        findutils \
+        git \
+        gzip \
+        procps-ng \
+        shadow-utils \
+        tar \
+        wget \
+        which \
+    && dnf clean all \
+    && rm -rf /var/cache/dnf
+# conda
+RUN wget -O /tmp/miniforge.sh \
+      https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh \
+    && bash /tmp/miniforge.sh -b -p "${CONDA_DIR}" \
+    && rm -f /tmp/miniforge.sh \
+    && "${CONDA_DIR}/bin/conda" config --system --set auto_activate_base false \
+    && "${CONDA_DIR}/bin/conda" clean -afy
+
+ENV PATH="${CONDA_DIR}/bin:${CONDA_DIR}/envs/${CONDA_ENV}/bin:${PATH}"
+ENV CHECKM_DATA_PATH=/export/database/checkm
+
+WORKDIR /opt/all_in_one_pipeline
+COPY . /opt/all_in_one_pipeline
+
+RUN source "${CONDA_DIR}/etc/profile.d/conda.sh" \
+    && mamba env create -y -f env/all_in_one_requirements.yml \
+    && conda clean -a -y
+
+# Activate the target conda env for interactive shells
+RUN echo 'source /opt/conda/etc/profile.d/conda.sh && conda activate all_in_one_pipeline' >> /root/.bashrc
+
+# Activate the target conda env for container entry 
+RUN cat > /usr/local/bin/container_entrypoint.sh <<'EOS' \
+    && chmod +x /usr/local/bin/container_entrypoint.sh
+#!/usr/bin/env bash
+set -e
+source /opt/conda/etc/profile.d/conda.sh
+conda activate all_in_one_pipeline
+exec "$@"
+EOS
+
+ENTRYPOINT ["/usr/local/bin/container_entrypoint.sh"]
+CMD ["bash"]

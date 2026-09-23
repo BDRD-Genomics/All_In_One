@@ -1,0 +1,12 @@
+name: aio_search
+channels:
+  - conda-forge
+  - bioconda
+channel_priority: strict
+dependencies:
+  - blast
+  - diamond
+  - mmseqs2
+  - python
+  - pandas
+  - ete3

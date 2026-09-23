@@ -35,12 +35,12 @@ process Dorado_Aligner {
     label 'normal'
 
     // publish ONLY the bam_pass/<sample_id>/ files
-    publishDir "${params.outdir}/${params.project_id}/${sample_id}/dorado_aligner",
+    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/dorado_aligner" },
         mode: 'copy',
-        pattern: "unknown/**/bam_pass/${sample_id}/*"
+        pattern: { "unknown/**/bam_pass/${sample_id}/*" }
 
     // publish the summary too (it lives in --output-dir)
-    publishDir "${params.outdir}/${params.project_id}/${sample_id}/dorado_aligner",
+    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/dorado_aligner" },
         mode: 'copy',
         pattern: "alignment_summary.txt"
 
@@ -63,29 +63,10 @@ process Dorado_Aligner {
     """
 }
 
-/*
-process Dorado_Aligner {
-    tag { sample_id }
-    publishDir "${params.outdir}/${params.project_id}/${sample_id}/dorado_aligner/", mode: 'copy'
-    label 'normal'
-
-    input:
-    tuple val(sample_id), path(bam_file), path(contigs_fasta)
-
-    output:
-    tuple val(sample_id),file("contigs.fasta"), file("${sample_id}.bam"),file("${sample_id}.bam.bai") emit: dorado_aligner_ch
-
-    script:
-    """
-    ${params.dorado_software}/dorado aligner ${contigs_fasta} ${bam_file} -o .
-    """
-}
-*/
 process Dorado_Polisher {
     tag { sample_id }
-    publishDir "${params.outdir}/${params.project_id}/${sample_id}/dorado_polish/", mode: 'copy'
-    //label 'medaka_gpu'
-    clusterOptions = [ '--partition="normal"','--gpus=2' ]
+    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/dorado_polish/" }, mode: 'copy'
+    clusterOptions '--partition="normal" --gpus=2'
     errorStrategy 'ignore'
     input:
     tuple val(sample_id), path(bam_file), path(bam_index), path(contigs_fasta)
@@ -98,7 +79,7 @@ process Dorado_Polisher {
     ${params.dorado_software}/dorado polish \\
         --device auto \\
         --bacteria \\
-        --models-directory ${params.model} \\
+        --models-directory ${params.dorado_polish_model} \\
         -o . \\
         ${bam_file} \\
         ${contigs_fasta}

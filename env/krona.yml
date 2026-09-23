@@ -9,4 +9,3 @@ channels:
   - http://repomaster.genomics.local/repos/mamba/gurobi
 dependencies:
   - krona
-prefix: /export/miniforge3/envs/krona

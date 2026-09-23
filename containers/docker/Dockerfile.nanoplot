@@ -1,0 +1,26 @@
+FROM ghcr.io/bdrd-genomics/allinone-conda-base:1.0.2
+
+SHELL ["/bin/bash", "-lc"]
+
+LABEL description="NanoPlot container installed from Bioconda"
+
+# Avoid dnf package conflicts from curl-minimal/coreutils-single in Alma/RHEL-based images.
+# NanoPlot is installed entirely through conda.
+COPY environment.nanoplot.yml /tmp/environment.yml
+
+RUN conda config --system --set channel_priority flexible && \
+    /opt/conda/bin/mamba env create -f /tmp/environment.yml && \
+    /opt/conda/bin/conda clean -afy
+
+# Auto-activate NanoPlot env
+RUN echo 'source /opt/conda/etc/profile.d/conda.sh' > /etc/profile.d/conda_auto.sh && \
+    echo 'conda activate nanoplot' >> /etc/profile.d/conda_auto.sh && \
+    chmod +x /etc/profile.d/conda_auto.sh
+
+ENV BASH_ENV=/etc/profile.d/conda_auto.sh
+ENV PATH=/opt/conda/envs/nanoplot/bin:/opt/conda/bin:$PATH
+ENV CONDA_DEFAULT_ENV=nanoplot
+
+WORKDIR /data
+
+CMD ["NanoPlot", "--help"]
