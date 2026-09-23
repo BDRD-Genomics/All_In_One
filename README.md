@@ -2,9 +2,9 @@
 
 **All-In-One** is a modular [Nextflow](https://www.nextflow.io/) DSL2 workflow for infectious-disease sequencing analysis. It supports **paired short-read**, **long-read**, and **hybrid** sequencing data and combines quality control, host/rRNA removal, assembly, taxonomic classification, viral analysis, genome characterization, automated reference mapping, and reporting in a single configurable pipeline.
 
-> **Documentation:** Browse the [GitHub Pages documentation](https://bdrd-genomics.github.io/All_In_One/), jump to the [parameter reference](https://bdrd-genomics.github.io/All_In_One/parameters/), or see the [Docker and Apptainer guide](https://bdrd-genomics.github.io/All_In_One/containers/).
->
-> The Markdown parameter reference is also available directly in the repository at [`docs/parameters.md`](docs/parameters.md).
+**Documentation:** Browse the [documentation](docs/index.md), jump to the [parameter reference](docs/parameters.md), or see the [Docker and Apptainer guide](docs/containers.md).
+
+The complete parameter reference is maintained in [`docs/parameters.md`](docs/parameters.md).
 
 ---
 
