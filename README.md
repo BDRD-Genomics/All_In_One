@@ -18,7 +18,7 @@ The pipeline is designed so that major analysis stages can be enabled or disable
 |---|---|
 | Quality control | fastp, FastQC, NanoPlot, MultiQC, read-distribution statistics |
 | Host / rRNA removal | host read mapping, BBMap/minimap2, RiboDetector |
-| Assembly | SPAdes, metaSPAdes, plasmidSPAdes, Unicycler, Dragonflye, Raven, Myloasm, CLC |
+| Assembly | SPAdes, metaSPAdes, plasmidSPAdes, Unicycler, Dragonflye, Raven, Myloasm |
 | Assembly validation | CheckM / CheckM2 / CheckV and AutoCycler workflows |
 | Taxonomic classification | Kraken2/Bracken, Sourmash, Mash, MetaPhlAn, GOTTCHA, Taxpasta |
 | Sequence search / viral analysis | DIAMOND BLASTX, MMseqs2, VirusSeeker workflows |
@@ -79,7 +79,7 @@ Create a site-specific configuration from the included template:
 cp conf/site.config.example site.config
 ```
 
-Edit `site.config` for the local installation. This is where paths such as container directories, database directories, temporary storage, Dorado, MEGAN, CLC, and other installation-specific resources should be defined.
+Edit `site.config` for the local installation. This is where paths such as container directories, database directories, temporary storage, Dorado, MEGAN, and other installation-specific resources should be defined.
 
 `site.config` is intended to be installation-specific and should not be committed when it contains local paths or credentials.
 
