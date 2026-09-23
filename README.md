@@ -1,6 +1,6 @@
 # All-In-One Sequencing Pipeline
 
-**All-In-One** is a modular [Nextflow](https://www.nextflow.io/) DSL2 workflow for metagenomic and viral sequencing analysis. It supports **paired short-read**, **long-read**, and **hybrid** sequencing data and combines quality control, host/rRNA removal, assembly, taxonomic classification, viral analysis, genome characterization, automated reference mapping, and reporting in a single configurable pipeline.
+**All-In-One** is a modular [Nextflow](https://www.nextflow.io/) DSL2 workflow for infectious-disease sequencing analysis. It supports **paired short-read**, **long-read**, and **hybrid** sequencing data and combines quality control, host/rRNA removal, assembly, taxonomic classification, viral analysis, genome characterization, automated reference mapping, and reporting in a single configurable pipeline.
 
 > **Documentation:** Browse the [GitHub Pages documentation](https://bdrd-genomics.github.io/All_In_One/), jump to the [parameter reference](https://bdrd-genomics.github.io/All_In_One/parameters/), or see the [Docker and Apptainer guide](https://bdrd-genomics.github.io/All_In_One/containers/).
 >
@@ -18,7 +18,7 @@ The pipeline is designed so that major analysis stages can be enabled or disable
 |---|---|
 | Quality control | fastp, FastQC, NanoPlot, MultiQC, read-distribution statistics |
 | Host / rRNA removal | host read mapping, BBMap/minimap2, RiboDetector |
-| Assembly | SPAdes, metaSPAdes, plasmidSPAdes, Unicycler, Dragonflye, Raven, Myloasm |
+| Assembly | SPAdes, metaSPAdes, plasmidSPAdes, Unicycler, Dragonflye, Raven, Myloasm, CLC |
 | Assembly validation | CheckM / CheckM2 / CheckV and AutoCycler workflows |
 | Taxonomic classification | Kraken2/Bracken, Sourmash, Mash, MetaPhlAn, GOTTCHA, Taxpasta |
 | Sequence search / viral analysis | DIAMOND BLASTX, MMseqs2, VirusSeeker workflows |
@@ -83,7 +83,7 @@ Create a site-specific configuration from the included template:
 cp conf/site.config.example site.config
 ```
 
-Edit `site.config` for the local installation. This is where paths such as container directories, database directories, temporary storage, Dorado, MEGAN, and other installation-specific resources should be defined.
+Edit `site.config` for the local installation. This is where paths such as container directories, database directories, temporary storage, Dorado, MEGAN, CLC, and other installation-specific resources should be defined.
 
 `site.config` is intended to be installation-specific and should not be committed when it contains local paths or credentials.
 
