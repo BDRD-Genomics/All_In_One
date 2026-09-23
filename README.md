@@ -329,5 +329,3 @@ so the documented parameter reference remains synchronized with pipeline behavio
 ---
 
 ## License
-
-Add the project license and distribution terms here when finalized.
