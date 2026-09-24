@@ -1,0 +1,7 @@
+name: dragonflye
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - dragonflye
+prefix: /export/miniforge3/envs/dragonflye

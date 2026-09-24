@@ -11,8 +11,8 @@ nextflow.enable.dsl=2
 process MetaSPAdes_Assembly {
     tag { sample_id }
     errorStrategy 'ignore'
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/all_assemblies/" },pattern: "*_metaspades_contigs.fasta", mode: 'copy'
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/spades/meta_pe_trim" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/all_assemblies/" },pattern: "*_metaspades_contigs.fasta", mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/spades/meta_pe_trim" }, mode: 'copy'
     label 'normal'
     cpus { cpus_in }
     memory { mem_in }
@@ -62,8 +62,8 @@ process MetaSPAdes_Assembly {
 process Myloasm {
 
     tag { sample_id }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/all_assemblies/" }, pattern: "*_myloasm_contigs.fasta", mode: 'copy'
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/myloasm/" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/all_assemblies/" }, pattern: "*_myloasm_contigs.fasta", mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/myloasm/" }, mode: 'copy'
     label 'normal'
     errorStrategy 'ignore'
     cpus { params.myloasm_cpus ?: 50 }
@@ -117,7 +117,7 @@ process Myloasm {
 
 process Spades {
     tag { sample_id }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/spades/meta_pe_trim" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/spades/meta_pe_trim" }, mode: 'copy'
     label 'normal'
     errorStrategy 'ignore'
     cpus { 80 }
@@ -148,8 +148,8 @@ process Spades {
 process Dragonflye {
 
     tag { sample_id }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/all_assemblies/" },pattern: "*_dragonflye_contigs.fasta", mode: 'copy'
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/dragonflye/" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/all_assemblies/" },pattern: "*_dragonflye_contigs.fasta", mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/dragonflye/" }, mode: 'copy'
     label 'normal'
     errorStrategy 'ignore'
     cpus { 16 }
@@ -236,8 +236,8 @@ process Dragonflye {
 process Dragonflye_Raven {
 
     tag { sample_id }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/all_assemblies/" },pattern: "*_raven_contigs.fasta", mode: 'copy'
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/raven/" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/all_assemblies/" },pattern: "*_raven_contigs.fasta", mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/raven/" }, mode: 'copy'
     label 'normal'
     errorStrategy 'ignore'
     cpus { 16 }
@@ -335,7 +335,7 @@ process Dragonflye_Medaka {
 
     tag { sample_id }
 
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/dragonflye_medaka/" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/dragonflye_medaka/" }, mode: 'copy'
     label 'medaka_gpu'
     errorStrategy 'ignore'
     //clusterOptions = [ '--partition="normal"','--gpus=2' ]
@@ -427,7 +427,7 @@ process Dragonflye_Medaka {
 process Unicycler_Assembly {
     tag { sample_id }
     errorStrategy 'ignore'
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/unicycler/" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/unicycler/" }, mode: 'copy'
     label 'normal'
     cpus { 30 }
     memory { '162 GB'}
@@ -466,7 +466,7 @@ process Unicycler_Assembly {
 
 process Plasmid_Spades {
     tag { sample_id }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/spades/plasmid" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/spades/plasmid" }, mode: 'copy'
     label 'normal'
     errorStrategy 'ignore'
     input:

@@ -1,12 +1,12 @@
 name: multiqc
 channels:
-  - http://repomaster.genomics.local/repos/mamba/conda-forge
-  - http://repomaster.genomics.local/repos/mamba/bioconda
-  - http://repomaster.genomics.local/repos/mamba/anaconda
-  - http://repomaster.genomics.local/repos/mamba/r
-  - http://repomaster.genomics.local/repos/mamba/compbiocore
-  - http://repomaster.genomics.local/repos/mamba/nanoporetech
-  - http://repomaster.genomics.local/repos/mamba/gurobi
+  - conda-forge
+  - bioconda
+  - anaconda
+  - r
+  - compbiocore
+  - nanoporetech
+  - gurobi
 dependencies:
   - _libgcc_mutex=0.1=conda_forge
   - _openmp_mutex=4.5=2_gnu
@@ -109,3 +109,4 @@ dependencies:
   - yaml=0.2.5=h7f98852_2
   - zipp=3.19.2=pyhd8ed1ab_0
   - zstd=1.5.6=ha6fb4c9_0
+prefix: /export/miniforge3/envs/multiqc

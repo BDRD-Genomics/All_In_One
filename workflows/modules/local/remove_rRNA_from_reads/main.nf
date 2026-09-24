@@ -3,7 +3,7 @@ nextflow.enable.dsl=2
 
 process Remove_Common_Flora_rRNA_reads {
     tag { sample_id }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/trim/quality_control/rRNA_removed/" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/trim/quality_control/rRNA_removed/" }, mode: 'copy'
     label 'qc'
     cpus { cpus }
     memory { mem }
@@ -62,7 +62,7 @@ process Remove_Common_Flora_rRNA_reads {
 process Post_removal_rRNA_reads_fastqc {
     tag { sample_id }
     errorStrategy 'ignore'
-    publishDir "${params.outdir}/${params.project_id}/fastqc/rRNA_removal", mode: 'copy'
+    publishDir "${params.outdir}/${params.run_id}/fastqc/rRNA_removal", mode: 'copy'
     label 'qc'
 
     input:
@@ -84,7 +84,7 @@ process Post_removal_rRNA_reads_fastqc {
 process Multiqc_QC_rRNA_removal {
    
     errorStrategy 'ignore'
-    publishDir "${params.outdir}/${params.project_id}/", mode: 'copy'
+    publishDir "${params.outdir}/${params.run_id}/", mode: 'copy'
     label 'qc'
     conda "$baseDir/env/aio_qc.yml"
 
@@ -97,18 +97,18 @@ process Multiqc_QC_rRNA_removal {
     params.run_qc_stats
     script:
     """
-    mkdir -p ${params.outdir}/${params.project_id}/multiqc/rRNA_removal/
-    mkdir -p ${params.outdir}/${params.project_id}/qc_stats/targeted_read_mapping/
-    multiqc ${params.outdir}/${params.project_id}/fastqc/rRNA_removal/ --data-format csv --outdir ${params.outdir}/${params.project_id}/multiqc/rRNA_removal/
-    Rscript ${params.scripts}/create_remove_rRNA_qc_stats.R -r ${params.outdir}/${params.project_id}/multiqc/rRNA_removal/multiqc_data/multiqc_general_stats.csv \
-                                                -o ${params.outdir}/${params.project_id}/qc_stats/rRNA_removal/
+    mkdir -p ${params.outdir}/${params.run_id}/multiqc/rRNA_removal/
+    mkdir -p ${params.outdir}/${params.run_id}/qc_stats/targeted_read_mapping/
+    multiqc ${params.outdir}/${params.run_id}/fastqc/rRNA_removal/ --data-format csv --outdir ${params.outdir}/${params.run_id}/multiqc/rRNA_removal/
+    Rscript ${params.scripts}/create_remove_rRNA_qc_stats.R -r ${params.outdir}/${params.run_id}/multiqc/rRNA_removal/multiqc_data/multiqc_general_stats.csv \
+                                                -o ${params.outdir}/${params.run_id}/qc_stats/rRNA_removal/
     """
 }
 
 process RiboDetector_Remove_rRNA_reads {
     tag { sample_id }
 
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/trim/quality_control/rRNA_removed/" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/trim/quality_control/rRNA_removed/" }, mode: 'copy'
 
     label 'ribodetector'
 

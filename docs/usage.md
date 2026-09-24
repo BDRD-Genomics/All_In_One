@@ -58,7 +58,7 @@ A typical Slurm + Apptainer invocation is:
 nextflow run main.nf \
     -profile slurm,apptainer \
     --samplesheet samplesheet.csv \
-    --project_id example_project \
+    --run_id example_project \
     --shortreads true \
     --run_qc true
 ```

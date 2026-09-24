@@ -12,7 +12,7 @@ process EstimateGenomeSize {
   errorStrategy 'ignore'
   tag { sample_id }
   label 'small'
-  publishDir { "${params.outdir}/${params.project_id}/${sample_id}/00_genome_size" }, mode: 'copy'
+  publishDir { "${params.outdir}/${params.run_id}/${sample_id}/00_genome_size" }, mode: 'copy'
 
   input:
   tuple val(sample_id), path(lr), val(mode)
@@ -32,7 +32,7 @@ process SubsampleReads {
   tag { sample_id }
   label 'small'
   errorStrategy 'ignore'
-  publishDir { "${params.outdir}/${params.project_id}/${sample_id}/01_subsamples" }, mode: 'copy'
+  publishDir { "${params.outdir}/${params.run_id}/${sample_id}/01_subsamples" }, mode: 'copy'
 
   input:
   tuple val(sample_id), path(lr), val(mode), val(genome_size)
@@ -73,7 +73,7 @@ process AssembleFlye {
   //time '36h'
   errorStrategy 'ignore'
   label 'autocycler_mem'
-  publishDir { "${params.outdir}/${params.project_id}/${sample_id}/02_assemblies/flye/sub${subid}" }, mode: 'copy'
+  publishDir { "${params.outdir}/${params.run_id}/${sample_id}/02_assemblies/flye/sub${subid}" }, mode: 'copy'
   input:
   tuple val(sample_id), val(subid), path(subreads), val(genome_size)
 
@@ -100,7 +100,7 @@ process AssembleMyloasm {
   //time '36h'
   errorStrategy 'ignore'
   label 'autocycler_mem'
-  publishDir { "${params.outdir}/${params.project_id}/${sample_id}/02_assemblies/myloasm/sub${subid}" }, mode: 'copy'
+  publishDir { "${params.outdir}/${params.run_id}/${sample_id}/02_assemblies/myloasm/sub${subid}" }, mode: 'copy'
 
   input:
   tuple val(sample_id), val(subid), path(subreads), val(genome_size)
@@ -128,7 +128,7 @@ process AssembleMiniasm {
   //time '36h'
   errorStrategy 'ignore'
   label 'autocycler_mem'
-  publishDir { "${params.outdir}/${params.project_id}/${sample_id}/02_assemblies/miniasm/sub${subid}" }, mode: 'copy'
+  publishDir { "${params.outdir}/${params.run_id}/${sample_id}/02_assemblies/miniasm/sub${subid}" }, mode: 'copy'
 
   input:
   tuple val(sample_id), val(subid), path(subreads), val(genome_size)
@@ -153,7 +153,7 @@ process CompressAssemblies {
   tag { sample_id }
   label 'medium'
   errorStrategy 'ignore'
-  publishDir { "${params.outdir}/${params.project_id}/${sample_id}/03_compress" }, mode: 'copy'
+  publishDir { "${params.outdir}/${params.run_id}/${sample_id}/03_compress" }, mode: 'copy'
 
   input:
   tuple val(sample_id), val(fa_list)   // fa_list is list of assembly.fasta paths
@@ -216,7 +216,7 @@ process ClusterAssemblies {
   tag { sample_id }
   label 'medium'
   errorStrategy 'ignore'
-  publishDir { "${params.outdir}/${params.project_id}/${sample_id}/04_cluster" }, mode: 'copy'
+  publishDir { "${params.outdir}/${params.run_id}/${sample_id}/04_cluster" }, mode: 'copy'
 
   input:
   tuple val(sample_id), path(ac_dir)
@@ -237,7 +237,7 @@ process TrimClusters {
   tag { sample_id }
   label 'small'
   errorStrategy 'ignore'
-  publishDir { "${params.outdir}/${params.project_id}/${sample_id}/05_trim" }, mode: 'copy'
+  publishDir { "${params.outdir}/${params.run_id}/${sample_id}/05_trim" }, mode: 'copy'
 
   input:
   tuple val(sample_id), path(ac_dir)   // base Autocycler dir from previous step
@@ -261,7 +261,7 @@ process ResolveClusters {
   tag { sample_id }
   label 'small'
   errorStrategy 'ignore'
-  publishDir { "${params.outdir}/${params.project_id}/${sample_id}/06_resolve" }, mode: 'copy'
+  publishDir { "${params.outdir}/${params.run_id}/${sample_id}/06_resolve" }, mode: 'copy'
 
   input:
   tuple val(sample_id), path(ac_dir)
@@ -282,7 +282,7 @@ process CombineResolved {
   tag { sample_id }
   label 'tiny'
   errorStrategy 'ignore'
-  publishDir { "${params.outdir}/${params.project_id}/${sample_id}/07_final" }, mode: 'copy'
+  publishDir { "${params.outdir}/${params.run_id}/${sample_id}/07_final" }, mode: 'copy'
 
   input:
   tuple val(sample_id), path(resolved_dirs)

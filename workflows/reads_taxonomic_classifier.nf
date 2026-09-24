@@ -40,7 +40,7 @@ process KRAKEN2_CLASSIFY {
 
     label 'kraken2'
 
-    publishDir "${params.outdir}/${params.project_id}/reads_taxonomic_classifier/kraken2", mode: 'copy'
+    publishDir "${params.outdir}/${params.run_id}/reads_taxonomic_classifier/kraken2", mode: 'copy'
     errorStrategy 'ignore'
     input:
     tuple val(sample_id), path(reads)
@@ -81,7 +81,7 @@ process BRACKEN_ABUNDANCE {
 
     label 'kraken2'
 
-    publishDir "${params.outdir}/${params.project_id}/reads_taxonomic_classifier/bracken", mode: 'copy'
+    publishDir "${params.outdir}/${params.run_id}/reads_taxonomic_classifier/bracken", mode: 'copy'
     errorStrategy 'ignore'
 
     input:
@@ -122,7 +122,7 @@ process KRAKEN2_KRONA {
 
     label 'krona'
 
-    publishDir "${params.outdir}/${params.project_id}/reads_taxonomic_classifier/kraken2", mode: 'copy'
+    publishDir "${params.outdir}/${params.run_id}/reads_taxonomic_classifier/kraken2", mode: 'copy'
     errorStrategy 'ignore'
     input:
     tuple val(sample_id), path(krakenReport)
@@ -144,7 +144,7 @@ process KRAKEN2_KRONA_SNAPSHOT {
 
     label 'krona'
 
-    publishDir "${params.outdir}/${params.project_id}/reads_taxonomic_classifier/kraken2/snapshots", mode: 'copy'
+    publishDir "${params.outdir}/${params.run_id}/reads_taxonomic_classifier/kraken2/snapshots", mode: 'copy'
 
     container "${params.krona_screenshot_container}"
     errorStrategy 'ignore'
@@ -185,7 +185,7 @@ process SOURMASH_SKETCH {
 
     label 'sourmash'
 
-    publishDir "${params.outdir}/${params.project_id}/reads_taxonomic_classifier/sourmash/sketches", mode: 'copy'
+    publishDir "${params.outdir}/${params.run_id}/reads_taxonomic_classifier/sourmash/sketches", mode: 'copy'
     errorStrategy 'ignore'
     input:
     tuple val(sample_id), path(reads)
@@ -215,7 +215,7 @@ process SOURMASH_GATHER {
 
     label 'sourmash'
 
-    publishDir "${params.outdir}/${params.project_id}/reads_taxonomic_classifier/sourmash/gather", mode: 'copy'
+    publishDir "${params.outdir}/${params.run_id}/reads_taxonomic_classifier/sourmash/gather", mode: 'copy'
     errorStrategy 'ignore'
     input:
     tuple val(sample_id), path(sig)
@@ -245,7 +245,7 @@ process SOURMASH_TAX_KREPORT {
 
     label 'sourmash'
 
-    publishDir "${params.outdir}/${params.project_id}/reads_taxonomic_classifier/sourmash/kreport", mode: 'copy'
+    publishDir "${params.outdir}/${params.run_id}/reads_taxonomic_classifier/sourmash/kreport", mode: 'copy'
     errorStrategy 'ignore'
     input:
     tuple val(sample_id), path(gather_csv)
@@ -283,7 +283,7 @@ process SOURMASH_TAX_KREPORT {
 process MASH {
     tag "${sample_id}"
     label 'mash'
-    publishDir "${params.outdir}/${params.project_id}/reads_taxonomic_classifier/mash", mode: 'copy'
+    publishDir "${params.outdir}/${params.run_id}/reads_taxonomic_classifier/mash", mode: 'copy'
     errorStrategy 'ignore'
     input:
     tuple val(sample_id), path(trimmed_reads)
@@ -306,7 +306,7 @@ process METAPHLAN4_CLASSIFY {
 
     label 'metaphlan4'
 
-    publishDir "${params.outdir}/${params.project_id}/reads_taxonomic_classifier/metaphlan4", mode: 'copy'
+    publishDir "${params.outdir}/${params.run_id}/reads_taxonomic_classifier/metaphlan4", mode: 'copy'
     errorStrategy 'ignore'
     input:
     tuple val(sample_id), path(reads)
@@ -342,7 +342,7 @@ process GOTTCHA_CLASSIFY {
 
     label 'gottcha'
 
-    publishDir "${params.outdir}/${params.project_id}/reads_taxonomic_classifier/gottcha", mode: 'copy'
+    publishDir "${params.outdir}/${params.run_id}/reads_taxonomic_classifier/gottcha", mode: 'copy'
     errorStrategy 'ignore'
     input:
     tuple val(sample_id), path(reads)
@@ -406,7 +406,7 @@ process TAXPASTA_KRAKEN2 {
 
     label 'taxpasta'
 
-    publishDir "${params.outdir}/${params.project_id}/reads_taxonomic_classifier/taxpasta", mode: 'copy'
+    publishDir "${params.outdir}/${params.run_id}/reads_taxonomic_classifier/taxpasta", mode: 'copy'
     errorStrategy 'ignore'
     input:
     path kraken2_reports
@@ -452,7 +452,7 @@ process TAXPASTA_METAPHLAN4 {
 
     label 'taxpasta'
 
-    publishDir "${params.outdir}/${params.project_id}/reads_taxonomic_classifier/taxpasta", mode: 'copy'
+    publishDir "${params.outdir}/${params.run_id}/reads_taxonomic_classifier/taxpasta", mode: 'copy'
     errorStrategy 'ignore'
     input:
     path metaphlan_profiles
@@ -502,7 +502,7 @@ process READS_TAXONOMIC_CLASSIFIER_SUMMARY {
 
     label 'summary'
 
-    publishDir "${params.outdir}/${params.project_id}/reads_taxonomic_classifier/summary", mode: 'copy'
+    publishDir "${params.outdir}/${params.run_id}/reads_taxonomic_classifier/summary", mode: 'copy'
     errorStrategy 'ignore'
     input:
     path kraken_reports

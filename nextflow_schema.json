@@ -15,9 +15,9 @@
           "default": "samplesheet.csv",
           "format": "file-path"
         },
-        "project_id": {
+        "run_id": {
           "type": "string",
-          "description": "Project identifier used in output paths and report names.",
+          "description": "Run identifier used in output paths and report names.",
           "default": "YOU_FORGOT_TO_SET_THIS"
         },
         "outdir": {
@@ -43,7 +43,7 @@
       },
       "required": [
         "samplesheet",
-        "project_id"
+        "run_id"
       ]
     },
     "input_mode_options": {

@@ -16,7 +16,7 @@ nextflow.enable.dsl=2
 
 process Pull_Unassigned_MMseqs_Blastx {
     tag { "${sample_id}_${assembler}" }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/VS_supplemental_outputs" },
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/VS_supplemental_outputs" },
                 mode: 'copy',
                 overwrite: true,
                 saveAs: { fn -> "${assembler}/${fn}" }
@@ -58,7 +58,7 @@ process Pull_Unassigned_MMseqs_Blastx {
 
 process Pull_Unassigned_MMseqs_Reads {
     tag { "${sample_id}" }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/VS_supplemental_outputs" },
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/VS_supplemental_outputs" },
                 mode: 'copy',
                 overwrite: true,
                 saveAs: { fn -> "${assembler}/${fn}" }
@@ -127,7 +127,7 @@ process Pull_Unassigned_MMseqs_Reads {
 
 process Diamondview {
     tag { "${sample_id}_reads" }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/blast/" },
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/blast/" },
                 mode: 'copy',
                 overwrite: true,
                 saveAs: { fn -> "${fn}" }
@@ -181,7 +181,7 @@ process Diamondview {
 
 process Pull_and_Parse_Unmapped_Reads {
     tag { "${sample_id}_${assembler}" }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/VS_supplemental_outputs/" },
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/VS_supplemental_outputs/" },
                 mode: 'copy',
                 overwrite: true,
                 saveAs: { fn -> "${assembler}/${fn}" }
@@ -240,7 +240,7 @@ process Pull_and_Parse_Unmapped_Reads {
 
 process Fastq_2_Fasta {
     tag { "${sample_id}_reads" }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/VS_supplemental_outputs" },
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/VS_supplemental_outputs" },
                 mode: 'copy',
                 overwrite: true,
                 saveAs: { fn -> "${assembler}/${fn}" }
@@ -284,7 +284,7 @@ process Fastq_2_Fasta {
 
 process Map_Reads_2_Contigs {
     tag { "${sample_id}_${assembler}" }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/VS_supplemental_outputs" }, 
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/VS_supplemental_outputs" }, 
                 mode: 'copy',
                 overwrite: true,
                 saveAs: { fn -> "${assembler}/${fn}" }
@@ -317,7 +317,7 @@ process Map_Reads_2_Contigs {
     def SR_QC_count = SR_QC_reads_com * 2
     
     """
-    #mkdir -p ${params.outdir}/${params.project_id}/${sample_id}/status_log/
+    #mkdir -p ${params.outdir}/${params.run_id}/${sample_id}/status_log/
 
     if [[ "${mode}" == "long" || "${mode}" == "hybrid" ]]; then
         LR_QC_reads_com=\$(zgrep -c '^@' ${long_read})
@@ -364,7 +364,7 @@ process Map_Reads_2_Contigs {
 
 process Parse_MMseqs_Reads {
   tag { "${sample_id} | ${assembler} | ${read_type}" }
-  publishDir { "${params.outdir}/${params.project_id}/${sample_id}/VS_supplemental_outputs/${assembler}" },
+  publishDir { "${params.outdir}/${params.run_id}/${sample_id}/VS_supplemental_outputs/${assembler}" },
               mode: 'copy',
               overwrite: true,
               saveAs: { fn -> "${assembler}/${fn}" }
@@ -408,7 +408,7 @@ script:
 /*
 process Parse_MMseqs_Reads {
   tag { "${sample_id}" }
-  publishDir { "${params.outdir}/${params.project_id}/${sample_id}/VS_supplemental_outputs/" },
+  publishDir { "${params.outdir}/${params.run_id}/${sample_id}/VS_supplemental_outputs/" },
               mode: 'copy',
               overwrite: true,
               saveAs: { fn -> "${assembler}/${fn}" }
@@ -479,7 +479,7 @@ script:
 process Filter_Putative_Viruses_ALL {
     tag { "${sample_id}_${assembler}_${mode}" }
 
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/VS_supplemental_outputs" },
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/VS_supplemental_outputs" },
         mode: 'copy',
         overwrite: true,
         saveAs: { fn -> "${assembler}/${fn}" }
@@ -583,7 +583,7 @@ process Filter_Putative_Viruses_ALL {
 process Generate_VS_Outputs {
     tag { "${sample_id}_${assembler}" }
 
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/VS_supplemental_outputs" },
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/VS_supplemental_outputs" },
         mode: 'copy',
         overwrite: true,
         saveAs: { fn -> "${assembler}/${fn}" }
@@ -690,7 +690,7 @@ process Generate_VS_Outputs {
 
 process Merge_Arc {
   tag { "merge_all_${assembler}" }
-  publishDir "${params.outdir}/${params.project_id}/VS_merged_arc_files/",
+  publishDir "${params.outdir}/${params.run_id}/VS_merged_arc_files/",
               mode: 'copy',
               overwrite: true,
               saveAs: { fn -> "${assembler}/${fn}" }  
@@ -699,12 +699,12 @@ process Merge_Arc {
   //path accurate_read_counts_dir  // a list of all matched TSVs
   tuple val(assembler), path(arc_files)
   output:
-  //path "${params.project_id}_total_hits_merged.csv"
-  //path "${params.project_id}_normalized_family_hits_merged.csv"
-  //path "${params.project_id}_normalized_RPM_hits_merged.csv"
-  path "${params.project_id}_${assembler}_total_hits_merged.csv",              emit: total_csv
-  path "${params.project_id}_${assembler}_normalized_family_hits_merged.csv",  emit: nfam_csv
-  path "${params.project_id}_${assembler}_normalized_RPM_hits_merged.csv",     emit: nrpm_csv
+  //path "${params.run_id}_total_hits_merged.csv"
+  //path "${params.run_id}_normalized_family_hits_merged.csv"
+  //path "${params.run_id}_normalized_RPM_hits_merged.csv"
+  path "${params.run_id}_${assembler}_total_hits_merged.csv",              emit: total_csv
+  path "${params.run_id}_${assembler}_normalized_family_hits_merged.csv",  emit: nfam_csv
+  path "${params.run_id}_${assembler}_normalized_RPM_hits_merged.csv",     emit: nrpm_csv
 
   script:
   """
@@ -715,7 +715,7 @@ process Merge_Arc {
   #printf '%s\0' ${arc_files} | xargs -0 -I '{}' cp -L -n '{}' "arc_${assembler}/"
   python ${params.scripts}/combine_ARC_hits.py \
     -r arc_${assembler} \
-    -p ${params.project_id}_${assembler} \
+    -p ${params.run_id}_${assembler} \
     -o .
 
   echo "[done] wrote merged CSVs"
@@ -725,7 +725,7 @@ process Merge_Arc {
 
 process Heatmap_Virusseeker {
   tag { tagName }
-  publishDir "${params.outdir}/${params.project_id}/VS_merged_arc_files/VS_Heatmaps/", mode: 'copy', overwrite: true,
+  publishDir "${params.outdir}/${params.run_id}/VS_merged_arc_files/VS_Heatmaps/", mode: 'copy', overwrite: true,
              saveAs: { fn -> "${tagName}/${fn}" }   // dynamic subdir per input
   conda "$baseDir/env/aio_qc.yml"
 

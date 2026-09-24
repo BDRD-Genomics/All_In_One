@@ -2,22 +2,27 @@ name: aio_qc
 channels:
   - conda-forge
   - bioconda
-channel_priority: strict
+  - anaconda
+  - r
+  - compbiocore
+  - nanoporetech
+  - gurobi
 dependencies:
   - bbmap
-  - fastp
-  - fastqc
-  - multiqc
   - seqkit
-  - r-base
-  - r-optparse
   - r-openxlsx
+  - fastqc
+  - r-scales
+  - fastp
+  - r-optparse
+  - multiqc
   - r-readxl
   - r-dplyr
+  - dragonflye
   - r-tidyr
   - r-ggplot2
   - r-readr
   - r-ggpubr
   - r-pheatmap
   - r-reshape2
-  - r-scales
+prefix: /export/miniforge3/envs/aio_qc

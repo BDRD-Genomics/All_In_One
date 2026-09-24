@@ -1,12 +1,12 @@
 name: vs
 channels:
-  - http://repomaster.genomics.local/repos/mamba/conda-forge
-  - http://repomaster.genomics.local/repos/mamba/bioconda
-  - http://repomaster.genomics.local/repos/mamba/anaconda
-  - http://repomaster.genomics.local/repos/mamba/r
-  - http://repomaster.genomics.local/repos/mamba/compbiocore
-  - http://repomaster.genomics.local/repos/mamba/nanoporetech
-  - http://repomaster.genomics.local/repos/mamba/gurobi
+  - conda-forge
+  - bioconda
+  - anaconda
+  - r
+  - compbiocore
+  - nanoporetech
+  - gurobi
 dependencies:
   - _libgcc_mutex=0.1=conda_forge
   - _openmp_mutex=4.5=2_gnu
@@ -156,6 +156,7 @@ dependencies:
   - perl-common-sense=3.75=pl5321hd8ed1ab_0
   - perl-compress-raw-bzip2=2.201=pl5321h166bdaf_0
   - perl-compress-raw-zlib=2.202=pl5321h166bdaf_0
+  - perl-config-simple=4.59=pl5321hd8ed1ab_0
   - perl-constant=1.33=pl5321hd8ed1ab_0
   - perl-data-dumper=2.183=pl5321h166bdaf_0
   - perl-db-file=1.855=pl5321h779adbc_1
@@ -329,3 +330,4 @@ dependencies:
   - zlib=1.2.13=hd590300_5
   - zstd=1.5.5=hfc55251_0
   - pyarrow
+prefix: /export/miniforge3/envs/vs

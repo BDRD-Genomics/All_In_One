@@ -1,0 +1,7 @@
+name: checkm2
+channels:
+  - conda-forge
+  - bioconda
+channel_priority: strict
+dependencies:
+  - checkm2

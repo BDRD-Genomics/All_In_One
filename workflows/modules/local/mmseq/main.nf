@@ -15,7 +15,7 @@ nextflow.enable.dsl=2
 process Parse_MMSEQ_dragonflye_contigs {
     tag {sample_id}
     errorStrategy 'ignore'
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/blast/" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/blast/" }, mode: 'copy'
     label 'lowmem'
 
     input:
@@ -35,7 +35,7 @@ process Parse_MMSEQ_dragonflye_contigs {
 process Parse_MMSEQ_dragonflye_medaka_contigs {
     tag {sample_id}
     errorStrategy 'ignore'
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/blast/" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/blast/" }, mode: 'copy'
     label 'lowmem'
 
     input:
@@ -55,7 +55,7 @@ process Parse_MMSEQ_dragonflye_medaka_contigs {
 process Parse_MMSEQ_metaspades_contigs {
     tag {sample_id}
     errorStrategy 'ignore'
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/blast/" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/blast/" }, mode: 'copy'
     label 'lowmem'
 
     input:
@@ -75,7 +75,7 @@ process Parse_MMSEQ_metaspades_contigs {
 process Parse_MMSEQ_unicycler_contigs {
     tag {sample_id}
     errorStrategy 'ignore'
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/blast/" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/blast/" }, mode: 'copy'
     label 'lowmem'
 
     input:

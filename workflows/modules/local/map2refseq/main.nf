@@ -13,7 +13,7 @@ nextflow.enable.dsl=2
 
 process Map_Reads_2_RefSeq {
     tag { sample_id }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/trim/quality_control/targeted_read_mapping/" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/trim/quality_control/targeted_read_mapping/" }, mode: 'copy'
     errorStrategy 'ignore'
     cpus { cpus }
     memory { mem }
@@ -63,7 +63,7 @@ process Map_Reads_2_RefSeq {
 process Post_host_remove_fastqc {
     tag { sample_id }
     errorStrategy 'ignore'
-    publishDir "${params.outdir}/${params.project_id}/fastqc/targeted_read_mapping", mode: 'copy'
+    publishDir "${params.outdir}/${params.run_id}/fastqc/targeted_read_mapping", mode: 'copy'
     label 'qc'
 
     input:
@@ -85,7 +85,7 @@ process Post_host_remove_fastqc {
 process Multiqc_QC_host_removal {
    
     errorStrategy 'ignore'
-    publishDir "${params.outdir}/${params.project_id}/", mode: 'copy'
+    publishDir "${params.outdir}/${params.run_id}/", mode: 'copy'
     label 'qc'
 
     input:
@@ -94,17 +94,17 @@ process Multiqc_QC_host_removal {
     params.run_qc_stats
     script:
     """
-    mkdir -p ${params.outdir}/${params.project_id}/multiqc/targeted_read_mapping/
-    mkdir -p ${params.outdir}/${params.project_id}/qc_stats/targeted_read_mapping/
-    multiqc ${params.outdir}/${params.project_id}/fastqc/targeted_read_mapping/ --data-format csv --outdir ${params.outdir}/${params.project_id}/multiqc/targeted_read_mapping//
-    Rscript ${params.scripts}/create_host_removed_qc_stats.R -p ${params.outdir}/${params.project_id}/multiqc/targeted_read_mapping/multiqc_data/multiqc_general_stats.csv \
-                                                -o ${params.outdir}/${params.project_id}/qc_stats/targeted_read_mapping/
+    mkdir -p ${params.outdir}/${params.run_id}/multiqc/targeted_read_mapping/
+    mkdir -p ${params.outdir}/${params.run_id}/qc_stats/targeted_read_mapping/
+    multiqc ${params.outdir}/${params.run_id}/fastqc/targeted_read_mapping/ --data-format csv --outdir ${params.outdir}/${params.run_id}/multiqc/targeted_read_mapping//
+    Rscript ${params.scripts}/create_host_removed_qc_stats.R -p ${params.outdir}/${params.run_id}/multiqc/targeted_read_mapping/multiqc_data/multiqc_general_stats.csv \
+                                                -o ${params.outdir}/${params.run_id}/qc_stats/targeted_read_mapping/
     """
 }
 
 process Map_Reads_2_Contigs {
     tag { "${sample_id}_${assembler}" }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/assembly_verification/map2assembly/" },
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/assembly_verification/map2assembly/" },
                 mode: 'copy',
                 overwrite: true,
                 saveAs: { fn -> "${assembler}/${fn}" }

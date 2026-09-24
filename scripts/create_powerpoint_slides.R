@@ -9,22 +9,22 @@ suppressPackageStartupMessages({
 
 # CLI 
 opt_list <- list(
-  make_option(c("-p","--project_id"), type="character", help="Project ID to show on title slide (required)"),
+  make_option(c("-p","--run_id"), type="character", help="Run ID to show on title slide (required)"),
   make_option(c("-i","--image"),      type="character", help="Path to JPEG(s)"),
   make_option(c("-o","--out"),        type="character", default=NULL,
-              help="Output .pptx path (default: ./<project_id>_QC_Summary.pptx)"),
+              help="Output .pptx path (default: ./<run_id>_QC_Summary.pptx)"),
   make_option(c("-t","--template"),   type="character", default=NULL,
               help="Optional PowerPoint template .pptx to use (default: blank Office Theme)") # Need to find NMRC template slides
 )
 opt <- parse_args(OptionParser(option_list = opt_list))
 
-if (is.null(opt$project_id)) stop("Missing --project_id")
+if (is.null(opt$run_id)) stop("Missing --run_id")
 if (is.null(opt$image))      stop("Missing --image (path to JPEG)")
 
 if (!file_exists(opt$image)) stop(sprintf("Image not found: %s", opt$image))
 
 if (is.null(opt$out) || nchar(opt$out) == 0) {
-  opt$out <- path(".", sprintf("%s_QC_Summary.pptx", opt$project_id))
+  opt$out <- path(".", sprintf("%s_QC_Summary.pptx", opt$run_id))
 }
 dir_create(path_dir(opt$out))
 
@@ -109,7 +109,7 @@ add_image_slide <- function(doc, img_path, slide_title = "Read Counts: Raw Vs. T
 # Build PPTX 
 doc <- if (!is.null(opt$template) && file_exists(opt$template)) read_pptx(opt$template) else read_pptx()
 
-doc <- add_title_slide(doc, opt$project_id)
+doc <- add_title_slide(doc, opt$run_id)
 doc <- add_image_slide(doc, opt$image, slide_title = "Read Counts: Raw Vs. Trimmed")
 
 print(doc, target = opt$out)

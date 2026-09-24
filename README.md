@@ -143,7 +143,7 @@ nextflow run main.nf \
     -c site.config \
     -profile slurm,apptainer \
     --samplesheet samplesheet.csv \
-    --project_id example_project \
+    --run_id example_project \
     --shortreads true \
     --run_qc true \
     --outdir results
@@ -156,7 +156,7 @@ nextflow run main.nf \
     -c site.config \
     -profile slurm,apptainer \
     --samplesheet samplesheet.csv \
-    --project_id example_project \
+    --run_id example_project \
     --hybrid true \
     --run_qc true \
     --run_assembly true \
@@ -171,7 +171,7 @@ nextflow run main.nf \
     -c site.config \
     -profile slurm,apptainer \
     --samplesheet samplesheet.csv \
-    --project_id example_project \
+    --run_id example_project \
     --longreads true \
     --run_qc true \
     --run_assembly true \
