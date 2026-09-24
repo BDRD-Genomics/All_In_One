@@ -41,9 +41,7 @@ The complete set of defaults is maintained in `conf/databases.config`.
 - [Assembly validation and AutoCycler](#assembly-validation-and-autocycler)
 - [Sequence search and viral analysis](#sequence-search-and-viral-analysis)
 - [Read taxonomic classification](#read-taxonomic-classification)
-- [Virulence-factor classifier](#virulence-factor-classifier)
 - [Contig characterization](#contig-characterization)
-- [Automated read mapping](#automated-read-mapping)
 - [Krona rendering](#krona-rendering)
 - [Advanced and developer options](#advanced-and-developer-options)
 
@@ -1132,31 +1130,6 @@ Additional GOTTCHA command-line options.
 - Type: `string`
 - Default: ``
 
-## Virulence-factor classifier
-
-Machine-learning and VFDB homology settings for VF classification.
-
-| Parameter | Type | Default | Description |
-|---|---|---|---|
-| [`--vf_homology`](#vf_homology) | string | `yes` | Enable or disable VFDB homology support using `yes` or `no`. Allowed values: `yes`, `no`. |
-| [`--vf_threshold`](#vf_threshold) | number | `0.34` | Model probability threshold used to call virulence factors. |
-
-<a id="vf_homology"></a>
-### `--vf_homology`
-
-Enable or disable VFDB homology support using `yes` or `no`.
-
-- Type: `string`
-- Default: `yes`
-- Allowed values: `yes`, `no`
-
-<a id="vf_threshold"></a>
-### `--vf_threshold`
-
-Model probability threshold used to call virulence factors.
-
-- Type: `number`
-- Default: `0.34`
 
 ## Contig characterization
 
