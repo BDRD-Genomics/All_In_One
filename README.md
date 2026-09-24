@@ -1,6 +1,6 @@
 # All-In-One Sequencing Pipeline
 
-**All-In-One** is a modular [Nextflow](https://www.nextflow.io/) DSL2 workflow for metagenomic and viral sequencing analysis. It supports **paired short-read**, **long-read**, and **hybrid** sequencing data and combines quality control, host/rRNA removal, assembly, taxonomic classification, viral analysis, genome characterization, automated reference mapping, and reporting in a single configurable pipeline.
+**All-In-One** is a modular [Nextflow](https://www.nextflow.io/) DSL2 workflow for metagenomic and viral sequencing analysis. It supports **paired short-read**, **long-read**, and **hybrid** sequencing data and combines quality control, host/rRNA removal, assembly, taxonomic classification, viral analysis, genome characterization, and reporting in a single configurable pipeline.
 
 **Documentation:** Browse the [documentation](docs/index.md), jump to the [parameter reference](docs/parameters.md), or see the [Docker and Apptainer guide](docs/containers.md).
 
@@ -23,7 +23,7 @@ The pipeline is designed so that major analysis stages can be enabled or disable
 | Taxonomic classification | Kraken2/Bracken, Sourmash, Mash, MetaPhlAn, GOTTCHA, Taxpasta |
 | Sequence search / viral analysis | DIAMOND BLASTX, MMseqs2, VirusSeeker workflows |
 | Contig characterization | Prokka, BUSCO, MLST, AMRFinderPlus, RGI, PhiSpy, MOB-suite, PLASMe |
-| Reporting | Nextflow trace, timeline, report, DAG, QC summaries, and exercise reports |
+| Reporting | Nextflow trace, timeline, report, DAG, and QC summaries |
 
 ---
 
@@ -204,6 +204,34 @@ Examples:
 ```
 
 The available execution/backend profiles are defined in [`conf/profiles.config`](conf/profiles.config).
+
+### RiboDetector CPU/GPU support
+
+RiboDetector supports both CPU and GPU execution. GPU support depends on the selected software backend:
+
+| Backend | CPU mode | GPU mode |
+|---|---:|---:|
+| Conda/Mamba | Supported | Supported and tested with the provided CUDA-enabled environment |
+| Apptainer | Supported | Supported and tested with NVIDIA GPU passthrough |
+| Docker | Supported | Not supported in the current All-In-One deployment |
+
+Select the RiboDetector execution mode with:
+
+```bash
+--ribodetector_mode cpu
+```
+
+or:
+
+```bash
+--ribodetector_mode gpu
+```
+
+For Conda/Mamba GPU execution, `env/environment.ribodetector.yml` provides a CUDA-enabled PyTorch environment. The host system must provide a compatible NVIDIA driver.
+
+For Apptainer GPU execution, NVIDIA GPU passthrough is required. On supported systems, this is provided using Apptainer's `--nv` option.
+
+Docker should be used with RiboDetector CPU mode in the current All-In-One deployment. Use the Conda/Mamba or Apptainer backend when GPU execution is required.
 
 ---
 
