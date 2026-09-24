@@ -251,7 +251,8 @@ nextflow run main.nf \
     --hybrid true \
     --run_qc true \
     --run_assembly true \
-    --metaspades true \
+    --unicycler true \
+    --dragonflye true \
     --outdir results
 ```
 
