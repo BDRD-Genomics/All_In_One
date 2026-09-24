@@ -3,8 +3,8 @@
 All-In-One supports containerized execution with **Apptainer/Singularity** and **Docker**. A Conda/Mamba backend is also available for environments where containers are not appropriate.
 
 [Apptainer](#apptainer)
-[Docker](#docker){ .md-button }
-[Configuration](configuration.md){ .md-button }
+[Docker](#docker)
+[Configuration](configuration.md)
 
 ## Supported backends
 
