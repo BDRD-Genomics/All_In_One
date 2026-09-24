@@ -2,11 +2,11 @@
 
 **All-In-One** is a modular Nextflow DSL2 workflow for infectious-disease sequencing analysis. It supports **paired short-read**, **long-read**, and **hybrid** sequencing data and brings quality control, host/rRNA removal, assembly, taxonomic classification, viral analysis, genome characterization, and reporting into one configurable pipeline.
 
-[View parameters](parameters.md){ .md-button .md-button--primary }
+[View parameters](parameters.md)
 
-[Usage guide](usage.md){ .md-button }
+[Usage guide](usage.md)
 
-[Configuration](configuration.md){ .md-button }
+[Configuration](configuration.md)
 
 ## Major workflow areas
 
