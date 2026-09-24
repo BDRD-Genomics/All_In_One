@@ -1,0 +1,11 @@
+name	category	preset	install_subdir	method	required_command	source	default_install	notes
+taxdb	blast	standard	blast/taxdb	update_blastdb	update_blastdb.pl	https://ftp.ncbi.nlm.nih.gov/blast/db/	yes	BLAST taxonomy support
+nt	blast	full	blast/nt	update_blastdb	update_blastdb.pl	https://ftp.ncbi.nlm.nih.gov/blast/db/	no	Very large; opt-in only
+nr	blast	full	blast/nr	update_blastdb	update_blastdb.pl	https://ftp.ncbi.nlm.nih.gov/blast/db/	no	Very large; opt-in only
+checkm	assembly_qc	standard	checkm	archive	wget	https://data.ace.uq.edu.au/public/CheckM_databases/	yes	CheckM v1 reference data
+checkm2	assembly_qc	standard	checkm2	checkm2	checkm2	https://github.com/chklovski/CheckM2	yes	Uses upstream CheckM2 database installer
+checkv	viral_qc	standard	checkv	checkv	checkv	https://portal.nersc.gov/CheckV/	yes	Uses upstream CheckV database installer
+busco	assembly_qc	standard	busco	busco	busco	https://busco.ezlab.org/	yes	Downloads prokaryota lineage datasets
+kraken2_core_nt	taxonomy	standard	kraken2/core_nt	kraken2_core_nt	wget	https://benlangmead.github.io/aws-indexes/k2	yes	Prebuilt Kraken2+Bracken core_nt database
+metaphlan4	taxonomy	standard	metaphlan4	metaphlan	metaphlan	https://github.com/biobakery/MetaPhlAn	yes	Uses MetaPhlAn upstream installer
+amrfinderplus	amr	standard	amrfinderplus	amrfinder	amrfinder	https://github.com/ncbi/amr	yes	Runs upstream updater then copies resolved database into AIO root
