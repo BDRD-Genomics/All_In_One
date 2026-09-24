@@ -10,7 +10,7 @@ nextflow.enable.dsl=2
 
 process CheckM_Assemblies {
     tag { "${assembler} | ${sample_id}" }
-    publishDir path: { "${params.outdir}/${params.project_id}/${sample_id}/assembly_verification/${assembler}/checkm" }, mode: 'copy'
+    publishDir path: { "${params.outdir}/${params.run_id}/${sample_id}/assembly_verification/${assembler}/checkm" }, mode: 'copy'
     label 'normal'
     errorStrategy 'ignore'
     cpus { 32 }
@@ -43,7 +43,7 @@ process CheckM_Assemblies {
 
 process CheckM2_Assemblies {
     tag { "${assembler} | ${sample_id}" }
-    publishDir path: { "${params.outdir}/${params.project_id}/${sample_id}/assembly_verification/${assembler}/" }, mode: 'copy'
+    publishDir path: { "${params.outdir}/${params.run_id}/${sample_id}/assembly_verification/${assembler}/" }, mode: 'copy'
     label 'normal'
     errorStrategy 'ignore'
     cpus { 32 }
@@ -71,7 +71,7 @@ process CheckM2_Assemblies {
 
 process CheckV_Assemblies {
     tag { "${assembler} | ${sample_id}" }
-    publishDir path: { "${params.outdir}/${params.project_id}/${sample_id}/assembly_verification/${assembler}/checkv" }, mode: 'copy'
+    publishDir path: { "${params.outdir}/${params.run_id}/${sample_id}/assembly_verification/${assembler}/checkv" }, mode: 'copy'
     label 'normal'
     errorStrategy 'ignore'
     cpus { 32 }

@@ -1,0 +1,12 @@
+name: krona
+channels:
+  - conda-forge
+  - bioconda
+  - anaconda
+  - r
+  - compbiocore
+  - nanoporetech
+  - gurobi
+dependencies:
+  - krona
+prefix: /export/miniforge3/envs/krona

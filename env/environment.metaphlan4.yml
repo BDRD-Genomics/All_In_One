@@ -1,7 +1,9 @@
-name: prokka
+name: metaphlan4
+
 channels:
   - conda-forge
   - bioconda
-  - defaults
+
 dependencies:
-  - prokka
+  - python=3.11
+  - metaphlan

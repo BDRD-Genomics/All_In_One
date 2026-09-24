@@ -7,7 +7,7 @@ suppressPackageStartupMessages({
 })
 
 option_list <- list(
-  make_option(c("-e","--project_id"),
+  make_option(c("-e","--run_id"),
               type="character", help="Project identifier (used in title and default output name)"),
   make_option(c("-p","--qc_plot"),
               type="character", help="Path to the QC JPEG produced by qc_stats_plot.R"),
@@ -16,7 +16,7 @@ option_list <- list(
               help="Path to the Rmd template (default: ngs_summary_tabs.rmd in CWD)"),
   make_option(c("-o","--out_html"),
               type="character", default=NULL,
-              help="Output HTML path (default: <out_dir>/<project_id>_ngs_summary.html)"),
+              help="Output HTML path (default: <out_dir>/<run_id>_ngs_summary.html)"),
   make_option(c("-d","--out_dir"),
               type="character", default=".",
               help="Output directory (default: current directory)")
@@ -25,8 +25,8 @@ option_list <- list(
 opt <- parse_args(OptionParser(option_list = option_list))
 
 # Validate inputs 
-if (is.null(opt$project_id)) {
-  stop("Missing --project_id")
+if (is.null(opt$run_id)) {
+  stop("Missing --run_id")
 }
 if (is.null(opt$qc_plot)) {
   stop("Missing --qc_plot (path to the QC JPEG)")
@@ -42,14 +42,14 @@ dir_create(opt$out_dir)
 
 # Default output file if not provided
 if (is.null(opt$out_html) || nchar(opt$out_html) == 0) {
-  opt$out_html <- path(opt$out_dir, paste0(opt$project_id, "_ngs_summary.html"))
+  opt$out_html <- path(opt$out_dir, paste0(opt$run_id, "_ngs_summary.html"))
 }
 
 # ---- Render ----
 rmarkdown::render(
   input  = opt$rmd,
   params = list(
-    project_id = opt$project_id,
+    run_id = opt$run_id,
     qc_plot_path  = opt$qc_plot
   ),
   output_file = opt$out_html,

@@ -25,7 +25,7 @@ def compId(id) {
 process MMSEQS_CREATEDB_QUERY {
   tag {sample_id}
   errorStrategy 'ignore'
-  publishDir { "${params.outdir}/${params.project_id}/${ cleanSid(sample_id) }/mmseqs/${ compId(sample_id) }" }, mode: 'copy'
+  publishDir { "${params.outdir}/${params.run_id}/${ cleanSid(sample_id) }/mmseqs/${ compId(sample_id) }" }, mode: 'copy'
   label 'lowmem'
 
   input:
@@ -45,7 +45,7 @@ process MMSEQS_CREATEDB_QUERY {
 process MMSEQS_SEARCH {
   tag {sample_id}
   errorStrategy 'ignore'
-  publishDir { "${params.outdir}/${params.project_id}/${ cleanSid(sample_id) }/mmseqs/${ compId(sample_id) }" }, mode: 'copy'
+  publishDir { "${params.outdir}/${params.run_id}/${ cleanSid(sample_id) }/mmseqs/${ compId(sample_id) }" }, mode: 'copy'
   label 'optimized_MMSEQ_SEARCH'
 
   input:
@@ -95,7 +95,7 @@ process MMSEQS_SEARCH {
 process MMSEQS_CONVERTALIS {
   tag {sample_id}
   errorStrategy 'ignore'
-  publishDir { "${params.outdir}/${params.project_id}/${ cleanSid(sample_id) }/mmseqs/${ compId(sample_id) }" }, mode: 'copy'
+  publishDir { "${params.outdir}/${params.run_id}/${ cleanSid(sample_id) }/mmseqs/${ compId(sample_id) }" }, mode: 'copy'
   label 'optimized_MMSEQ_contigs_against_NT_metaspades'
   conda "$baseDir/env/mmseqs2.yml"
 
@@ -142,7 +142,7 @@ process MMSEQS_CONVERTALIS {
 
 process Parse_MMSEQ_Contigs {
   tag { "${assembler} | ${sample_id}" }
-  publishDir path: { "${params.outdir}/${params.project_id}/${sample_id}/blast/" }, mode: 'copy'
+  publishDir path: { "${params.outdir}/${params.run_id}/${sample_id}/blast/" }, mode: 'copy'
   label 'lowmem'
   errorStrategy 'ignore'
 

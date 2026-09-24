@@ -1,7 +1,7 @@
-name: prokka
+name: gottcha2
 channels:
   - conda-forge
   - bioconda
-  - defaults
+channel_priority: strict
 dependencies:
-  - prokka
+  - gottcha2

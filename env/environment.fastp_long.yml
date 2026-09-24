@@ -1,7 +1,7 @@
-name: prokka
+name: fastp_long
 channels:
   - conda-forge
   - bioconda
-  - defaults
 dependencies:
-  - prokka
+  - fastp
+  - fastplong

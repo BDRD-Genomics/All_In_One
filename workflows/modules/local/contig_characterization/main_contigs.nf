@@ -12,7 +12,7 @@ nextflow.enable.dsl=2
     process UNMAPPED_LR_TO_FASTA {
         tag { "${sample_id} | ${source_assembler}" }
 
-        publishDir { "${params.outdir}/${params.project_id}/${sample_id}/unmapped_read_analysis/filtered_reads/" },
+        publishDir { "${params.outdir}/${params.run_id}/${sample_id}/unmapped_read_analysis/filtered_reads/" },
             mode: 'copy',
             overwrite: true
 
@@ -43,7 +43,7 @@ nextflow.enable.dsl=2
 
 process BLASTN_NT_contigs {
     tag { "${assembler} | ${sample_id}" }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/blast/${assembler}" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/blast/${assembler}" }, mode: 'copy'
     cpus 64
     memory '128 GB'
     errorStrategy 'ignore'
@@ -69,7 +69,7 @@ process BLASTN_NT_contigs {
 
 process PROKKA {
     tag { "${assembler} | ${sample_id}" }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/prokka/" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/prokka/" }, mode: 'copy'
     cpus 1
     memory '16 GB'
     errorStrategy 'ignore'
@@ -101,7 +101,7 @@ process PROKKA {
 
 process BUSCO {
     tag { "${assembler} | ${sample_id}" }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/busco/${assembler}" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/busco/${assembler}" }, mode: 'copy'
     label 'lowmem'
     errorStrategy 'ignore'
     input:
@@ -121,7 +121,7 @@ process BUSCO {
 
 process AMR_VF_BLAST {
     tag { "${assembler} | ${sample_id}" }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/AMR_VF/${assembler}" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/AMR_VF/${assembler}" }, mode: 'copy'
     label 'lowmem'
     errorStrategy 'ignore'
     input:
@@ -148,7 +148,7 @@ process AMR_VF_BLAST {
 
 process AMR_VF_BLASTN_UNMAPPED {
     tag { "${assembler} | ${sample_id}" }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/unmapped_read_analysis/AMR_VF/${assembler}" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/unmapped_read_analysis/AMR_VF/${assembler}" }, mode: 'copy'
     label 'lowmem'
     errorStrategy 'ignore'
 
@@ -192,7 +192,7 @@ process AMR_VF_BLASTN_UNMAPPED {
 
 process MLST {
     tag { "${assembler} | ${sample_id}" }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/MLST/${assembler}" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/MLST/${assembler}" }, mode: 'copy'
     label 'lowmem'
     errorStrategy 'ignore'
     input:
@@ -212,7 +212,7 @@ process MLST {
 
 process GE_SCREEN {
     tag { "${assembler} | ${sample_id}" }
-    publishDir { "${params.outdir}/${params.project_id}/GE_screen/${assembler}" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/GE_screen/${assembler}" }, mode: 'copy'
     label 'lowmem'
     errorStrategy 'ignore'
     input:
@@ -250,7 +250,7 @@ process GE_SCREEN {
 
 process RGI {
     tag { "${assembler} | ${sample_id}" }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/rgi/${assembler}" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/rgi/${assembler}" }, mode: 'copy'
     label 'lowmem'
     errorStrategy 'ignore'
     input:
@@ -273,7 +273,7 @@ process RGI {
 
 process RGI_UNMAPPED {
     tag { "${assembler} | ${sample_id}" }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/rgi/${assembler}" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/rgi/${assembler}" }, mode: 'copy'
     label 'lowmem'
     errorStrategy 'ignore'
     input:
@@ -296,7 +296,7 @@ process RGI_UNMAPPED {
 
 process AMRFINDER {
     tag { "${assembler} | ${sample_id}" }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/amrfinder/${assembler}" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/amrfinder/${assembler}" }, mode: 'copy'
     label 'lowmem'
     errorStrategy 'ignore'
     input:
@@ -324,7 +324,7 @@ process AMRFINDER {
 
 process AMRFINDER_UNMAPPED {
     tag { "${assembler} | ${sample_id}" }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/amrfinder/${assembler}" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/amrfinder/${assembler}" }, mode: 'copy'
     label 'lowmem'
     errorStrategy 'ignore'
     input:
@@ -349,7 +349,7 @@ process AMRFINDER_UNMAPPED {
 
 process PLASME {
     tag { "${assembler} | ${sample_id}" }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/plasme/${assembler}" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/plasme/${assembler}" }, mode: 'copy'
     label 'lowmem'
     errorStrategy 'ignore'
     input:
@@ -369,7 +369,7 @@ process PLASME {
 
 process PHISPY {
     tag { "${assembler} | ${sample_id}" }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/phispy/${assembler}" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/phispy/${assembler}" }, mode: 'copy'
     label 'lowmem'
     errorStrategy 'ignore'
     input:
@@ -389,7 +389,7 @@ process PHISPY {
 
 process MOBSUITE {
     tag { "${assembler} | ${sample_id}" }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/mobsuite/${assembler}" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/mobsuite/${assembler}" }, mode: 'copy'
     label 'no_fips'
     errorStrategy 'ignore'
     input:
@@ -409,7 +409,7 @@ process MOBSUITE {
 
 process AMR_VF_BLAST_plasmids {
     tag { "${assembler} | ${sample_id}" }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/AMR_VF/${assembler}" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/AMR_VF/${assembler}" }, mode: 'copy'
     label 'lowmem'
     conda "${baseDir}/env/amrfinderplus.yml"
     errorStrategy 'ignore'
@@ -434,7 +434,7 @@ process AMR_VF_BLAST_plasmids {
 
 process AMR_VF_BLAST_select_agents {
     tag { "${assembler} | ${sample_id}" }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/AMR_VF/${assembler}" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/AMR_VF/${assembler}" }, mode: 'copy'
     label 'lowmem'
     conda "${baseDir}/env/amrfinderplus.yml"
     errorStrategy 'ignore'
@@ -459,7 +459,7 @@ process AMR_VF_BLAST_select_agents {
 
 process AMR_VF_BLAST_AMR {
     tag { "${assembler} | ${sample_id}" }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/AMR_VF/${assembler}" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/AMR_VF/${assembler}" }, mode: 'copy'
     label 'lowmem'
     conda "${baseDir}/env/amrfinderplus.yml"
     errorStrategy 'ignore'
@@ -483,7 +483,7 @@ process AMR_VF_BLAST_AMR {
 }
 process AMR_VF_BLAST_VF {
     tag { "${assembler} | ${sample_id}" }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/AMR_VF/${assembler}" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/AMR_VF/${assembler}" }, mode: 'copy'
     label 'lowmem'
     conda "${baseDir}/env/amrfinderplus.yml"
     errorStrategy 'ignore'

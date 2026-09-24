@@ -27,7 +27,7 @@ nextflow run main.nf \
     -c site.config \
     -profile slurm,apptainer \
     --samplesheet samplesheet.csv \
-    --project_id example_project \
+    --run_id example_project \
     --shortreads true \
     --run_qc true \
     --outdir results
@@ -40,7 +40,7 @@ nextflow run main.nf \
     -c site.config \
     -profile local,apptainer \
     --samplesheet samplesheet.csv \
-    --project_id example_project \
+    --run_id example_project \
     --shortreads true \
     --run_qc true \
     --outdir results
@@ -120,7 +120,7 @@ nextflow run main.nf \
     -c site.config \
     -profile local,docker \
     --samplesheet samplesheet.csv \
-    --project_id example_project \
+    --run_id example_project \
     --shortreads true \
     --run_qc true \
     --outdir results

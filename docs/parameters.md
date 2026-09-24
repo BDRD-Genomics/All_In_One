@@ -54,7 +54,7 @@ Input sample sheet, project naming, and output locations.
 | Parameter | Type | Default | Description |
 |---|---|---|---|
 | [`--samplesheet`](#samplesheet) | string | `samplesheet.csv` | CSV sample sheet with the columns `sample_id`, `fastq_1`, `fastq_2`, and `long_read`. |
-| [`--project_id`](#project_id) | string | `YOU_FORGOT_TO_SET_THIS` | Project identifier used in output paths and report names. |
+| [`--run_id`](#run_id) | string | `YOU_FORGOT_TO_SET_THIS` | Run identifier used in output paths and report names. |
 | [`--outdir`](#outdir) | string | `${launchDir}/results` | Directory where pipeline results and execution reports are written. |
 | [`--work_dir`](#work_dir) | string | `${launchDir}/work` | Nextflow work directory. |
 | [`--cleanup`](#cleanup) | boolean / null | `null` | Whether Nextflow should remove intermediate work files after successful completion. |
@@ -67,10 +67,10 @@ CSV sample sheet with the columns `sample_id`, `fastq_1`, `fastq_2`, and `long_r
 - Type: `string`
 - Default: `samplesheet.csv`
 
-<a id="project_id"></a>
-### `--project_id`
+<a id="run_id"></a>
+### `--run_id`
 
-Project identifier used in output paths and report names.
+Run identifier used in output paths and report names.
 
 - Type: `string`
 - Default: `YOU_FORGOT_TO_SET_THIS`

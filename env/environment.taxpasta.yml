@@ -1,7 +1,7 @@
-name: prokka
+name: taxpasta
 channels:
   - conda-forge
   - bioconda
-  - defaults
+channel_priority: strict
 dependencies:
-  - prokka
+  - taxpasta

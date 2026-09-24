@@ -1,12 +1,12 @@
 name: md
 channels:
-  - http://repomaster.genomics.local/repos/mamba/conda-forge
-  - http://repomaster.genomics.local/repos/mamba/bioconda
-  - http://repomaster.genomics.local/repos/mamba/anaconda
-  - http://repomaster.genomics.local/repos/mamba/r
-  - http://repomaster.genomics.local/repos/mamba/compbiocore
-  - http://repomaster.genomics.local/repos/mamba/nanoporetech
-  - http://repomaster.genomics.local/repos/mamba/gurobi
+  - conda-forge
+  - bioconda
+  - anaconda
+  - r
+  - compbiocore
+  - nanoporetech
+  - gurobi
 dependencies:
   - _libgcc_mutex=0.1=conda_forge
   - _openmp_mutex=4.5=2_gnu
@@ -234,3 +234,4 @@ dependencies:
   - xz=5.2.6=h166bdaf_0
   - zlib=1.2.13=hd590300_5
   - zstd=1.5.5=hfc55251_0
+prefix: /export/miniforge3/envs/md

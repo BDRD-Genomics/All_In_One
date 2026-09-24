@@ -1,12 +1,12 @@
 name: mmseqs2
 channels:
-  - http://repomaster.genomics.local/repos/mamba/conda-forge
-  - http://repomaster.genomics.local/repos/mamba/bioconda
-  - http://repomaster.genomics.local/repos/mamba/anaconda
-  - http://repomaster.genomics.local/repos/mamba/r
-  - http://repomaster.genomics.local/repos/mamba/compbiocore
-  - http://repomaster.genomics.local/repos/mamba/nanoporetech
-  - http://repomaster.genomics.local/repos/mamba/gurobi
+  - conda-forge
+  - bioconda
+  - anaconda
+  - r
+  - compbiocore
+  - nanoporetech
+  - gurobi
 dependencies:
   - _libgcc_mutex=0.1=conda_forge
   - _openmp_mutex=4.5=2_gnu
@@ -45,3 +45,4 @@ dependencies:
   - readline=8.2=h8228510_1
   - wget=1.21.4=hda4d442_0
   - zlib=1.3.1=hb9d3cd8_2
+prefix: /export/miniforge3/envs/mmseqs2

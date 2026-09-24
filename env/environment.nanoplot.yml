@@ -1,7 +1,6 @@
-name: prokka
+name: nanoplot
 channels:
   - conda-forge
   - bioconda
-  - defaults
 dependencies:
-  - prokka
+  - nanoplot

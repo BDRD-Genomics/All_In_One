@@ -2,6 +2,6 @@ name: rgi
 channels:
   - conda-forge
   - bioconda
-channel_priority: strict
+  - defaults
 dependencies:
   - rgi

@@ -11,7 +11,7 @@ nextflow.enable.dsl=2
 
 process BlastX_contigs {
     tag { "${assembler} | ${sample_id}" }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/blast/" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/blast/" }, mode: 'copy'
     label 'optimized_blastx_contigs'
     errorStrategy 'ignore'
     input:
@@ -39,7 +39,7 @@ process BlastX_contigs {
 
 process BlastX_reads {
     tag { "${sample_id}_${mode}" }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/blast/" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/blast/" }, mode: 'copy'
     label 'optimized_blastx_reads'
     errorStrategy 'ignore'
 
@@ -86,7 +86,7 @@ process BlastX_reads {
 process DAA2INFO_contigs_daa_file {
     tag {sample_id}
     errorStrategy 'ignore'
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/blast/" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/blast/" }, mode: 'copy'
     label 'normal'
 
     input:
@@ -103,23 +103,23 @@ process DAA2INFO_contigs_daa_file {
     """
     if [ "${params.metaspades}" == "true" ]; then
       bash ${params.meganpath}/daa2info \
-      -i ${params.outdir}/${params.project_id}/${sample_id}/blast/${sample_id}_metaspades_blastx.daa \
+      -i ${params.outdir}/${params.run_id}/${sample_id}/blast/${sample_id}_metaspades_blastx.daa \
       -o ${sample_id}_c2c.txt \
       -c2c Taxonomy -n -r -u
 
     elif [ "${params.hybrid}" == "true" ]; then 
       bash ${params.meganpath}/daa2info \
-      -i ${params.outdir}/${params.project_id}/${sample_id}/blast/${sample_id}_dragonflye_blastx.daa \
+      -i ${params.outdir}/${params.run_id}/${sample_id}/blast/${sample_id}_dragonflye_blastx.daa \
       -o ${sample_id}_c2c.txt \
       -c2c Taxonomy -n -r -u
     elif [ "${params.dragonflye_isolate}" == "true" ]; then 
       bash ${params.meganpath}/daa2info \
-      -i ${params.outdir}/${params.project_id}/${sample_id}/blast/${sample_id}_dragonflye_isolate_contigs_blastx.daa \
+      -i ${params.outdir}/${params.run_id}/${sample_id}/blast/${sample_id}_dragonflye_isolate_contigs_blastx.daa \
       -o ${sample_id}_c2c.txt \
       -c2c Taxonomy -n -r -u
     elif [ "${params.unicycler}" == "true" ]; then 
       bash ${params.meganpath}/daa2info \
-      -i ${params.outdir}/${params.project_id}/${sample_id}/blast/${sample_id}_unicycler_blastx.daa \
+      -i ${params.outdir}/${params.run_id}/${sample_id}/blast/${sample_id}_unicycler_blastx.daa \
       -o ${sample_id}_c2c.txt \
       -c2c Taxonomy -n -r -u
     else 
@@ -134,7 +134,7 @@ process DAA2INFO_contigs_daa_file {
 process Meganize_ShortReads_BlastX {
     tag { sample_id }
     errorStrategy 'ignore'
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/blast/meganized_reads" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/blast/meganized_reads" }, mode: 'copy'
     label 'megan'
     cpus { 32 }
     memory { '128 GB'}
@@ -182,7 +182,7 @@ process Meganize_ShortReads_BlastX {
 process Meganize_LongReads_BlastX {
     tag { sample_id }
     errorStrategy 'ignore'
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/blast/meganized_reads" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/blast/meganized_reads" }, mode: 'copy'
     label 'megan'
     input:
     tuple val(sample_id), file(blastx_long)
@@ -228,7 +228,7 @@ process Meganize_LongReads_BlastX {
 
 process Meganize_BlastX_Contigs {
     tag { "${assembler} | ${sample_id}" }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/blast/meganized_contigs/" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/blast/meganized_contigs/" }, mode: 'copy'
     label 'optimized_Meganize_Contigs_BlastX'
     errorStrategy 'ignore'
     input:
@@ -282,7 +282,7 @@ process Meganize_BlastX_Contigs {
 
 process Parse_BlastX_Contigs {
     tag { "${assembler} | ${sample_id}" }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/blast/" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/blast/" }, mode: 'copy'
     label 'lowmem'
     errorStrategy 'ignore'
     input:

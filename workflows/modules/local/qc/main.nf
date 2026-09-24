@@ -5,7 +5,7 @@ nextflow.enable.dsl=2
 
 process Interleave {
     tag { sample_id }
-    publishDir "${params.outdir}/${params.project_id}/interleave_fastq/", mode: 'copy'
+    publishDir "${params.outdir}/${params.run_id}/interleave_fastq/", mode: 'copy'
     label 'optimized_qc_workflow'
     cpus { cpus }
     memory { mem }
@@ -25,10 +25,10 @@ process Interleave {
 	echo "Skip this step" > lr_skipped.txt
     fi
     if [ "${params.hybrid}" == "true" ]; then
-    	#mkdir -p ${params.outdir}/${params.project_id}/interleave_fastq/
+    	#mkdir -p ${params.outdir}/${params.run_id}/interleave_fastq/
     	reformat.sh in1=${fastq_1} in2=${fastq_2} out=${sample_id}_IR.fastq.gz ow=t tossbrokenreads=t
     elif [ "${params.shortreads}" == "true" ]; then
-        #mkdir -p ${params.outdir}/${params.project_id}/interleave_fastq/
+        #mkdir -p ${params.outdir}/${params.run_id}/interleave_fastq/
         reformat.sh in1=${fastq_1} in2=${fastq_2} out=${sample_id}_IR.fastq.gz ow=t tossbrokenreads=t
     else 
 	echo "skipped" > interleave.skipped
@@ -39,8 +39,8 @@ process Interleave {
 process Pretrim_fastqc_merged {
     tag {sample_id}
     errorStrategy 'ignore'
-    publishDir "${params.outdir}/${params.project_id}/fastqc/pretrim/", pattern: "*.{zip,html}", mode: 'copy'
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/q_stats/" }, pattern: "*.txt", mode: 'copy'
+    publishDir "${params.outdir}/${params.run_id}/fastqc/pretrim/", pattern: "*.{zip,html}", mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/q_stats/" }, pattern: "*.txt", mode: 'copy'
     label 'optimized_qc_workflow'
 
     cpus {cpus} // setting slurm allocation dynamically
@@ -59,13 +59,13 @@ process Pretrim_fastqc_merged {
     script:
     """
     if [ "${params.longreads}" == "true" ] || [ "${params.hybrid}" == "true" ]; then
-    	#mkdir -p ${params.outdir}/${params.project_id}/fastqc/pretrim/
+    	#mkdir -p ${params.outdir}/${params.run_id}/fastqc/pretrim/
     	fastqc --memory 2000 --outdir . \
                ${long_read} 
         seqkit stats -j ${task.cpus} -a -T ${long_read} > ${sample_id}_seqkit_rawReads_LR.txt
     fi
     if [ "${params.shortreads}" == "true" ] || [ "${params.hybrid}" == "true" ]; then
-    	#mkdir -p ${params.outdir}/${params.project_id}/fastqc/pretrim/
+    	#mkdir -p ${params.outdir}/${params.run_id}/fastqc/pretrim/
     	fastqc --memory 2000 --outdir . ${interleave_files}
         seqkit stats -j ${task.cpus} -a -T ${interleave_files} > ${sample_id}_seqkit_rawReads_SR.txt
     fi
@@ -75,7 +75,7 @@ process Pretrim_fastqc_merged {
 process Pretrim_fastqc {
     tag {sample_id}
     errorStrategy 'ignore'
-    publishDir "${params.outdir}/${params.project_id}/fastqc/pretrim/", mode: 'copy'
+    publishDir "${params.outdir}/${params.run_id}/fastqc/pretrim/", mode: 'copy'
     label 'optimized_qc_workflow'
 
     input: 
@@ -99,7 +99,7 @@ process Pretrim_NanoPlot {
     tag { sample_id }
     errorStrategy 'ignore'
 
-    publishDir { "${params.outdir}/${params.project_id}/nanoplot/pretrim/${sample_id}/" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/nanoplot/pretrim/${sample_id}/" }, mode: 'copy'
 
     label 'optimized_qc_workflow'
     cpus { cpus }
@@ -128,7 +128,7 @@ process Pretrim_NanoPlot {
 
 process Quality_Control {
     tag { sample_id }
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/trim/quality_control/" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/trim/quality_control/" }, mode: 'copy'
     cpus { cpus }
     memory { mem }
 
@@ -173,7 +173,7 @@ process Quality_Control {
 process PoreChop {
     tag {sample_id} 
     errorStrategy 'ignore'
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/trim/quality_control/" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/trim/quality_control/" }, mode: 'copy'
     cpus { cpus }
     memory { mem }
 
@@ -201,7 +201,7 @@ process Fastp_LongReads {
     tag { sample_id }
     errorStrategy 'ignore'
 
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/trim/quality_control/" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/trim/quality_control/" }, mode: 'copy'
 
     label 'optimized_qc_workflow'
     conda "${baseDir}/env/aio_qc.yml"
@@ -246,8 +246,8 @@ process Post_trim_fastqc {
     tag { sample_id }
     errorStrategy 'ignore'
 
-    publishDir "${params.outdir}/${params.project_id}/fastqc/post_trim/", pattern: "*.{zip,html}", mode: 'copy'
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/q_stats/" }, pattern: "*.txt", mode: 'copy'
+    publishDir "${params.outdir}/${params.run_id}/fastqc/post_trim/", pattern: "*.{zip,html}", mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/q_stats/" }, pattern: "*.txt", mode: 'copy'
 
     label "qc"
     conda "$baseDir/env/aio_qc.yml"
@@ -263,7 +263,7 @@ process Post_trim_fastqc {
 
     script:
     """
-    #mkdir -p ${params.outdir}/${params.project_id}/fastqc/post_trim/
+    #mkdir -p ${params.outdir}/${params.run_id}/fastqc/post_trim/
 
     fastqc --memory 2000 --outdir . ${qc_files}
 
@@ -276,7 +276,7 @@ process Posttrim_NanoPlot {
     tag { sample_id }
     errorStrategy 'ignore'
 
-    publishDir { "${params.outdir}/${params.project_id}/nanoplot/post_trim/${sample_id}/" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/nanoplot/post_trim/${sample_id}/" }, mode: 'copy'
 
     label 'optimized_qc_workflow'
     conda "${baseDir}/env/aio_qc.yml"
@@ -307,7 +307,7 @@ process Posttrim_NanoPlot {
 process Multiqc_QC_Stats {
    
     errorStrategy 'ignore'
-    publishDir "${params.outdir}/${params.project_id}/", mode: 'copy'
+    publishDir "${params.outdir}/${params.run_id}/", mode: 'copy'
     label 'qc'
     conda "$baseDir/env/aio_qc.yml"
 
@@ -319,7 +319,7 @@ process Multiqc_QC_Stats {
     file fastqc_post_trim_files 
     
     output:
-    val params.project_id, emit: multiqc_complete_ch
+    val params.run_id, emit: multiqc_complete_ch
     //path("multiqc/pretrim/"), emit: multiqc_pretrim_ch
     //path("multiqc/post_trim/"), emit: multiqc_posttrim_ch
     //path("qc_stats/"), emit: qc_stats_ch
@@ -327,25 +327,25 @@ process Multiqc_QC_Stats {
     params.run_qc_stats
     script:
     """
-    rm -rf "${params.outdir}/${params.project_id}//multiqc/pretrim" "${params.outdir}/${params.project_id}//multiqc/post_trim" "${params.outdir}/${params.project_id}/qc_stats/"
-    mkdir -p ${params.outdir}/${params.project_id}/multiqc/pretrim/
-    multiqc ${params.outdir}/${params.project_id}/fastqc/pretrim/ --data-format csv --outdir ${params.outdir}/${params.project_id}/multiqc/pretrim/ --export
-    mkdir -p ${params.outdir}/${params.project_id}/ multiqc/post_trim/
-    multiqc ${params.outdir}/${params.project_id}/fastqc/post_trim/ --data-format csv --outdir ${params.outdir}/${params.project_id}/multiqc/post_trim/ --export
-    mkdir -p ${params.outdir}/${params.project_id}/qc_stats/
-    Rscript ${params.scripts}/create_qc_stats.R -i ${params.outdir}/${params.project_id}/multiqc/pretrim/multiqc_data/multiqc_general_stats.csv \
-                                                                                -p ${params.outdir}/${params.project_id}/multiqc/post_trim/multiqc_data/multiqc_general_stats.csv \
-                                                                                -o ${params.outdir}/${params.project_id}/qc_stats/
+    rm -rf "${params.outdir}/${params.run_id}//multiqc/pretrim" "${params.outdir}/${params.run_id}//multiqc/post_trim" "${params.outdir}/${params.run_id}/qc_stats/"
+    mkdir -p ${params.outdir}/${params.run_id}/multiqc/pretrim/
+    multiqc ${params.outdir}/${params.run_id}/fastqc/pretrim/ --data-format csv --outdir ${params.outdir}/${params.run_id}/multiqc/pretrim/ --export
+    mkdir -p ${params.outdir}/${params.run_id}/ multiqc/post_trim/
+    multiqc ${params.outdir}/${params.run_id}/fastqc/post_trim/ --data-format csv --outdir ${params.outdir}/${params.run_id}/multiqc/post_trim/ --export
+    mkdir -p ${params.outdir}/${params.run_id}/qc_stats/
+    Rscript ${params.scripts}/create_qc_stats.R -i ${params.outdir}/${params.run_id}/multiqc/pretrim/multiqc_data/multiqc_general_stats.csv \
+                                                                                -p ${params.outdir}/${params.run_id}/multiqc/post_trim/multiqc_data/multiqc_general_stats.csv \
+                                                                                -o ${params.outdir}/${params.run_id}/qc_stats/
     echo "Post Trim Multiqc Complete" > post_trim_multiqc.finished
     Rscript ${params.scripts}/Plot_QC_Counts.R \
-        --input ${params.outdir}/${params.project_id}/qc_stats/qc_stats_final.xlsx \
-        --outdir ${params.outdir}/${params.project_id}/qc_plots/ \
-        --outfile ${params.project_id}_raw_reads_vs_trimmed_reads.jpeg
+        --input ${params.outdir}/${params.run_id}/qc_stats/qc_stats_final.xlsx \
+        --outdir ${params.outdir}/${params.run_id}/qc_plots/ \
+        --outfile ${params.run_id}_raw_reads_vs_trimmed_reads.jpeg
     """
 }
 
 process Read_Distribution {
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/read_distribution" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/read_distribution" }, mode: 'copy'
     label 'optimized_qc_workflow'
     conda "$baseDir/env/aio_qc.yml"
     errorStrategy 'ignore'
@@ -396,7 +396,7 @@ process Read_Distribution {
 }
 
 process Fastcat_trim {
-    publishDir { "${params.outdir}/${params.project_id}/${sample_id}/read_distribution" }, mode: 'copy'
+    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/read_distribution" }, mode: 'copy'
     label 'optimized_qc_workflow'
     conda "$baseDir/env/fastcat.yml"
     errorStrategy 'ignore'
@@ -429,7 +429,7 @@ process Fastcat_trim {
 process LongRead_NanoPlot_QC_Stats {
 
     errorStrategy 'ignore'
-    publishDir "${params.outdir}/${params.project_id}/", mode: 'copy'
+    publishDir "${params.outdir}/${params.run_id}/", mode: 'copy'
     label 'qc'
     conda "$baseDir/env/aio_qc.yml"
 
@@ -438,7 +438,7 @@ process LongRead_NanoPlot_QC_Stats {
     val nanoplot_post_files
 
     output:
-    val params.project_id, emit: longread_nanoplot_qc_complete_ch
+    val params.run_id, emit: longread_nanoplot_qc_complete_ch
 
     when:
     params.run_qc_stats && (params.longreads || params.hybrid)
@@ -447,11 +447,11 @@ process LongRead_NanoPlot_QC_Stats {
     """
     set -euo pipefail
 
-    PRE_NANOPLOT_DIR="${params.outdir}/${params.project_id}/nanoplot/pretrim/"
-    POST_NANOPLOT_DIR="${params.outdir}/${params.project_id}/nanoplot/post_trim/"
+    PRE_NANOPLOT_DIR="${params.outdir}/${params.run_id}/nanoplot/pretrim/"
+    POST_NANOPLOT_DIR="${params.outdir}/${params.run_id}/nanoplot/post_trim/"
 
-    mkdir -p ${params.outdir}/${params.project_id}/qc_stats_post_Q1/
-    mkdir -p ${params.outdir}/${params.project_id}/qc_plots/
+    mkdir -p ${params.outdir}/${params.run_id}/qc_stats_post_Q1/
+    mkdir -p ${params.outdir}/${params.run_id}/qc_plots/
 
     if [[ ! -d "\${PRE_NANOPLOT_DIR}" ]]; then
         echo "ERROR: Missing pretrim NanoPlot directory: \${PRE_NANOPLOT_DIR}"
@@ -476,12 +476,12 @@ process LongRead_NanoPlot_QC_Stats {
     Rscript ${params.scripts}/create_nanoplot_qc_stats.R \
         -i \${PRE_NANOPLOT_DIR} \
         -p \${POST_NANOPLOT_DIR} \
-        -o ${params.outdir}/${params.project_id}/qc_stats_post_Q1/
+        -o ${params.outdir}/${params.run_id}/qc_stats_post_Q1/
 
     Rscript ${params.scripts}/Plot_NanoPlot_QC_Counts.R \
-        --input ${params.outdir}/${params.project_id}/qc_stats_post_Q1/qc_stats_final.xlsx \
-        --outdir ${params.outdir}/${params.project_id}/qc_plots/ \
-        --outfile ${params.project_id}_long_raw_reads_vs_Q1_trimmed_reads.jpeg
+        --input ${params.outdir}/${params.run_id}/qc_stats_post_Q1/qc_stats_final.xlsx \
+        --outdir ${params.outdir}/${params.run_id}/qc_plots/ \
+        --outfile ${params.run_id}_long_raw_reads_vs_Q1_trimmed_reads.jpeg
 
     echo "Long-read NanoPlot QC stats complete" > longread_nanoplot_qc_stats.finished
     """
