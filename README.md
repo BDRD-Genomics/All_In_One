@@ -223,6 +223,11 @@ Select the corresponding input mode with one of:
 
 Only the sequencing mode appropriate for the run should be enabled.
 
+To easily generate this samplesheet we provide an Rscript to do this
+
+```
+Rscript scripts/create_samplesheet.R -i /path/to/directory/containing/fastq/files -o output_dir/
+```
 ---
 
 ## Quick start
