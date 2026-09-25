@@ -19,7 +19,7 @@ The pipeline is designed so that major analysis stages can be enabled or disable
 | Assembly                         | SPAdes, metaSPAdes, plasmidSPAdes, Unicycler, Dragonflye, Raven, Myloasm |
 | Assembly validation              | CheckM, CheckM2, CheckV, BUSCO, and AutoCycler workflows                 |
 | Taxonomic classification         | Kraken2/Bracken, Sourmash, Mash, MetaPhlAn, GOTTCHA, Taxpasta            |
-| Sequence search / viral analysis | BLAST, DIAMOND BLASTX, MMseqs2, VirusSeeker workflows                    |
+| Sequence search / viral analysis | BLAST, DIAMOND BLASTX, MMseqs2, VirusSeeker 2.0 workflows                    |
 | Contig characterization          | Prokka, MLST, AMRFinderPlus, RGI, PhiSpy, MOB-suite, PLASMe              |
 | Reporting                        | Nextflow trace, timeline, execution report, DAG, and QC summaries        |
 
