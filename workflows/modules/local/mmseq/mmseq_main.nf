@@ -80,7 +80,7 @@ process MMSEQS_SEARCH {
 	alnDB_dir_pre/alnDB_pre \
 	tmp_${sample_id} \
 	--threads ${task.cpus} \
-        --local-tmp /database/tmp \
+        --local-tmp ${params.tmp_dir} \
 	${params.mmseqs_search_opts ?: ''} 2>&1 | tee ${sample_id}.log
 
 

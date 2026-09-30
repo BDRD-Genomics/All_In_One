@@ -14,7 +14,7 @@ params {
     container_dir = System.getenv('AIO_CONTAINER_DIR') ?: "${projectDir}/containers"
     // Single root for all external pipeline databases.
     // Recommended: keep all All_In_One databases beneath this directory.
-    database_dir = System.getenv('AIO_DATABASE_DIR') ?: "${projectDir}/database"
+    database_dir = System.getenv('AIO_DATABASE_DIR') ?: "${projectDir}/databases"
 
 
     // Software backends
