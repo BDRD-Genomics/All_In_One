@@ -1,0 +1,150 @@
+Sep-30 18:19:04.328 [main] DEBUG nextflow.cli.Launcher - $> nextflow run . -profile test,apptainer --samplesheet tests/data/short/samplesheet.csv --run_id reviewer_short --shortreads true -resume
+Sep-30 18:19:04.385 [main] DEBUG nextflow.cli.CmdRun - N E X T F L O W  ~  version 26.04.0
+Sep-30 18:19:04.400 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; embedded=false; plugins-dir=/home/acicalo/.nextflow/plugins; core-plugins: nf-amazon@3.9.0,nf-azure@1.22.2,nf-cloudcache@0.6.0,nf-codecommit@0.5.1,nf-console@1.3.0,nf-google@1.27.2,nf-k8s@1.5.2,nf-seqera@0.19.0,nf-tower@1.27.0,nf-wave@1.20.0
+Sep-30 18:19:04.420 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
+Sep-30 18:19:04.421 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
+Sep-30 18:19:04.423 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.14.1 in 'deployment' mode
+Sep-30 18:19:04.432 [main] DEBUG nextflow.util.RetryConfig - Missing nextflow session - using default retry config
+Sep-30 18:19:04.512 [main] DEBUG nextflow.plugin.PluginUpdater - Using plugin repository: HttpPluginRepository [registry]; url=https://registry.nextflow.io/api
+Sep-30 18:19:04.515 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
+Sep-30 18:19:04.532 [main] DEBUG nextflow.scm.AssetManager - Selecting multi-revision strategy
+Sep-30 18:19:04.538 [main] DEBUG nextflow.config.ConfigParserFactory - Using config parser v2
+Sep-30 18:19:04.775 [main] DEBUG nextflow.config.ConfigBuilder - Found config local: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/nextflow.config
+Sep-30 18:19:04.776 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/nextflow.config
+Sep-30 18:19:04.778 [main] DEBUG nextflow.config.ConfigParserFactory - Using config parser v2
+Sep-30 18:19:04.784 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `test,apptainer`
+Sep-30 18:19:05.134 [main] DEBUG nextflow.config.ConfigBuilder - Available config profiles: [local, slurm, conda, docker, apptainer, offline, test]
+Sep-30 18:19:05.157 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins default=[]
+Sep-30 18:19:05.158 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins resolved requirement=[]
+Sep-30 18:19:05.167 [main] DEBUG n.secret.LocalSecretsProvider - Secrets store: /home/acicalo/.nextflow/secrets/store.json
+Sep-30 18:19:05.169 [main] DEBUG nextflow.secret.SecretsLoader - Discovered secrets providers: [nextflow.secret.LocalSecretsProvider@217c23ce] - activable => nextflow.secret.LocalSecretsProvider@217c23ce
+Sep-30 18:19:05.180 [main] DEBUG nextflow.cli.CmdRun - Launching `./main.nf` [deadly_almeida] - revision: a2f8408018
+Sep-30 18:19:05.234 [main] DEBUG nextflow.Session - Session UUID: 2f0395cc-d078-4031-889d-855d40008779
+Sep-30 18:19:05.235 [main] DEBUG nextflow.Session - Run name: deadly_almeida
+Sep-30 18:19:05.235 [main] DEBUG nextflow.Session - Executor pool size: 32
+Sep-30 18:19:05.241 [main] DEBUG nextflow.file.FilePorter - File porter settings maxRetries=3; maxTransfers=50; pollTimeout=null
+Sep-30 18:19:05.244 [main] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'FileTransfer' minSize=10; maxSize=96; workQueue=LinkedBlockingQueue[-1]; allowCoreThreadTimeout=false
+Sep-30 18:19:05.315 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 26.04.0 build 12031
+  Created: 29-04-2026 04:00 UTC (00:00 EDT)
+  System: Linux 5.14.0-687.51.1.el9_8.x86_64
+  Runtime: Groovy 4.0.31 on OpenJDK 64-Bit Server VM 23.0.2-internal-adhoc.conda.src
+  Encoding: UTF-8 (UTF-8)
+  Process: 1023107@nmrcnb111725.genomics.local [10.0.0.168]
+  CPUs: 32 - Mem: 62.5 GB (11.4 GB) - Swap: 15.6 GB (12.6 GB)
+Sep-30 18:19:05.332 [main] DEBUG nextflow.Session - Work-dir: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/work [xfs]
+Sep-30 18:19:05.332 [main] DEBUG nextflow.Session - Script base path does not exist or is not a directory: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/bin
+Sep-30 18:19:05.340 [main] DEBUG nextflow.executor.ExecutorFactory - Extension executors providers=[]
+Sep-30 18:19:05.348 [main] DEBUG nextflow.Session - Observer factory (v2): LinObserverFactory
+Sep-30 18:19:05.349 [main] DEBUG nextflow.Session - Observer factory (v2): DefaultObserverFactory
+Sep-30 18:19:05.372 [main] DEBUG nextflow.cache.CacheFactory - Using Nextflow cache factory: nextflow.cache.DefaultCacheFactory
+Sep-30 18:19:05.377 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 33; maxThreads: 1000
+Sep-30 18:19:05.508 [main] DEBUG nextflow.Session - Session start
+Sep-30 18:19:05.512 [main] DEBUG nextflow.trace.TraceFileObserver - Workflow started -- trace file: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/test_results/pipeline_2026-09-30_18-19-04.trace
+Sep-30 18:19:05.514 [main] DEBUG nextflow.script.ScriptLoaderFactory - Using script parser v2
+Sep-30 18:19:07.822 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Sep-30 18:19:08.184 [main] DEBUG n.script.dsl.ProcessConfigBuilder - Config settings `withName:Interleave` matches process QC_Workflow:Interleave
+Sep-30 18:19:08.186 [main] DEBUG n.script.dsl.ProcessConfigBuilder - Config settings `withName:QC_Workflow:Interleave` matches process QC_Workflow:Interleave
+Sep-30 18:19:08.187 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Sep-30 18:19:08.187 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Sep-30 18:19:08.192 [main] DEBUG nextflow.executor.Executor - [warm up] executor > local
+Sep-30 18:19:08.196 [main] DEBUG n.processor.LocalPollingMonitor - Creating local task monitor for executor 'local' > cpus=32; memory=62.5 GB; capacity=32; pollInterval=100ms; dumpInterval=5m
+Sep-30 18:19:08.198 [main] DEBUG n.processor.TaskPollingMonitor - >>> barrier register (monitor: local)
+Sep-30 18:19:08.220 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'QC_Workflow:Interleave': maxForks=0; fair=false; array=0
+Sep-30 18:19:08.238 [main] DEBUG n.script.dsl.ProcessConfigBuilder - Config settings `withName:Pretrim_fastqc_merged` matches process QC_Workflow:Pretrim_fastqc_merged
+Sep-30 18:19:08.239 [main] DEBUG n.script.dsl.ProcessConfigBuilder - Config settings `withName:QC_Workflow:Pretrim_fastqc_merged` matches process QC_Workflow:Pretrim_fastqc_merged
+Sep-30 18:19:08.241 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Sep-30 18:19:08.241 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Sep-30 18:19:08.241 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'QC_Workflow:Pretrim_fastqc_merged': maxForks=0; fair=false; array=0
+Sep-30 18:19:08.244 [main] DEBUG n.script.dsl.ProcessConfigBuilder - Config settings `withName:Pretrim_NanoPlot` matches process QC_Workflow:Pretrim_NanoPlot
+Sep-30 18:19:08.244 [main] DEBUG n.script.dsl.ProcessConfigBuilder - Config settings `withName:QC_Workflow:Pretrim_NanoPlot` matches process QC_Workflow:Pretrim_NanoPlot
+Sep-30 18:19:08.245 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Sep-30 18:19:08.245 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Sep-30 18:19:08.246 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'QC_Workflow:Pretrim_NanoPlot': maxForks=0; fair=false; array=0
+Sep-30 18:19:08.248 [main] DEBUG n.script.dsl.ProcessConfigBuilder - Config settings `withName:Quality_Control` matches process QC_Workflow:Quality_Control
+Sep-30 18:19:08.249 [main] DEBUG n.script.dsl.ProcessConfigBuilder - Config settings `withName:QC_Workflow:Quality_Control` matches process QC_Workflow:Quality_Control
+Sep-30 18:19:08.250 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Sep-30 18:19:08.250 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Sep-30 18:19:08.251 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'QC_Workflow:Quality_Control': maxForks=0; fair=false; array=0
+Sep-30 18:19:08.253 [main] DEBUG n.script.dsl.ProcessConfigBuilder - Config settings `withName:PoreChop` matches process QC_Workflow:PoreChop
+Sep-30 18:19:08.254 [main] DEBUG n.script.dsl.ProcessConfigBuilder - Config settings `withName:QC_Workflow:PoreChop` matches process QC_Workflow:PoreChop
+Sep-30 18:19:08.255 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Sep-30 18:19:08.255 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Sep-30 18:19:08.256 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'QC_Workflow:PoreChop': maxForks=0; fair=false; array=0
+Sep-30 18:19:08.258 [main] DEBUG n.script.dsl.ProcessConfigBuilder - Config settings `withName:Fastp_LongReads` matches process QC_Workflow:Fastp_LongReads
+Sep-30 18:19:08.259 [main] DEBUG n.script.dsl.ProcessConfigBuilder - Config settings `withName:QC_Workflow:Fastp_LongReads` matches process QC_Workflow:Fastp_LongReads
+Sep-30 18:19:08.259 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Sep-30 18:19:08.259 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Sep-30 18:19:08.260 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'QC_Workflow:Fastp_LongReads': maxForks=0; fair=false; array=0
+Sep-30 18:19:08.270 [main] DEBUG n.script.dsl.ProcessConfigBuilder - Config settings `withLabel:qc` matches labels `qc` for process with name QC_Workflow:Post_trim_fastqc
+Sep-30 18:19:08.270 [main] DEBUG n.script.dsl.ProcessConfigBuilder - Config settings `withName:Post_trim_fastqc` matches process QC_Workflow:Post_trim_fastqc
+Sep-30 18:19:08.271 [main] DEBUG n.script.dsl.ProcessConfigBuilder - Config settings `withName:QC_Workflow:Post_trim_fastqc` matches process QC_Workflow:Post_trim_fastqc
+Sep-30 18:19:08.271 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Sep-30 18:19:08.272 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Sep-30 18:19:08.272 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'QC_Workflow:Post_trim_fastqc': maxForks=0; fair=false; array=0
+Sep-30 18:19:08.276 [main] DEBUG n.script.dsl.ProcessConfigBuilder - Config settings `withLabel:qc` matches labels `qc` for process with name QC_Workflow:Multiqc_QC_Stats
+Sep-30 18:19:08.277 [main] DEBUG n.script.dsl.ProcessConfigBuilder - Config settings `withName:Multiqc_QC_Stats` matches process QC_Workflow:Multiqc_QC_Stats
+Sep-30 18:19:08.278 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Sep-30 18:19:08.279 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Sep-30 18:19:08.279 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'QC_Workflow:Multiqc_QC_Stats': maxForks=0; fair=false; array=0
+Sep-30 18:19:08.299 [main] DEBUG n.script.dsl.ProcessConfigBuilder - Config settings `withName:Read_Distribution` matches process Read_Distribution
+Sep-30 18:19:08.300 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Sep-30 18:19:08.300 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Sep-30 18:19:08.300 [main] DEBUG nextflow.processor.TaskProcessor - Creating process 'Read_Distribution': maxForks=0; fair=false; array=0
+Sep-30 18:19:08.324 [main] DEBUG nextflow.Session - Process names: CONTIG_based_analysis:MLST, CheckM2_Assemblies, QC_Workflow:Pretrim_fastqc_merged, Reads_Taxonomic_Classifier_Workflow:MASH, Post_host_remove_fastqc, MMSEQ_AllAssemblers:ES_SEARCH, PROKKA, Reads_Taxonomic_Classifier_Workflow:BRACKEN_ABUNDANCE, VS_Workflow:Map_Reads_2_Contigs_VS, Posttrim_NanoPlot_After_ReadDistribution, Reads_Taxonomic_Classifier_Workflow:SOURMASH_SKETCH, CONTIG_based_analysis:CheckM2_Assemblies, Reads_Taxonomic_Classifier_Workflow:READS_TAXONOMIC_CLASSIFIER_SUMMARY, Myloasm, MapReads_2_RefSeq:Map_Reads_2_RefSeq, PHISPY, AMRFINDER, Unicycler_Assembly_Hybrid, Fastq_2_Fasta, AMR_VF_BLAST, Dragonflye_Medaka_LR, Parse_MMseqs_Reads, LongRead_NanoPlot_QC_Stats, ClusterAssemblies, AMRFINDER_UNMAPPED, Assembly_Workflow:MetaSPAdes_Assembly, Autocycler_Workflow:AssembleMiniasm, Pull_Unassigned_MMseqs_Reads, AssembleMiniasm, Assembly_Workflow:Dragonflye_Medaka_LR, KRAKEN2_CLASSIFY, AMR_VF_BLAST_AMR, MLST, Dragonflye_LR, SOURMASH_SKETCH, Autocycler_Workflow:ClusterAssemblies, Assembly_Workflow:Unicycler_Assembly_Hybrid, QC_Workflow:Interleave, Reads_Taxonomic_Classifier_Workflow:TAXPASTA_METAPHLAN4, Assembly_Workflow:Dragonflye_Medaka_Hybrid, DAA2INFO_contigs_daa_file, Dragonflye_Raven, RGI_UNMAPPED, Autocycler_Workflow:CombineResolved, BlastX_reads, Fastcat_trim, BRACKEN_ABUNDANCE, VS_Workflow:Diamondview, Quality_Control, Map_Reads_2_Contigs, Remove_rRNA_Reads_Workflow:RiboDetector_Remove_rRNA_reads, Interleave, TAXPASTA_KRAKEN2, Pull_and_Parse_Unmapped_Reads, CONTIG_based_analysis:AMR_VF_BLAST_AMR, Reads_Taxonomic_Classifier_Workflow:KRAKEN2_KRONA_SNAPSHOT, QC_Workflow:PoreChop, Dragonflye_Medaka, Unicycler_Assembly, MMSEQS_CREATEDB_QUERY, Posttrim_NanoPlot, Autocycler_Workflow:SubsampleReads, RGI, AssembleFlye, TrimClusters, Remove_rRNA_Reads_Workflow:Remove_Common_Flora_rRNA_reads, CompressAssemblies, CheckV_Assemblies, SubsampleReads, VS_Workflow:Filter_Putative_Viruses_ALL, AssembleMyloasm, MASH, Reads_Taxonomic_Classifier_Workflow:SOURMASH_GATHER, Megan_ShortReads_WF:Meganize_ShortReads_BlastX, Assembly_Workflow:Spades, BlastX_Reads_Workflow:BlastX_reads, MMSEQ_AllAssemblers:ES_CREATEDB, PoreChop, MapReads_2_RefSeq:Multiqc_QC_host_removal, Post_removal_rRNA_reads_fastqc, Pretrim_fastqc, Reads_Taxonomic_Classifier_Workflow:SOURMASH_TAX_KREPORT, MMSEQS_SEARCH, Parse_BlastX_Contigs, Dorado_Split_BamFiles, Autocycler_Workflow:CompressAssemblies, Multiqc_QC_rRNA_removal, Dragonflye_Raven_LR, CONTIG_based_analysis:Map_Reads_2_Contigs, Meganize_LongReads_BlastX, AMR_VF_BLASTN_UNMAPPED, VS_Workflow:MMSEQ_AllReads:ES_CREATEDB, Assembly_Workflow:Plasmid_Spades, MOBSUITE, AMR_VF_BLAST_plasmids, Assembly_Workflow:Dragonflye_Raven_Hybrid, QC_Workflow:Fastp_LongReads, Autocycler_Workflow:ResolveClusters, ES_CREATEDB, Dragonflye_Raven_Hybrid, Reads_Taxonomic_Classifier_Workflow:KRAKEN2_CLASSIFY, Reads_Taxonomic_Classifier_Workflow:METAPHLAN4_CLASSIFY, Generate_VS_Outputs, KRAKEN2_KRONA, Split_BamFiles_Workflow:Dorado_Split_BamFiles, Multiqc_QC_host_removal, Reads_Taxonomic_Classifier_Workflow:KRAKEN2_KRONA, BUSCO, CONTIG_based_analysis:AMR_VF_BLAST_select_agents, VS_Workflow:Parse_MMseqs_Reads, ES_CONVERT, CONTIG_based_analysis:BLASTN_NT_contigs, MMSEQ_AllAssemblers:ES_CONVERT, MetaSPAdes_Assembly, READS_TAXONOMIC_CLASSIFIER_SUMMARY, QC_Workflow:Post_trim_fastqc, Dorado_Aligner, VS_Workflow:MMSEQ_AllReads:ES_SEARCH, Assembly_Workflow:Dragonflye_Hybrid, VS_Workflow:Pull_Unassigned_MMseqs_Blastx, Pretrim_NanoPlot, VS_Workflow:Pull_Unassigned_MMseqs_Reads, ES_SEARCH, Map_Reads_2_RefSeq, QC_Workflow:Quality_Control, CheckM_Assemblies, AMR_VF_BLAST_select_agents, Assembly_Workflow:Unicycler_Assembly_Short, EstimateGenomeSize, Autocycler_Workflow:EstimateGenomeSize, Diamondview, SOURMASH_GATHER, Meganize_ShortReads_BlastX, CONTIG_based_analysis:MOBSUITE, Map_Reads_2_Contigs_VS, BLASTN_NT_contigs, Autocycler_Workflow:TrimClusters, Parse_MMSEQ_Contigs, Assembly_Workflow:Myloasm, Dorado_Polisher, VS_Workflow:MMSEQ_AllReads:ES_CONVERT, Assembly_Workflow:Dragonflye_Raven_LR, Reads_Taxonomic_Classifier_Workflow:GOTTCHA_CLASSIFY, Fastp_LongReads, Read_Distribution, CONTIG_based_analysis:PHISPY, VS_Workflow:Generate_VS_Outputs, CONTIG_based_analysis:PROKKA, SOURMASH_TAX_KREPORT, BlastX_contigs, TAXPASTA_METAPHLAN4, CombineResolved, Remove_Common_Flora_rRNA_reads, CONTIG_based_analysis:AMR_VF_BLASTN_UNMAPPED, GE_SCREEN, Meganize_BlastX_Contigs, CONTIG_based_analysis:PLASME, Dragonflye_Hybrid, Dragonflye, PLASME, CONTIG_based_analysis:RGI_UNMAPPED, Remove_rRNA_Reads_Workflow:Post_removal_rRNA_reads_fastqc, UNMAPPED_LR_TO_FASTA, AMR_VF_BLAST_VF, KRAKEN2_KRONA_SNAPSHOT, Heatmap_Virusseeker, CONTIG_based_analysis:CheckV_Assemblies, Dragonflye_Medaka_Hybrid, QC_Workflow:Multiqc_QC_Stats, Reads_Taxonomic_Classifier_Workflow:TAXPASTA_KRAKEN2, CONTIG_based_analysis:AMR_VF_BLAST_plasmids, Autocycler_Workflow:AssembleMyloasm, MMSEQS_CONVERTALIS, VS_Workflow:Fastq_2_Fasta, CONTIG_based_analysis:AMRFINDER_UNMAPPED, CONTIG_based_analysis:BUSCO, CONTIG_based_analysis:RGI, Autocycler_Workflow:AssembleFlye, CONTIG_based_analysis:CheckM_Assemblies, Post_trim_fastqc, RiboDetector_Remove_rRNA_reads, MapReads_2_RefSeq:Post_host_remove_fastqc, Unicycler_Assembly_Short, VS_Workflow:Pull_and_Parse_Unmapped_Reads, ResolveClusters, Pretrim_fastqc_merged, Plasmid_Spades, Filter_Putative_Viruses_ALL, Multiqc_QC_Stats, Spades, CONTIG_based_analysis:UNMAPPED_LR_TO_FASTA, CONTIG_based_analysis:AMR_VF_BLAST_VF, QC_Workflow:Pretrim_NanoPlot, GOTTCHA_CLASSIFY, Merge_Arc, CONTIG_based_analysis:AMRFINDER, Megan_LongReads_WF:Meganize_LongReads_BlastX, Remove_rRNA_Reads_Workflow:Multiqc_QC_rRNA_removal, METAPHLAN4_CLASSIFY, Pull_Unassigned_MMseqs_Blastx, Assembly_Workflow:Dragonflye_LR
+Sep-30 18:19:08.340 [main] DEBUG nextflow.Session - Igniting dataflow network (29)
+Sep-30 18:19:08.345 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > QC_Workflow:Interleave
+Sep-30 18:19:08.345 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > QC_Workflow:Pretrim_fastqc_merged
+Sep-30 18:19:08.345 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > QC_Workflow:Pretrim_NanoPlot
+Sep-30 18:19:08.345 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > QC_Workflow:Quality_Control
+Sep-30 18:19:08.345 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > QC_Workflow:PoreChop
+Sep-30 18:19:08.345 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > QC_Workflow:Fastp_LongReads
+Sep-30 18:19:08.345 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > QC_Workflow:Post_trim_fastqc
+Sep-30 18:19:08.345 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > QC_Workflow:Multiqc_QC_Stats
+Sep-30 18:19:08.345 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > Read_Distribution
+Sep-30 18:19:08.346 [main] DEBUG nextflow.script.ScriptRunner - Parsed script files:
+  _nf_script_20305570258358e3: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/workflows/mmseqs/mmseqs_reads.nf
+  _nf_script_177cfd6f82019bc7: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/workflows/autocycler_wf.nf
+  _nf_script_e3fa72cb34fa6567: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/workflows/contigs_based_analysis.nf
+  _nf_script_02b8f41fe3dc177e: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/workflows/modules/local/remove_rRNA_from_reads/main.nf
+  _nf_script_522cec2ebfb81728: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/workflows/dorado_polish.nf
+  _nf_script_a369b74b1d0230fe: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/workflows/modules/local/contig_characterization/main_contigs.nf
+  _nf_script_1c9a9fee8ea3e2a9: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/workflows/megan_workflow/main.nf
+  _nf_script_323ddd4ef94014ce: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/workflows/modules/local/map2refseq/main.nf
+  _nf_script_8310e4e042a7be66: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/workflows/qc.nf
+  _nf_script_f88f91adbf944273: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/workflows/modules/local/blastx/main.nf
+  _nf_script_5e8d73e56b408a5e: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/workflows/assembly.nf
+  _nf_script_4e183f2ebe6877f9: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/workflows/modules/local/dorado_polish/main.nf
+  _nf_script_49100a7afeeed784: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/workflows/modules/local/checkm/main.nf
+  _nf_script_eba102eb1f91c987: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/workflows/modules/local/assembler/main.nf
+  _nf_script_70b98d98aa5c2f3b: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/workflows/modules/local/qc/main.nf
+  _nf_script_6f0769c6e822da3b: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/workflows/mmseqs/mmseq_allassemblers.nf
+  _nf_script_b3a466d65fdece23: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/workflows/reads_taxonomic_classifier.nf
+  _nf_script_66c9ca586c8db1df: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/workflows/modules/local/virusseeker/main.nf
+  _nf_script_108c26bd555f235e: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/workflows/BlastX_Reads.nf
+  _nf_script_b9db90cad048776d: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/workflows/modules/local/autocycler/main.nf
+  _nf_script_607f3e516122d982: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/workflows/modules/local/mmseq/mmseq_main.nf
+  _nf_script_a77117612174f85c: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/workflows/MapReads2RefSeq.nf
+  Main: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/main.nf
+  _nf_script_449f406f22c482fd: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/workflows/VS_calls.nf
+  _nf_script_9f9113ffb14634ba: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/workflows/Remove_rRNA_wf.nf
+Sep-30 18:19:08.346 [main] DEBUG nextflow.script.ScriptRunner - > Awaiting termination 
+Sep-30 18:19:08.346 [main] DEBUG nextflow.Session - Session await
+Sep-30 18:19:08.422 [Actor Thread 11] DEBUG nextflow.container.SingularityCache - Apptainer found local store for image=docker://ghcr.io/bdrd-genomics/allinone-aio_qc:latest; path=/data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/work/singularity/ghcr.io-bdrd-genomics-allinone-aio_qc-latest.img
+Sep-30 18:19:08.526 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Sep-30 18:19:08.529 [Task submitter] INFO  nextflow.Session - [a4/dfad8d] Submitted process > QC_Workflow:Quality_Control (test_short)
+Sep-30 18:19:12.314 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 2; name: QC_Workflow:Quality_Control (test_short); status: COMPLETED; exit: 0; error: -; workDir: /data/github/MANUSCRIPT_ALL_IN_ONE/All_In_One/work/a4/dfad8de69266ec62e44abf1beabd19]
+Sep-30 18:19:12.315 [Task monitor] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'TaskFinalizer' minSize=10; maxSize=96; workQueue=LinkedBlockingQueue[-1]; allowCoreThreadTimeout=false
+Sep-30 18:19:12.332 [TaskFinalizer-1] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'PublishDir' minSize=10; maxSize=96; workQueue=LinkedBlockingQueue[-1]; allowCoreThreadTimeout=false
+Sep-30 18:19:12.336 [main] DEBUG nextflow.Session - Session await > all processes finished
+Sep-30 18:19:12.413 [Task monitor] DEBUG n.processor.TaskPollingMonitor - <<< barrier arrives (monitor: local) - terminating tasks monitor poll loop
+Sep-30 18:19:12.413 [main] DEBUG nextflow.Session - Session await > all barriers passed
+Sep-30 18:19:12.415 [main] DEBUG nextflow.util.ThreadPoolManager - Thread pool 'TaskFinalizer' shutdown completed (hard=false)
+Sep-30 18:19:12.416 [main] DEBUG nextflow.util.ThreadPoolManager - Thread pool 'PublishDir' shutdown completed (hard=false)
+Sep-30 18:19:12.420 [main] DEBUG n.trace.WorkflowStatsObserver - Workflow completed > WorkflowStats[succeededCount=1; failedCount=0; ignoredCount=0; cachedCount=0; pendingCount=0; submittedCount=0; runningCount=0; retriesCount=0; abortedCount=0; succeedDuration=6.5s; failedDuration=0ms; cachedDuration=0ms;loadCpus=0; loadMemory=0; peakRunning=1; peakCpus=2; peakMemory=4 GB; ]
+Sep-30 18:19:12.605 [main] DEBUG nextflow.trace.ReportObserver - Workflow completed -- rendering execution report
+Sep-30 18:19:13.025 [main] DEBUG nextflow.trace.TimelineObserver - Workflow completed -- rendering execution timeline
+Sep-30 18:19:13.079 [main] DEBUG nextflow.trace.TraceFileObserver - Workflow completed -- saving trace file
+Sep-30 18:19:13.084 [main] DEBUG nextflow.cache.CacheDB - Closing CacheDB done
+Sep-30 18:19:13.089 [main] DEBUG nextflow.util.ThreadPoolManager - Thread pool 'FileTransfer' shutdown completed (hard=false)
+Sep-30 18:19:13.090 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye
