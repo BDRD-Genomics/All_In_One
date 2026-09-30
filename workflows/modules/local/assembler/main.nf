@@ -338,9 +338,6 @@ process Dragonflye_Medaka {
     publishDir { "${params.outdir}/${params.run_id}/${sample_id}/dragonflye_medaka/" }, mode: 'copy'
     label 'medaka_gpu'
     errorStrategy 'ignore'
-    //clusterOptions = [ '--partition="normal"','--gpus=2' ]
-    //cpus { 16 }
-    //memory { '32 GB'}
     time '36h'
 
     input:

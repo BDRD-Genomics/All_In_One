@@ -16,7 +16,6 @@ params {
     // Recommended: keep all All_In_One databases beneath this directory.
     database_dir = System.getenv('AIO_DATABASE_DIR') ?: "${projectDir}/database"
 
-    tmp_dir = System.getenv('AIO_TMP_DIR') ?: "${launchDir}/tmp"
 
     // Software backends
     docker_image  = 'your-registry/all_in_one_pipeline:latest'

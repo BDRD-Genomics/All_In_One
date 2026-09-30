@@ -235,7 +235,7 @@ process GE_SCREEN {
         --amrfinderplus \\
         --amrfinder-db ${params.amrfinderDB} \\
         --amrfinder-annotation-format prodigal \\
-        --partition normal \\
+        --partition ${params.slurm_partition} \\
         --threads ${task.cpus} \\
         --submit-dashboard \\ 
         --dashboard-wrapper ${params.scripts}/submit_ge_screen_dashboard.sh \\
@@ -411,7 +411,6 @@ process AMR_VF_BLAST_plasmids {
     tag { "${assembler} | ${sample_id}" }
     publishDir { "${params.outdir}/${params.run_id}/${sample_id}/AMR_VF/${assembler}" }, mode: 'copy'
     label 'lowmem'
-    conda "${baseDir}/env/amrfinderplus.yml"
     errorStrategy 'ignore'
     input:
     tuple val(sample_id), val(assembler), path(contigs_fasta)
@@ -436,7 +435,6 @@ process AMR_VF_BLAST_select_agents {
     tag { "${assembler} | ${sample_id}" }
     publishDir { "${params.outdir}/${params.run_id}/${sample_id}/AMR_VF/${assembler}" }, mode: 'copy'
     label 'lowmem'
-    conda "${baseDir}/env/amrfinderplus.yml"
     errorStrategy 'ignore'
     input:
     tuple val(sample_id), val(assembler), path(contigs_fasta)
@@ -461,7 +459,6 @@ process AMR_VF_BLAST_AMR {
     tag { "${assembler} | ${sample_id}" }
     publishDir { "${params.outdir}/${params.run_id}/${sample_id}/AMR_VF/${assembler}" }, mode: 'copy'
     label 'lowmem'
-    conda "${baseDir}/env/amrfinderplus.yml"
     errorStrategy 'ignore'
     input:
     tuple val(sample_id), val(assembler), path(contigs_fasta)
@@ -485,7 +482,6 @@ process AMR_VF_BLAST_VF {
     tag { "${assembler} | ${sample_id}" }
     publishDir { "${params.outdir}/${params.run_id}/${sample_id}/AMR_VF/${assembler}" }, mode: 'copy'
     label 'lowmem'
-    conda "${baseDir}/env/amrfinderplus.yml"
     errorStrategy 'ignore'
     input:
     tuple val(sample_id), val(assembler), path(contigs_fasta)

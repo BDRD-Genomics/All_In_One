@@ -3,14 +3,14 @@ name: ribodetector
 channels:
   - conda-forge
   - bioconda
-  - defaults
-
-channel_priority: strict
 
 dependencies:
   - python=3.10
   - pip
   - ribodetector
+  - bbmap
+  - pigz
+
   - pip:
       - --extra-index-url https://download.pytorch.org/whl/cu124
       - torch==2.6.0

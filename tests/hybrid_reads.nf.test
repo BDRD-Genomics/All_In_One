@@ -1,0 +1,33 @@
+nextflow_workflow {
+
+    name "All_In_One hybrid reads"
+
+    script "../main.nf"
+
+    config "./nextflow.config"
+
+
+    params {
+
+        samplesheet = "data/hybrid/samplesheet.csv"
+
+        run_id = "test_hybrid"
+
+        outdir = "results_hybrid"
+
+        shortreads = false
+        longreads  = false
+        hybrid     = true
+
+    }
+
+
+    test("hybrid workflow completes") {
+
+        assert workflow.success
+
+        assert path("results_hybrid").exists()
+
+    }
+
+}
