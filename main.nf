@@ -35,9 +35,9 @@ workflow {
         .fromPath(params.samplesheet)
         .splitCsv(header: true)
         .map { row ->
-            def fq1 = row.fastq_1?.contains('No_Read') ? null : file(row.fastq_1, checkIfExists: false)
-            def fq2 = row.fastq_2?.contains('No_Read') ? null : file(row.fastq_2, checkIfExists: false)
-            def lr  = row.long_read?.contains('No_Read') ? null : file(row.long_read, checkIfExists: false)
+            def fq1 = row.fastq_1?.trim() && !row.fastq_1.contains('No_Read') ? file(row.fastq_1, checkIfExists: false) : null
+            def fq2 = row.fastq_2?.trim() && !row.fastq_2.contains('No_Read') ? file(row.fastq_2, checkIfExists: false) : null
+            def lr  = row.long_read?.trim() && !row.long_read.contains('No_Read') ? file(row.long_read, checkIfExists: false) : null
 
             def mode = fq1 && fq2 && lr ? 'hybrid'
                      : fq1 && fq2       ? 'short'

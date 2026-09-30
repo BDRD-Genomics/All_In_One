@@ -172,7 +172,6 @@ process RiboDetector_Remove_rRNA_reads {
             -i "${sr_file}" \\
             -e ${ribodetector_ensure} \\
             --chunk_size ${ribodetector_chunk} \\
-            --log ${sample_id}.ribodetector.short.log \\
             -o ${sample_id}_host_contaminant_rRNA_removed_pe.raw.fastq \\
             -r ${sample_id}_rRNA.raw.fastq
 
@@ -211,7 +210,6 @@ process RiboDetector_Remove_rRNA_reads {
             -i "${lr_file}" \\
             -e ${ribodetector_ensure} \\
             --chunk_size ${ribodetector_chunk} \\
-            --log ${sample_id}.ribodetector.long.log \\
             -o ${sample_id}_host_contaminant_rRNA_removed_LR.fastq \\
             -r ${sample_id}_rRNA_LR.fastq
 

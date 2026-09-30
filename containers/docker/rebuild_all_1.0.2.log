@@ -1,0 +1,3677 @@
+============================================================
+All_In_One Docker rebuild + validation + push
+Release: 1.0.2
+Base:    ghcr.io/bdrd-genomics/allinone-conda-base:latest
+Source:  https://github.com/BDRD-Genomics/All_In_One
+============================================================
+
+Checking base image...
+PASS: base image
+
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-aio_qc:1.0.2
+Dockerfile: Dockerfile.aio_qc
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.aio_qc
+#1 transferring dockerfile: 563B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 494B done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.aio_qc.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml &&     /opt/conda/bin/conda clean -a -y
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:1b4453c03b47b08841fb6780569b097862d1035616c8dd00134b1681b5c04d3e done
+#8 naming to ghcr.io/bdrd-genomics/allinone-aio_qc:1.0.2 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-aio_qc:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-aio_qc:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-aio_qc]
+08424d1f1fb1: Preparing
+2ba7f069259a: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+325e753dfc15: Waiting
+2d6e09443d18: Waiting
+c82be61ce08a: Waiting
+08424d1f1fb1: Layer already exists
+ed6d2ffa030a: Layer already exists
+a1dcf546c41a: Layer already exists
+2ba7f069259a: Layer already exists
+9b0527ee93d7: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+1.0.2: digest: sha256:bff0e6fcc57669ee344f15768d89199a529002231dbca6254fc3fc18bee498cc size: 2008
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-aio_qc:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-aio_qc]
+08424d1f1fb1: Preparing
+2ba7f069259a: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+08424d1f1fb1: Layer already exists
+2ba7f069259a: Layer already exists
+9b0527ee93d7: Layer already exists
+a1dcf546c41a: Layer already exists
+ed6d2ffa030a: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+latest: digest: sha256:bff0e6fcc57669ee344f15768d89199a529002231dbca6254fc3fc18bee498cc size: 2008
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-aio_qc:1.0.2
+  ghcr.io/bdrd-genomics/allinone-aio_qc:latest
+SKIP: Dockerfile.almalinux9.autoactivate
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-amrfinder_plus:1.0.2
+Dockerfile: Dockerfile.amrfinder_plus
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.amrfinder_plus
+#1 transferring dockerfile: 635B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 222B done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.amrfinderplus.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml &&     /opt/conda/bin/conda clean -a -y
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:7e5ddfde8dfe526e5cbc70e902a25ddb7f6d259061afe89172e4c06b89a7b29c done
+#8 naming to ghcr.io/bdrd-genomics/allinone-amrfinder_plus:1.0.2 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-amrfinder_plus:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-amrfinder_plus:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-amrfinder_plus]
+f50aa4e25405: Preparing
+618c8717abd7: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+ed6d2ffa030a: Layer already exists
+a1dcf546c41a: Layer already exists
+618c8717abd7: Layer already exists
+f50aa4e25405: Layer already exists
+9b0527ee93d7: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+1.0.2: digest: sha256:3c062cd932832c22bd1b8c553395c90f0b40ee93884a6e0406e8d013de4f3baa size: 2007
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-amrfinder_plus:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-amrfinder_plus]
+f50aa4e25405: Preparing
+618c8717abd7: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+f50aa4e25405: Layer already exists
+a1dcf546c41a: Layer already exists
+9b0527ee93d7: Layer already exists
+ed6d2ffa030a: Layer already exists
+618c8717abd7: Layer already exists
+2d6e09443d18: Layer already exists
+c82be61ce08a: Layer already exists
+325e753dfc15: Layer already exists
+latest: digest: sha256:3c062cd932832c22bd1b8c553395c90f0b40ee93884a6e0406e8d013de4f3baa size: 2007
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-amrfinder_plus:1.0.2
+  ghcr.io/bdrd-genomics/allinone-amrfinder_plus:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-autocycler:1.0.2
+Dockerfile: Dockerfile.autocycler
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.autocycler
+#1 transferring dockerfile: 525B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 241B done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.autocycler.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -n autocycler -f /tmp/environment.yml     && /opt/conda/bin/conda clean -afy     && rm -f /tmp/environment.yml
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:bab436d4b914bbd4ae59f90bd87348bc8411d5987523a9c09e6b10e9e56cea46 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-autocycler:1.0.2 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-autocycler:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-autocycler:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-autocycler]
+5d9af5d5e9c4: Preparing
+06e77c7c9009: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+9b0527ee93d7: Layer already exists
+a1dcf546c41a: Layer already exists
+ed6d2ffa030a: Layer already exists
+06e77c7c9009: Layer already exists
+5d9af5d5e9c4: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+1.0.2: digest: sha256:c5ca2739534b1588b36023640f76eb395877574be88e50170c8ab3ea2e75e725 size: 2006
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-autocycler:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-autocycler]
+5d9af5d5e9c4: Preparing
+06e77c7c9009: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+2d6e09443d18: Waiting
+5d9af5d5e9c4: Layer already exists
+06e77c7c9009: Layer already exists
+a1dcf546c41a: Layer already exists
+2d6e09443d18: Layer already exists
+ed6d2ffa030a: Layer already exists
+9b0527ee93d7: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+latest: digest: sha256:c5ca2739534b1588b36023640f76eb395877574be88e50170c8ab3ea2e75e725 size: 2006
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-autocycler:1.0.2
+  ghcr.io/bdrd-genomics/allinone-autocycler:latest
+SKIP: Dockerfile.base
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-bbmap:1.0.2
+Dockerfile: Dockerfile.bbmap
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.bbmap
+#1 transferring dockerfile: 558B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 2.71kB done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.bbmap.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml &&     /opt/conda/bin/conda clean -a -y
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:430c1e49e9c2a9554b9b3d1d5890081f86eca87b16e759a3f1ad52d3dc9315ba done
+#8 naming to ghcr.io/bdrd-genomics/allinone-bbmap:1.0.2 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-bbmap:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-bbmap:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-bbmap]
+0d9f919c365b: Preparing
+e356b19ab6f3: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+9b0527ee93d7: Layer already exists
+0d9f919c365b: Layer already exists
+e356b19ab6f3: Layer already exists
+2d6e09443d18: Layer already exists
+ed6d2ffa030a: Layer already exists
+a1dcf546c41a: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+1.0.2: digest: sha256:85d136b4d35388de091c54269ab9f999b3c7e85984957a282abe55a8d585f24a size: 2008
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-bbmap:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-bbmap]
+0d9f919c365b: Preparing
+e356b19ab6f3: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+325e753dfc15: Waiting
+2d6e09443d18: Waiting
+c82be61ce08a: Waiting
+0d9f919c365b: Layer already exists
+e356b19ab6f3: Layer already exists
+a1dcf546c41a: Layer already exists
+2d6e09443d18: Layer already exists
+9b0527ee93d7: Layer already exists
+ed6d2ffa030a: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+latest: digest: sha256:85d136b4d35388de091c54269ab9f999b3c7e85984957a282abe55a8d585f24a size: 2008
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-bbmap:1.0.2
+  ghcr.io/bdrd-genomics/allinone-bbmap:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-blast:1.0.2
+Dockerfile: Dockerfile.blast
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.blast
+#1 transferring dockerfile: 594B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 193B done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.blast.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml &&     /opt/conda/bin/conda clean -a -y
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:ea6f39e9e0deb18bc6c06ccb3d0b415d3c8fa7d8b7963bcfed42c5a6c2746f39 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-blast:1.0.2 0.0s done
+#8 naming to ghcr.io/bdrd-genomics/allinone-blast:latest 0.0s done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-blast:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-blast]
+2ad968f5cae4: Preparing
+b0ff88fac631: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+2ad968f5cae4: Layer already exists
+9b0527ee93d7: Layer already exists
+a1dcf546c41a: Layer already exists
+b0ff88fac631: Layer already exists
+2d6e09443d18: Layer already exists
+ed6d2ffa030a: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+1.0.2: digest: sha256:58c6f646388b042466160322108a4e2d9833a0ae043b2581c373ea4816ded1ea size: 2007
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-blast:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-blast]
+2ad968f5cae4: Preparing
+b0ff88fac631: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+2ad968f5cae4: Layer already exists
+b0ff88fac631: Layer already exists
+ed6d2ffa030a: Layer already exists
+2d6e09443d18: Layer already exists
+9b0527ee93d7: Layer already exists
+325e753dfc15: Layer already exists
+a1dcf546c41a: Layer already exists
+c82be61ce08a: Layer already exists
+latest: digest: sha256:58c6f646388b042466160322108a4e2d9833a0ae043b2581c373ea4816ded1ea size: 2007
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-blast:1.0.2
+  ghcr.io/bdrd-genomics/allinone-blast:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-busco:1.0.2
+Dockerfile: Dockerfile.busco
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.busco
+#1 transferring dockerfile: 594B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 7.65kB done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.busco.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml &&     /opt/conda/bin/conda clean -a -y
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:c05e9ba24080afacd144326bcb950871114ca3e7ace9b66b3b537ed7f225b6bf done
+#8 naming to ghcr.io/bdrd-genomics/allinone-busco:1.0.2 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-busco:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-busco:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-busco]
+0f026a69b3f7: Preparing
+8eb98db4af83: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+9b0527ee93d7: Layer already exists
+ed6d2ffa030a: Layer already exists
+a1dcf546c41a: Layer already exists
+0f026a69b3f7: Layer already exists
+8eb98db4af83: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+1.0.2: digest: sha256:ba55f274782102e137844c2d5cab4b439ab9a6d226c628f46c1d0ff02670aa15 size: 2009
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-busco:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-busco]
+0f026a69b3f7: Preparing
+8eb98db4af83: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+0f026a69b3f7: Layer already exists
+8eb98db4af83: Layer already exists
+9b0527ee93d7: Layer already exists
+a1dcf546c41a: Layer already exists
+ed6d2ffa030a: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+latest: digest: sha256:ba55f274782102e137844c2d5cab4b439ab9a6d226c628f46c1d0ff02670aa15 size: 2009
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-busco:1.0.2
+  ghcr.io/bdrd-genomics/allinone-busco:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-checkm2:1.0.2
+Dockerfile: Dockerfile.checkm2
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.checkm2
+#1 transferring dockerfile: 734B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 211B done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.checkm2.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml     && /opt/conda/bin/mamba clean -a -y     && /opt/conda/bin/conda clean -a -y     && rm -rf /opt/conda/pkgs/* /root/.cache /tmp/* /var/tmp/*
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:07343e86a49c1f9b87b56765ebf21aba1691acdcc184b4788b09ebe551300640 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-checkm2:1.0.2 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-checkm2:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-checkm2:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-checkm2]
+03f9c319b58e: Preparing
+171c22e2ad4a: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+ed6d2ffa030a: Layer already exists
+9b0527ee93d7: Layer already exists
+a1dcf546c41a: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+171c22e2ad4a: Pushed
+03f9c319b58e: Pushed
+1.0.2: digest: sha256:8252bb4b36081317b2976b90ecdf241fd8b0a588e9eda8d2a5d42c9d40c090ed size: 2007
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-checkm2:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-checkm2]
+03f9c319b58e: Preparing
+171c22e2ad4a: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+03f9c319b58e: Layer already exists
+9b0527ee93d7: Layer already exists
+171c22e2ad4a: Layer already exists
+a1dcf546c41a: Layer already exists
+325e753dfc15: Layer already exists
+ed6d2ffa030a: Layer already exists
+2d6e09443d18: Layer already exists
+c82be61ce08a: Layer already exists
+latest: digest: sha256:8252bb4b36081317b2976b90ecdf241fd8b0a588e9eda8d2a5d42c9d40c090ed size: 2007
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-checkm2:1.0.2
+  ghcr.io/bdrd-genomics/allinone-checkm2:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-checkm-genome:1.0.2
+Dockerfile: Dockerfile.checkm-genome
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.checkm-genome
+#1 transferring dockerfile: 598B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 414B done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.checkm-genome.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml &&     /opt/conda/bin/conda clean -a -y
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:62ae1b7fc03531b0762c82f550c3c511b1ac75248a828f71846ad8f8c86ef6f3 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-checkm-genome:1.0.2 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-checkm-genome:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-checkm-genome:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-checkm-genome]
+0aea24e98aae: Preparing
+41a9692d2d37: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+2d6e09443d18: Waiting
+41a9692d2d37: Layer already exists
+ed6d2ffa030a: Layer already exists
+0aea24e98aae: Layer already exists
+a1dcf546c41a: Layer already exists
+9b0527ee93d7: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+1.0.2: digest: sha256:a21c0fcaa15643d0b382f4953a241e6aa4ae1de95b1846cb1c8a7d336715b8c6 size: 2007
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-checkm-genome:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-checkm-genome]
+0aea24e98aae: Preparing
+41a9692d2d37: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+0aea24e98aae: Layer already exists
+41a9692d2d37: Layer already exists
+2d6e09443d18: Layer already exists
+ed6d2ffa030a: Layer already exists
+a1dcf546c41a: Layer already exists
+325e753dfc15: Layer already exists
+9b0527ee93d7: Layer already exists
+c82be61ce08a: Layer already exists
+latest: digest: sha256:a21c0fcaa15643d0b382f4953a241e6aa4ae1de95b1846cb1c8a7d336715b8c6 size: 2007
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-checkm-genome:1.0.2
+  ghcr.io/bdrd-genomics/allinone-checkm-genome:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-checkv:1.0.2
+Dockerfile: Dockerfile.checkv
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.checkv
+#1 transferring dockerfile: 728B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 208B done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.checkv.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml     && /opt/conda/bin/mamba clean -a -y     && /opt/conda/bin/conda clean -a -y     && rm -rf /opt/conda/pkgs/* /root/.cache /tmp/* /var/tmp/*
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:847cc31e0e9a8888fb98b43a17e280c804a96085483fe477e201b9f6c7da49e3 0.0s done
+#8 naming to ghcr.io/bdrd-genomics/allinone-checkv:1.0.2 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-checkv:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-checkv:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-checkv]
+041067c2ba87: Preparing
+056e985999f7: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+9b0527ee93d7: Layer already exists
+ed6d2ffa030a: Layer already exists
+a1dcf546c41a: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+056e985999f7: Pushed
+041067c2ba87: Pushed
+1.0.2: digest: sha256:fcc09e0acbb755e0dccba5e00b2e380a07ac7538f99a776e6e87f4252068b2a0 size: 2007
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-checkv:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-checkv]
+041067c2ba87: Preparing
+056e985999f7: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+056e985999f7: Layer already exists
+a1dcf546c41a: Layer already exists
+9b0527ee93d7: Layer already exists
+041067c2ba87: Layer already exists
+ed6d2ffa030a: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+latest: digest: sha256:fcc09e0acbb755e0dccba5e00b2e380a07ac7538f99a776e6e87f4252068b2a0 size: 2007
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-checkv:1.0.2
+  ghcr.io/bdrd-genomics/allinone-checkv:latest
+SKIP: Dockerfile.conda-base
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-diamond:1.0.2
+Dockerfile: Dockerfile.diamond
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.diamond
+#1 transferring dockerfile: 556B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 321B done
+#5 DONE 0.0s
+
+#6 [2/3] COPY diamond.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml &&     /opt/conda/bin/conda clean -a -y
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:a133bfa5590655a121047dc5b891a5364345ccb21b2e8f5bec40a434d5bdd989 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-diamond:1.0.2 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-diamond:latest
+#8 naming to ghcr.io/bdrd-genomics/allinone-diamond:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-diamond:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-diamond]
+1d1f779eb673: Preparing
+2099f2ded860: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+2d6e09443d18: Waiting
+1d1f779eb673: Layer already exists
+ed6d2ffa030a: Layer already exists
+2099f2ded860: Layer already exists
+a1dcf546c41a: Layer already exists
+9b0527ee93d7: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+1.0.2: digest: sha256:aa5ad615db06ecb8617f8b481e6d503841362c3536d1017f4c369919b438e695 size: 2007
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-diamond:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-diamond]
+1d1f779eb673: Preparing
+2099f2ded860: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+1d1f779eb673: Layer already exists
+9b0527ee93d7: Layer already exists
+2099f2ded860: Layer already exists
+ed6d2ffa030a: Layer already exists
+2d6e09443d18: Layer already exists
+a1dcf546c41a: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+latest: digest: sha256:aa5ad615db06ecb8617f8b481e6d503841362c3536d1017f4c369919b438e695 size: 2007
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-diamond:1.0.2
+  ghcr.io/bdrd-genomics/allinone-diamond:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-dragonflye:1.0.2
+Dockerfile: Dockerfile.dragonflye
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.dragonflye
+#1 transferring dockerfile: 583B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 240B done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.dragonflye.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml &&     /opt/conda/bin/conda clean -a -y
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:1b14efe62722c9197c840778c3d9e28a1037ab9bf97782614ab38d984124e329 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-dragonflye:1.0.2 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-dragonflye:latest 0.0s done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-dragonflye:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-dragonflye]
+70f3eb19fc31: Preparing
+41fb291093a2: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+9b0527ee93d7: Layer already exists
+ed6d2ffa030a: Layer already exists
+41fb291093a2: Layer already exists
+70f3eb19fc31: Layer already exists
+a1dcf546c41a: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+1.0.2: digest: sha256:547c390b876e70cfea62124f11d907fdbb46b9a1081d1fc0996a86df3c588a4b size: 2008
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-dragonflye:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-dragonflye]
+70f3eb19fc31: Preparing
+41fb291093a2: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+70f3eb19fc31: Layer already exists
+a1dcf546c41a: Layer already exists
+41fb291093a2: Layer already exists
+ed6d2ffa030a: Layer already exists
+9b0527ee93d7: Layer already exists
+2d6e09443d18: Layer already exists
+c82be61ce08a: Layer already exists
+325e753dfc15: Layer already exists
+latest: digest: sha256:547c390b876e70cfea62124f11d907fdbb46b9a1081d1fc0996a86df3c588a4b size: 2008
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-dragonflye:1.0.2
+  ghcr.io/bdrd-genomics/allinone-dragonflye:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-fastp_long:1.0.2
+Dockerfile: Dockerfile.fastp_long
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.fastp_long
+#1 transferring dockerfile: 1.13kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/5] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 204B done
+#5 DONE 0.0s
+
+#6 [3/5] RUN conda config --system --set channel_priority flexible &&     /opt/conda/bin/mamba env create -f /tmp/environment.yml &&     /opt/conda/bin/conda clean -afy
+#6 CACHED
+
+#7 [4/5] RUN echo 'source /opt/conda/etc/profile.d/conda.sh' > /etc/profile.d/conda_auto.sh &&     echo 'conda activate fastp_long' >> /etc/profile.d/conda_auto.sh &&     chmod +x /etc/profile.d/conda_auto.sh
+#7 CACHED
+
+#8 [2/5] COPY environment.fastp_long.yml /tmp/environment.yml
+#8 CACHED
+
+#9 [5/5] WORKDIR /data
+#9 CACHED
+
+#10 exporting to image
+#10 exporting layers done
+#10 writing image sha256:a0e69df5f964548308c47297c096498519d5354475eb8b8995f26b29d93bf050 done
+#10 naming to ghcr.io/bdrd-genomics/allinone-fastp_long:1.0.2 done
+#10 naming to ghcr.io/bdrd-genomics/allinone-fastp_long:latest done
+#10 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-fastp_long:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-fastp_long]
+e232c73c6786: Preparing
+d6d0f2d439bf: Preparing
+018153131a82: Preparing
+12f642374eeb: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+9b0527ee93d7: Waiting
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+a1dcf546c41a: Waiting
+c82be61ce08a: Waiting
+ed6d2ffa030a: Layer already exists
+a1dcf546c41a: Layer already exists
+9b0527ee93d7: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+e232c73c6786: Pushed
+12f642374eeb: Pushed
+d6d0f2d439bf: Pushed
+018153131a82: Pushed
+1.0.2: digest: sha256:346f32def3352198647a3489c7206ef4b56ba03e37d8a599b52c9030e3025cee size: 2419
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-fastp_long:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-fastp_long]
+e232c73c6786: Preparing
+d6d0f2d439bf: Preparing
+018153131a82: Preparing
+12f642374eeb: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+a1dcf546c41a: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+9b0527ee93d7: Waiting
+2d6e09443d18: Waiting
+e232c73c6786: Layer already exists
+a1dcf546c41a: Layer already exists
+12f642374eeb: Layer already exists
+ed6d2ffa030a: Layer already exists
+d6d0f2d439bf: Layer already exists
+018153131a82: Layer already exists
+9b0527ee93d7: Layer already exists
+c82be61ce08a: Layer already exists
+325e753dfc15: Layer already exists
+2d6e09443d18: Layer already exists
+latest: digest: sha256:346f32def3352198647a3489c7206ef4b56ba03e37d8a599b52c9030e3025cee size: 2419
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-fastp_long:1.0.2
+  ghcr.io/bdrd-genomics/allinone-fastp_long:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-fastqc:1.0.2
+Dockerfile: Dockerfile.fastqc
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.fastqc
+#1 transferring dockerfile: 758B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/4] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [3/4] RUN mamba create -y -n fastqc         -c conda-forge         -c bioconda         fastqc     && mamba clean -a -y
+#5 CACHED
+
+#6 [2/4] RUN dnf install -y         procps-ng         findutils         which         gzip         tar         bzip2         xz         ca-certificates         fontconfig     && dnf clean all     && rm -rf /var/cache/dnf
+#6 CACHED
+
+#7 [4/4] WORKDIR /data
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:0ea5faf38466c8e5cf328bc735262d6b96e97516e305b94d785ef8c3aae58a64 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-fastqc:1.0.2 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-fastqc:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-fastqc:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-fastqc]
+466b2868ac29: Preparing
+a648eba9a4e5: Preparing
+a953a05a65ce: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+9b0527ee93d7: Waiting
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+466b2868ac29: Layer already exists
+ed6d2ffa030a: Layer already exists
+a953a05a65ce: Layer already exists
+a648eba9a4e5: Layer already exists
+9b0527ee93d7: Layer already exists
+a1dcf546c41a: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+1.0.2: digest: sha256:edd7a9a62367e11557d0af46a901f04a266bd2613eb79996ba92f3157b016ee3 size: 2217
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-fastqc:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-fastqc]
+466b2868ac29: Preparing
+a648eba9a4e5: Preparing
+a953a05a65ce: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+9b0527ee93d7: Waiting
+c82be61ce08a: Waiting
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+a953a05a65ce: Layer already exists
+a648eba9a4e5: Layer already exists
+a1dcf546c41a: Layer already exists
+ed6d2ffa030a: Layer already exists
+466b2868ac29: Layer already exists
+9b0527ee93d7: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+latest: digest: sha256:edd7a9a62367e11557d0af46a901f04a266bd2613eb79996ba92f3157b016ee3 size: 2217
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-fastqc:1.0.2
+  ghcr.io/bdrd-genomics/allinone-fastqc:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-gottcha2:1.0.2
+Dockerfile: Dockerfile.gottcha2
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.gottcha2
+#1 transferring dockerfile: 740B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 214B done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.gottcha2.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml     && /opt/conda/bin/mamba clean -a -y     && /opt/conda/bin/conda clean -a -y     && rm -rf /opt/conda/pkgs/* /root/.cache /tmp/* /var/tmp/*
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:df506f0e99cbdd8408a068c68d65ee4c59d07524a64400c2ec68682dfeaf8760 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-gottcha2:1.0.2 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-gottcha2:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-gottcha2:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-gottcha2]
+2b36a9b20e0a: Preparing
+8c65999677ea: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+a1dcf546c41a: Layer already exists
+ed6d2ffa030a: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+9b0527ee93d7: Layer already exists
+8c65999677ea: Pushed
+2b36a9b20e0a: Pushed
+1.0.2: digest: sha256:f0287a9eb103dc9941f0ea3f22b37efd16ac0e4439adac5f44a71baa251c2064 size: 2007
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-gottcha2:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-gottcha2]
+2b36a9b20e0a: Preparing
+8c65999677ea: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+2b36a9b20e0a: Layer already exists
+8c65999677ea: Layer already exists
+9b0527ee93d7: Layer already exists
+a1dcf546c41a: Layer already exists
+ed6d2ffa030a: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+latest: digest: sha256:f0287a9eb103dc9941f0ea3f22b37efd16ac0e4439adac5f44a71baa251c2064 size: 2007
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-gottcha2:1.0.2
+  ghcr.io/bdrd-genomics/allinone-gottcha2:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-interleave:1.0.2
+Dockerfile: Dockerfile.interleave
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.interleave
+#1 transferring dockerfile: 752B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/4] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [2/4] RUN dnf install -y         procps-ng         findutils         which         gzip         tar         bzip2         xz         ca-certificates     && dnf clean all     && rm -rf /var/cache/dnf
+#5 CACHED
+
+#6 [3/4] RUN mamba create -y -n interleave         -c conda-forge         -c bioconda         bbmap     && mamba clean -a -y
+#6 CACHED
+
+#7 [4/4] WORKDIR /data
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:7e2778efc9e72f25aa7dabe055cc0750e86a9b8ffcbe1aa5d10dc87d38b81e0d done
+#8 naming to ghcr.io/bdrd-genomics/allinone-interleave:1.0.2 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-interleave:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-interleave:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-interleave]
+98d7225c454b: Preparing
+586502e1f2d3: Preparing
+a49e920d41db: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+9b0527ee93d7: Waiting
+325e753dfc15: Waiting
+2d6e09443d18: Waiting
+c82be61ce08a: Waiting
+ed6d2ffa030a: Layer already exists
+a49e920d41db: Layer already exists
+a1dcf546c41a: Layer already exists
+98d7225c454b: Layer already exists
+586502e1f2d3: Layer already exists
+9b0527ee93d7: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+1.0.2: digest: sha256:8bc607c9f09cd9b816d8895764923994ba2114bf67294796647fbb24283c0356 size: 2216
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-interleave:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-interleave]
+98d7225c454b: Preparing
+586502e1f2d3: Preparing
+a49e920d41db: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+9b0527ee93d7: Waiting
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+a49e920d41db: Layer already exists
+a1dcf546c41a: Layer already exists
+ed6d2ffa030a: Layer already exists
+586502e1f2d3: Layer already exists
+98d7225c454b: Layer already exists
+9b0527ee93d7: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+latest: digest: sha256:8bc607c9f09cd9b816d8895764923994ba2114bf67294796647fbb24283c0356 size: 2216
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-interleave:1.0.2
+  ghcr.io/bdrd-genomics/allinone-interleave:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-kraken2:1.0.2
+Dockerfile: Dockerfile.kraken2
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.kraken2
+#1 transferring dockerfile: 604B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 211B done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.kraken2.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml &&     /opt/conda/bin/conda clean -a -y
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:76c72053ac6aebfa2d264cb88767075655d147006b9d53396e1f59a48677f818 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-kraken2:1.0.2 0.0s done
+#8 naming to ghcr.io/bdrd-genomics/allinone-kraken2:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-kraken2:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-kraken2]
+894f570d7a4b: Preparing
+26da7efbdfab: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+2d6e09443d18: Waiting
+26da7efbdfab: Layer already exists
+894f570d7a4b: Layer already exists
+a1dcf546c41a: Layer already exists
+9b0527ee93d7: Layer already exists
+ed6d2ffa030a: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+1.0.2: digest: sha256:724ed7642365260be8221448fd85bbaf428bae7945eb6264d202bb9b2b89da63 size: 2007
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-kraken2:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-kraken2]
+894f570d7a4b: Preparing
+26da7efbdfab: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+894f570d7a4b: Layer already exists
+2d6e09443d18: Layer already exists
+9b0527ee93d7: Layer already exists
+a1dcf546c41a: Layer already exists
+ed6d2ffa030a: Layer already exists
+26da7efbdfab: Layer already exists
+c82be61ce08a: Layer already exists
+325e753dfc15: Layer already exists
+latest: digest: sha256:724ed7642365260be8221448fd85bbaf428bae7945eb6264d202bb9b2b89da63 size: 2007
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-kraken2:1.0.2
+  ghcr.io/bdrd-genomics/allinone-kraken2:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-krona:1.0.2
+Dockerfile: Dockerfile.krona
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.krona
+#1 DONE 0.0s
+
+#1 [internal] load build definition from Dockerfile.krona
+#1 transferring dockerfile: 558B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 283B done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.krona.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml &&     /opt/conda/bin/conda clean -a -y
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:b54d4fde16e44c081f65f71ffb625a68ce964e0afea9ad623ed255528af3ede7 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-krona:1.0.2
+#8 naming to ghcr.io/bdrd-genomics/allinone-krona:1.0.2 0.0s done
+#8 naming to ghcr.io/bdrd-genomics/allinone-krona:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-krona:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-krona]
+3706c551a30b: Preparing
+b1a8ebb83e3f: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+325e753dfc15: Waiting
+2d6e09443d18: Waiting
+c82be61ce08a: Waiting
+9b0527ee93d7: Layer already exists
+a1dcf546c41a: Layer already exists
+3706c551a30b: Layer already exists
+ed6d2ffa030a: Layer already exists
+b1a8ebb83e3f: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+1.0.2: digest: sha256:42786e783708d6953aafb648ce48cabf668efbc2c0a576d88f3ee6b749e8e431 size: 2006
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-krona:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-krona]
+3706c551a30b: Preparing
+b1a8ebb83e3f: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+3706c551a30b: Layer already exists
+ed6d2ffa030a: Layer already exists
+9b0527ee93d7: Layer already exists
+b1a8ebb83e3f: Layer already exists
+a1dcf546c41a: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+latest: digest: sha256:42786e783708d6953aafb648ce48cabf668efbc2c0a576d88f3ee6b749e8e431 size: 2006
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-krona:1.0.2
+  ghcr.io/bdrd-genomics/allinone-krona:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-md:1.0.2
+Dockerfile: Dockerfile.md
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.md
+#1 transferring dockerfile: 543B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 8.28kB done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.md.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml &&     /opt/conda/bin/conda clean -a -y
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:8774e7153e91e2411fa006684ad230fc30131a260ec87263aaac0c2c883413a7 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-md:1.0.2 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-md:latest 0.0s done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-md:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-md]
+450fa99d0566: Preparing
+2e0696a7dae7: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+9b0527ee93d7: Layer already exists
+a1dcf546c41a: Layer already exists
+2e0696a7dae7: Layer already exists
+450fa99d0566: Layer already exists
+2d6e09443d18: Layer already exists
+ed6d2ffa030a: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+1.0.2: digest: sha256:b098712682d425629de96943c3051dcd20bbae8708831a0e75d1196d2f4d8e57 size: 2009
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-md:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-md]
+450fa99d0566: Preparing
+2e0696a7dae7: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+c82be61ce08a: Waiting
+325e753dfc15: Waiting
+2d6e09443d18: Waiting
+450fa99d0566: Layer already exists
+2e0696a7dae7: Layer already exists
+a1dcf546c41a: Layer already exists
+9b0527ee93d7: Layer already exists
+2d6e09443d18: Layer already exists
+ed6d2ffa030a: Layer already exists
+c82be61ce08a: Layer already exists
+325e753dfc15: Layer already exists
+latest: digest: sha256:b098712682d425629de96943c3051dcd20bbae8708831a0e75d1196d2f4d8e57 size: 2009
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-md:1.0.2
+  ghcr.io/bdrd-genomics/allinone-md:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-metaphlan4:1.0.2
+Dockerfile: Dockerfile.metaphlan4
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.metaphlan4
+#1 transferring dockerfile: 752B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 211B done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.metaphlan4.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml     && /opt/conda/bin/mamba clean -a -y     && /opt/conda/bin/conda clean -a -y     && rm -rf /opt/conda/pkgs/* /root/.cache /tmp/* /var/tmp/*
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:e5d7c2a2cc01551505119de7535f332959ef7c87a2cb9158905732ac868b8621 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-metaphlan4:1.0.2 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-metaphlan4:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-metaphlan4:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-metaphlan4]
+ded1d0a5391f: Preparing
+06fb72683291: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+a1dcf546c41a: Layer already exists
+ed6d2ffa030a: Layer already exists
+9b0527ee93d7: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+06fb72683291: Pushed
+ded1d0a5391f: Pushed
+1.0.2: digest: sha256:c042bce31e0dea236820794c5417cc33741b1a15ac13edff87608cc70ac68fa7 size: 2008
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-metaphlan4:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-metaphlan4]
+ded1d0a5391f: Preparing
+06fb72683291: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+2d6e09443d18: Waiting
+ded1d0a5391f: Layer already exists
+a1dcf546c41a: Layer already exists
+ed6d2ffa030a: Layer already exists
+2d6e09443d18: Layer already exists
+9b0527ee93d7: Layer already exists
+06fb72683291: Layer already exists
+c82be61ce08a: Layer already exists
+325e753dfc15: Layer already exists
+latest: digest: sha256:c042bce31e0dea236820794c5417cc33741b1a15ac13edff87608cc70ac68fa7 size: 2008
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-metaphlan4:1.0.2
+  ghcr.io/bdrd-genomics/allinone-metaphlan4:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-mlst:1.0.2
+Dockerfile: Dockerfile.mlst
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.mlst
+#1 transferring dockerfile: 716B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 202B done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.mlst.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml     && /opt/conda/bin/mamba clean -a -y     && /opt/conda/bin/conda clean -a -y     && rm -rf /opt/conda/pkgs/* /root/.cache /tmp/* /var/tmp/*
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:24487ed14ae0776ff21ea5b48de5e4714bbb7ae745ccc329fda71bde0cc9a06f done
+#8 naming to ghcr.io/bdrd-genomics/allinone-mlst:1.0.2 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-mlst:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-mlst:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-mlst]
+2ce21a7c1ef8: Preparing
+7cab39ca55ba: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+2d6e09443d18: Waiting
+9b0527ee93d7: Layer already exists
+7cab39ca55ba: Layer already exists
+2ce21a7c1ef8: Layer already exists
+ed6d2ffa030a: Layer already exists
+a1dcf546c41a: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+1.0.2: digest: sha256:6a62b7ae60480628cf5dfb81bd14aa5e3045c4a22d7e0baaa5a15647ca9f0134 size: 2007
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-mlst:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-mlst]
+2ce21a7c1ef8: Preparing
+7cab39ca55ba: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+2d6e09443d18: Waiting
+2ce21a7c1ef8: Layer already exists
+2d6e09443d18: Layer already exists
+ed6d2ffa030a: Layer already exists
+a1dcf546c41a: Layer already exists
+9b0527ee93d7: Layer already exists
+7cab39ca55ba: Layer already exists
+c82be61ce08a: Layer already exists
+325e753dfc15: Layer already exists
+latest: digest: sha256:6a62b7ae60480628cf5dfb81bd14aa5e3045c4a22d7e0baaa5a15647ca9f0134 size: 2007
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-mlst:1.0.2
+  ghcr.io/bdrd-genomics/allinone-mlst:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-mmseqs2:1.0.2
+Dockerfile: Dockerfile.mmseqs2
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.mmseqs2
+#1 transferring dockerfile: 568B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 1.42kB done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.mmseqs2.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml &&     /opt/conda/bin/conda clean -a -y
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:c14755d54254da5074b45ae2c3e74140d8d12a33efdfb2f24c5adc98dd367a5f done
+#8 naming to ghcr.io/bdrd-genomics/allinone-mmseqs2:1.0.2 0.0s done
+#8 naming to ghcr.io/bdrd-genomics/allinone-mmseqs2:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-mmseqs2:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-mmseqs2]
+1ed23391613b: Preparing
+a4ecb370ccbd: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+1ed23391613b: Layer already exists
+a4ecb370ccbd: Layer already exists
+9b0527ee93d7: Layer already exists
+a1dcf546c41a: Layer already exists
+ed6d2ffa030a: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+1.0.2: digest: sha256:a11986f6a0042134063f430947b675c6e3bdfa52e79cb8f74c10c8c0d2e7c194 size: 2007
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-mmseqs2:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-mmseqs2]
+1ed23391613b: Preparing
+a4ecb370ccbd: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+1ed23391613b: Layer already exists
+9b0527ee93d7: Layer already exists
+a1dcf546c41a: Layer already exists
+2d6e09443d18: Layer already exists
+a4ecb370ccbd: Layer already exists
+ed6d2ffa030a: Layer already exists
+c82be61ce08a: Layer already exists
+325e753dfc15: Layer already exists
+latest: digest: sha256:a11986f6a0042134063f430947b675c6e3bdfa52e79cb8f74c10c8c0d2e7c194 size: 2007
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-mmseqs2:1.0.2
+  ghcr.io/bdrd-genomics/allinone-mmseqs2:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-mobsuite:1.0.2
+Dockerfile: Dockerfile.mobsuite
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.mobsuite
+#1 transferring dockerfile: 740B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 215B done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.mobsuite.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml     && /opt/conda/bin/mamba clean -a -y     && /opt/conda/bin/conda clean -a -y     && rm -rf /opt/conda/pkgs/* /root/.cache /tmp/* /var/tmp/*
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:214cbdd805e51b98c89b790e88d09f96dfda74466cffb1919cf5fd4fd95e6182 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-mobsuite:1.0.2 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-mobsuite:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-mobsuite:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-mobsuite]
+863e01803c41: Preparing
+137c0107c98d: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+9b0527ee93d7: Layer already exists
+a1dcf546c41a: Layer already exists
+ed6d2ffa030a: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+137c0107c98d: Pushed
+863e01803c41: Pushed
+1.0.2: digest: sha256:1eba2da7d531949cbb0a8697ca13c29eaa300edbae04ad8590e92362ef28fe01 size: 2008
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-mobsuite:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-mobsuite]
+863e01803c41: Preparing
+137c0107c98d: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+863e01803c41: Layer already exists
+ed6d2ffa030a: Layer already exists
+137c0107c98d: Layer already exists
+a1dcf546c41a: Layer already exists
+9b0527ee93d7: Layer already exists
+2d6e09443d18: Layer already exists
+c82be61ce08a: Layer already exists
+325e753dfc15: Layer already exists
+latest: digest: sha256:1eba2da7d531949cbb0a8697ca13c29eaa300edbae04ad8590e92362ef28fe01 size: 2008
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-mobsuite:1.0.2
+  ghcr.io/bdrd-genomics/allinone-mobsuite:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-multiqc:1.0.2
+Dockerfile: Dockerfile.multiqc
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.multiqc
+#1 transferring dockerfile: 568B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 3.57kB done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.multiqc.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml &&     /opt/conda/bin/conda clean -a -y
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:8499f4f4e6100448454de3a1b1908b47f3552f4391854432c618507aae924f65 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-multiqc:1.0.2 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-multiqc:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-multiqc:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-multiqc]
+c94fdc42ac32: Preparing
+d2ac9d45b68c: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+2d6e09443d18: Waiting
+9b0527ee93d7: Layer already exists
+ed6d2ffa030a: Layer already exists
+c94fdc42ac32: Layer already exists
+a1dcf546c41a: Layer already exists
+d2ac9d45b68c: Layer already exists
+2d6e09443d18: Layer already exists
+c82be61ce08a: Layer already exists
+325e753dfc15: Layer already exists
+1.0.2: digest: sha256:13706ab6e85fc47759cfcaf9e49991b83cbc03761f6493c5a5f35614e59c53fa size: 2008
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-multiqc:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-multiqc]
+c94fdc42ac32: Preparing
+d2ac9d45b68c: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+2d6e09443d18: Waiting
+c94fdc42ac32: Layer already exists
+a1dcf546c41a: Layer already exists
+d2ac9d45b68c: Layer already exists
+ed6d2ffa030a: Layer already exists
+9b0527ee93d7: Layer already exists
+2d6e09443d18: Layer already exists
+c82be61ce08a: Layer already exists
+325e753dfc15: Layer already exists
+latest: digest: sha256:13706ab6e85fc47759cfcaf9e49991b83cbc03761f6493c5a5f35614e59c53fa size: 2008
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-multiqc:1.0.2
+  ghcr.io/bdrd-genomics/allinone-multiqc:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-myloasm:1.0.2
+Dockerfile: Dockerfile.myloasm
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.myloasm
+#1 transferring dockerfile: 513B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 230B done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.myloasm.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -n myloasm -f /tmp/environment.yml     && /opt/conda/bin/conda clean -afy     && rm -f /tmp/environment.yml
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:f61b3a2d39e3712fd731ee89c58cbba78c8343b108a56a70986302589801ab50 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-myloasm:1.0.2 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-myloasm:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-myloasm:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-myloasm]
+4ad43ca72100: Preparing
+625dc3c339dd: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+a1dcf546c41a: Layer already exists
+9b0527ee93d7: Layer already exists
+ed6d2ffa030a: Layer already exists
+325e753dfc15: Layer already exists
+2d6e09443d18: Layer already exists
+c82be61ce08a: Layer already exists
+625dc3c339dd: Pushed
+4ad43ca72100: Pushed
+1.0.2: digest: sha256:2af288b346101b6d75427382a49e198bcb8daaf87d04b71f48bcd3d80fe0574d size: 2006
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-myloasm:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-myloasm]
+4ad43ca72100: Preparing
+625dc3c339dd: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+4ad43ca72100: Layer already exists
+625dc3c339dd: Layer already exists
+9b0527ee93d7: Layer already exists
+ed6d2ffa030a: Layer already exists
+a1dcf546c41a: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+latest: digest: sha256:2af288b346101b6d75427382a49e198bcb8daaf87d04b71f48bcd3d80fe0574d size: 2006
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-myloasm:1.0.2
+  ghcr.io/bdrd-genomics/allinone-myloasm:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-nanoplot:1.0.2
+Dockerfile: Dockerfile.nanoplot
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.nanoplot
+#1 transferring dockerfile: 1.10kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/5] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 189B done
+#5 DONE 0.0s
+
+#6 [2/5] COPY environment.nanoplot.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [4/5] RUN echo 'source /opt/conda/etc/profile.d/conda.sh' > /etc/profile.d/conda_auto.sh &&     echo 'conda activate nanoplot' >> /etc/profile.d/conda_auto.sh &&     chmod +x /etc/profile.d/conda_auto.sh
+#7 CACHED
+
+#8 [3/5] RUN conda config --system --set channel_priority flexible &&     /opt/conda/bin/mamba env create -f /tmp/environment.yml &&     /opt/conda/bin/conda clean -afy
+#8 CACHED
+
+#9 [5/5] WORKDIR /data
+#9 CACHED
+
+#10 exporting to image
+#10 exporting layers done
+#10 writing image sha256:dbfcb1352b5e9c27cd310934f922916b57c7867d582e0cc4295a77a3ee3f46b2 done
+#10 naming to ghcr.io/bdrd-genomics/allinone-nanoplot:1.0.2 done
+#10 naming to ghcr.io/bdrd-genomics/allinone-nanoplot:latest done
+#10 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-nanoplot:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-nanoplot]
+31d420ebc100: Preparing
+ecfcaa52224b: Preparing
+39bb800ce24b: Preparing
+ef5b893fe77c: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+a1dcf546c41a: Waiting
+c82be61ce08a: Waiting
+9b0527ee93d7: Waiting
+ed6d2ffa030a: Layer already exists
+a1dcf546c41a: Layer already exists
+9b0527ee93d7: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+ef5b893fe77c: Pushed
+ecfcaa52224b: Pushed
+31d420ebc100: Pushed
+39bb800ce24b: Pushed
+1.0.2: digest: sha256:a6fff4fa04e7c57183d8dc441477f58032c788f3082f509522ed7f033f12c1e9 size: 2420
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-nanoplot:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-nanoplot]
+31d420ebc100: Preparing
+ecfcaa52224b: Preparing
+39bb800ce24b: Preparing
+ef5b893fe77c: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+a1dcf546c41a: Waiting
+9b0527ee93d7: Waiting
+2d6e09443d18: Waiting
+c82be61ce08a: Waiting
+325e753dfc15: Waiting
+ef5b893fe77c: Layer already exists
+a1dcf546c41a: Layer already exists
+ed6d2ffa030a: Layer already exists
+39bb800ce24b: Layer already exists
+ecfcaa52224b: Layer already exists
+31d420ebc100: Layer already exists
+9b0527ee93d7: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+latest: digest: sha256:a6fff4fa04e7c57183d8dc441477f58032c788f3082f509522ed7f033f12c1e9 size: 2420
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-nanoplot:1.0.2
+  ghcr.io/bdrd-genomics/allinone-nanoplot:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-nextflow:1.0.2
+Dockerfile: Dockerfile.nextflow
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.nextflow
+#1 transferring dockerfile: 573B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 4.45kB done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.nextflow.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml &&     /opt/conda/bin/conda clean -a -y
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:0eb98f85d3f214faf0b28ed182cf7d4162d464867f07792f99fb00bb948e98b7 0.0s done
+#8 naming to ghcr.io/bdrd-genomics/allinone-nextflow:1.0.2 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-nextflow:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-nextflow:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-nextflow]
+380725502480: Preparing
+2db795386e6b: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+a1dcf546c41a: Layer already exists
+ed6d2ffa030a: Layer already exists
+380725502480: Layer already exists
+2db795386e6b: Layer already exists
+9b0527ee93d7: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+1.0.2: digest: sha256:fe7e49b192b2ff85f2d3b902dc3546af051e0ed91a111eccdac6965e02903dbf size: 2009
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-nextflow:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-nextflow]
+380725502480: Preparing
+2db795386e6b: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+380725502480: Layer already exists
+ed6d2ffa030a: Layer already exists
+9b0527ee93d7: Layer already exists
+a1dcf546c41a: Layer already exists
+2db795386e6b: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+latest: digest: sha256:fe7e49b192b2ff85f2d3b902dc3546af051e0ed91a111eccdac6965e02903dbf size: 2009
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-nextflow:1.0.2
+  ghcr.io/bdrd-genomics/allinone-nextflow:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-phispy:1.0.2
+Dockerfile: Dockerfile.phispy
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.phispy
+#1 transferring dockerfile: 1.07kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/4] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [2/4] RUN conda config --system --set channel_priority flexible &&     conda create -y -n phispy         -c conda-forge         -c bioconda         phispy &&     /opt/conda/bin/conda clean -afy
+#5 CACHED
+
+#6 [3/4] RUN echo 'source /opt/conda/etc/profile.d/conda.sh' > /etc/profile.d/conda_auto.sh &&     echo 'conda activate phispy' >> /etc/profile.d/conda_auto.sh &&     chmod +x /etc/profile.d/conda_auto.sh
+#6 CACHED
+
+#7 [4/4] WORKDIR /data
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:11e46546eef880a15cd56a468125011b58b4fc32ba6e6226f830369ee5477f13 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-phispy:1.0.2 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-phispy:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-phispy:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-phispy]
+ead089fca174: Preparing
+0fb521557d87: Preparing
+b483b89efc0a: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+9b0527ee93d7: Waiting
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+ead089fca174: Layer already exists
+a1dcf546c41a: Layer already exists
+b483b89efc0a: Layer already exists
+ed6d2ffa030a: Layer already exists
+0fb521557d87: Layer already exists
+9b0527ee93d7: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+1.0.2: digest: sha256:7891a5555b8711798e233dd815bea448b101118165d33bd6e9aa11f015239be6 size: 2213
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-phispy:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-phispy]
+ead089fca174: Preparing
+0fb521557d87: Preparing
+b483b89efc0a: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+9b0527ee93d7: Waiting
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+0fb521557d87: Layer already exists
+ead089fca174: Layer already exists
+ed6d2ffa030a: Layer already exists
+9b0527ee93d7: Layer already exists
+b483b89efc0a: Layer already exists
+a1dcf546c41a: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+latest: digest: sha256:7891a5555b8711798e233dd815bea448b101118165d33bd6e9aa11f015239be6 size: 2213
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-phispy:1.0.2
+  ghcr.io/bdrd-genomics/allinone-phispy:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-plasme:1.0.2
+Dockerfile: Dockerfile.plasme
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.plasme
+#1 transferring dockerfile: 728B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 279B done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.plasme.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml     && /opt/conda/bin/mamba clean -a -y     && /opt/conda/bin/conda clean -a -y     && rm -rf /opt/conda/pkgs/* /root/.cache /tmp/* /var/tmp/*
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:83ac3744ca144d7001cee1b197ebb42738184e0c83992bdbf6de64345a64bf1d done
+#8 naming to ghcr.io/bdrd-genomics/allinone-plasme:1.0.2 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-plasme:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-plasme:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-plasme]
+fea5407728b3: Preparing
+b537e769572b: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+9b0527ee93d7: Layer already exists
+ed6d2ffa030a: Layer already exists
+a1dcf546c41a: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+b537e769572b: Pushed
+fea5407728b3: Pushed
+1.0.2: digest: sha256:5d8b47dea01e14c9ea906bc2f1889cee377e5d1c106c9b440ae4004f3b3dfe5d size: 2007
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-plasme:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-plasme]
+fea5407728b3: Preparing
+b537e769572b: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+2d6e09443d18: Waiting
+fea5407728b3: Layer already exists
+9b0527ee93d7: Layer already exists
+ed6d2ffa030a: Layer already exists
+a1dcf546c41a: Layer already exists
+b537e769572b: Layer already exists
+2d6e09443d18: Layer already exists
+c82be61ce08a: Layer already exists
+325e753dfc15: Layer already exists
+latest: digest: sha256:5d8b47dea01e14c9ea906bc2f1889cee377e5d1c106c9b440ae4004f3b3dfe5d size: 2007
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-plasme:1.0.2
+  ghcr.io/bdrd-genomics/allinone-plasme:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-prokka:1.0.2
+Dockerfile: Dockerfile.prokka
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.prokka
+#1 transferring dockerfile: 599B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 196B done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.prokka.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml &&     /opt/conda/bin/conda clean -a -y
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:65afbb3d58fc06497bc81af5017b10a4159e51f1dfa11dedc5099929124badd4 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-prokka:1.0.2 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-prokka:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-prokka:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-prokka]
+076d65a40ad4: Preparing
+b01a180d5500: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+076d65a40ad4: Layer already exists
+9b0527ee93d7: Layer already exists
+a1dcf546c41a: Layer already exists
+ed6d2ffa030a: Layer already exists
+b01a180d5500: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+1.0.2: digest: sha256:facf2a20ef47caa262c728f0a0f58f209620b52c35934cd28740eae3477d18c6 size: 2008
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-prokka:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-prokka]
+076d65a40ad4: Preparing
+b01a180d5500: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+076d65a40ad4: Layer already exists
+b01a180d5500: Layer already exists
+9b0527ee93d7: Layer already exists
+a1dcf546c41a: Layer already exists
+ed6d2ffa030a: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+latest: digest: sha256:facf2a20ef47caa262c728f0a0f58f209620b52c35934cd28740eae3477d18c6 size: 2008
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-prokka:1.0.2
+  ghcr.io/bdrd-genomics/allinone-prokka:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-python_reports:1.0.2
+Dockerfile: Dockerfile.python_reports
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.python_reports
+#1 transferring dockerfile: 541B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 303B done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.python_reports.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -n python_reports -f /tmp/environment.yml     && /opt/conda/bin/conda clean -afy     && rm -f /tmp/environment.yml
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:a774c4facf4d4ab8e37e3133503ba32002df03259850dbbba67f5841ce97d4b8 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-python_reports:1.0.2 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-python_reports:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-python_reports:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-python_reports]
+3772edce9111: Preparing
+b911b1e2a74e: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+a1dcf546c41a: Layer already exists
+ed6d2ffa030a: Layer already exists
+9b0527ee93d7: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+b911b1e2a74e: Pushed
+3772edce9111: Pushed
+1.0.2: digest: sha256:a09bb07ae446091a5e8c3c55e9c49d7f97d5bb1f734512bba2fc6a7f0f0ac6af size: 2007
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-python_reports:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-python_reports]
+3772edce9111: Preparing
+b911b1e2a74e: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+3772edce9111: Layer already exists
+ed6d2ffa030a: Layer already exists
+a1dcf546c41a: Layer already exists
+b911b1e2a74e: Layer already exists
+9b0527ee93d7: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+latest: digest: sha256:a09bb07ae446091a5e8c3c55e9c49d7f97d5bb1f734512bba2fc6a7f0f0ac6af size: 2007
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-python_reports:1.0.2
+  ghcr.io/bdrd-genomics/allinone-python_reports:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-python_utils:1.0.2
+Dockerfile: Dockerfile.python_utils
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.python_utils
+#1 transferring dockerfile: 533B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 260B done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.python_utils.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -n python_utils -f /tmp/environment.yml     && /opt/conda/bin/conda clean -afy     && rm -f /tmp/environment.yml
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:67d8b730988dd1cede7822479c4ebdedb47716a142abf33bc2771a544b092aac done
+#8 naming to ghcr.io/bdrd-genomics/allinone-python_utils:1.0.2 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-python_utils:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-python_utils:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-python_utils]
+0942e3f28cbb: Preparing
+d85919261b09: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+2d6e09443d18: Waiting
+a1dcf546c41a: Layer already exists
+ed6d2ffa030a: Layer already exists
+9b0527ee93d7: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+d85919261b09: Pushed
+0942e3f28cbb: Pushed
+1.0.2: digest: sha256:a4e689c0668d3bf1e71b6e06d19933e726b202b8b3b8e1e8148c6f0ed4eaab3c size: 2007
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-python_utils:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-python_utils]
+0942e3f28cbb: Preparing
+d85919261b09: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+0942e3f28cbb: Layer already exists
+ed6d2ffa030a: Layer already exists
+d85919261b09: Layer already exists
+2d6e09443d18: Layer already exists
+9b0527ee93d7: Layer already exists
+a1dcf546c41a: Layer already exists
+c82be61ce08a: Layer already exists
+325e753dfc15: Layer already exists
+latest: digest: sha256:a4e689c0668d3bf1e71b6e06d19933e726b202b8b3b8e1e8148c6f0ed4eaab3c size: 2007
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-python_utils:1.0.2
+  ghcr.io/bdrd-genomics/allinone-python_utils:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-rgi:1.0.2
+Dockerfile: Dockerfile.rgi
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.rgi
+#1 transferring dockerfile: 584B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 187B done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.rgi.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml &&     /opt/conda/bin/conda clean -a -y
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:033bb770fb36572830d4f9d34dffc1ea594b37071fc14885be021487dfbf9bf8 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-rgi:1.0.2 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-rgi:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-rgi:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-rgi]
+c0220fc16702: Preparing
+6de3e965d472: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+2d6e09443d18: Waiting
+6de3e965d472: Layer already exists
+9b0527ee93d7: Layer already exists
+c0220fc16702: Layer already exists
+ed6d2ffa030a: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+a1dcf546c41a: Layer already exists
+c82be61ce08a: Layer already exists
+1.0.2: digest: sha256:6c432233613838be40035d31ab55ed4933720d3dd29a70b1543f3cfcc995449e size: 2008
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-rgi:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-rgi]
+c0220fc16702: Preparing
+6de3e965d472: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+c0220fc16702: Layer already exists
+6de3e965d472: Layer already exists
+a1dcf546c41a: Layer already exists
+2d6e09443d18: Layer already exists
+ed6d2ffa030a: Layer already exists
+9b0527ee93d7: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+latest: digest: sha256:6c432233613838be40035d31ab55ed4933720d3dd29a70b1543f3cfcc995449e size: 2008
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-rgi:1.0.2
+  ghcr.io/bdrd-genomics/allinone-rgi:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-ribodetector:1.0.2
+Dockerfile: Dockerfile.ribodetector
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.ribodetector
+#1 transferring dockerfile: 1.55kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/5] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [3/5] RUN mamba create -y -n ribodetector         -c conda-forge         -c bioconda         python=3.10         ribodetector=0.3.3         bbmap         pigz         pip     && mamba clean -a -y
+#5 CACHED
+
+#6 [4/5] RUN source /opt/conda/etc/profile.d/conda.sh     && conda activate ribodetector     && pip uninstall -y torch torchvision torchaudio || true     && pip install --no-cache-dir         torch==2.6.0+cu124         torchvision==0.21.0+cu124         torchaudio==2.6.0+cu124         --index-url https://download.pytorch.org/whl/cu124
+#6 CACHED
+
+#7 [2/5] RUN dnf install -y         procps-ng         findutils         which         gzip         tar         bzip2         xz         ca-certificates         git     && dnf clean all     && rm -rf /var/cache/dnf
+#7 CACHED
+
+#8 [5/5] WORKDIR /data
+#8 CACHED
+
+#9 exporting to image
+#9 exporting layers done
+#9 writing image sha256:89573f91e5445571b240671b58812de1f7eb3e4bc2b83e28b2a2356e81b068c6 done
+#9 naming to ghcr.io/bdrd-genomics/allinone-ribodetector:1.0.2 done
+#9 naming to ghcr.io/bdrd-genomics/allinone-ribodetector:latest done
+#9 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-ribodetector:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-ribodetector]
+02b2ea069bb2: Preparing
+f1c18e89bfd0: Preparing
+f417d74a9c99: Preparing
+8bf90681901c: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+a1dcf546c41a: Waiting
+9b0527ee93d7: Waiting
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+ed6d2ffa030a: Layer already exists
+f417d74a9c99: Layer already exists
+f1c18e89bfd0: Layer already exists
+02b2ea069bb2: Layer already exists
+a1dcf546c41a: Layer already exists
+8bf90681901c: Layer already exists
+9b0527ee93d7: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+1.0.2: digest: sha256:859a67d3db2ebc178088f0eab98582be9db4d13ff06c6e6a9dcc03c5623dc978 size: 2432
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-ribodetector:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-ribodetector]
+02b2ea069bb2: Preparing
+f1c18e89bfd0: Preparing
+f417d74a9c99: Preparing
+8bf90681901c: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+a1dcf546c41a: Waiting
+9b0527ee93d7: Waiting
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+f417d74a9c99: Layer already exists
+f1c18e89bfd0: Layer already exists
+8bf90681901c: Layer already exists
+ed6d2ffa030a: Layer already exists
+a1dcf546c41a: Layer already exists
+02b2ea069bb2: Layer already exists
+c82be61ce08a: Layer already exists
+2d6e09443d18: Layer already exists
+9b0527ee93d7: Layer already exists
+325e753dfc15: Layer already exists
+latest: digest: sha256:859a67d3db2ebc178088f0eab98582be9db4d13ff06c6e6a9dcc03c5623dc978 size: 2432
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-ribodetector:1.0.2
+  ghcr.io/bdrd-genomics/allinone-ribodetector:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-sourmash:1.0.2
+Dockerfile: Dockerfile.sourmash
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.sourmash
+#1 transferring dockerfile: 740B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 214B done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.sourmash.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml     && /opt/conda/bin/mamba clean -a -y     && /opt/conda/bin/conda clean -a -y     && rm -rf /opt/conda/pkgs/* /root/.cache /tmp/* /var/tmp/*
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:5a88c2c5a853b848046c4c55c80dc486c9de13a3d09fac2f478b4fc4a5308a1f done
+#8 naming to ghcr.io/bdrd-genomics/allinone-sourmash:1.0.2 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-sourmash:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-sourmash:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-sourmash]
+ac8797b70ad3: Preparing
+a13902d50416: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+9b0527ee93d7: Layer already exists
+ed6d2ffa030a: Layer already exists
+a1dcf546c41a: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+a13902d50416: Pushed
+ac8797b70ad3: Pushed
+1.0.2: digest: sha256:158de2df5b15917b6fb300faea7632e0b7be9d884cda87844e82a1e2f522be11 size: 2007
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-sourmash:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-sourmash]
+ac8797b70ad3: Preparing
+a13902d50416: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+a13902d50416: Layer already exists
+ac8797b70ad3: Layer already exists
+ed6d2ffa030a: Layer already exists
+2d6e09443d18: Layer already exists
+a1dcf546c41a: Layer already exists
+9b0527ee93d7: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+latest: digest: sha256:158de2df5b15917b6fb300faea7632e0b7be9d884cda87844e82a1e2f522be11 size: 2007
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-sourmash:1.0.2
+  ghcr.io/bdrd-genomics/allinone-sourmash:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-spades:1.0.2
+Dockerfile: Dockerfile.spades
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.spades
+#1 transferring dockerfile: 563B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 1.27kB done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.spades.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml &&     /opt/conda/bin/conda clean -a -y
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:bbcadfc2e0cd11bd7da6bfbdb8a6a9ab6838f10f16cbb2b3a405b6594d9c3fc9 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-spades:1.0.2 0.0s done
+#8 naming to ghcr.io/bdrd-genomics/allinone-spades:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-spades:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-spades]
+af2d44a2f1a9: Preparing
+ccf6fd101919: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+2d6e09443d18: Waiting
+ccf6fd101919: Layer already exists
+a1dcf546c41a: Layer already exists
+af2d44a2f1a9: Layer already exists
+ed6d2ffa030a: Layer already exists
+9b0527ee93d7: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+1.0.2: digest: sha256:2a03953f67bcb86cbbd5fd9125a73af3d1b075944cf506968db5164553d9c62f size: 2007
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-spades:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-spades]
+af2d44a2f1a9: Preparing
+ccf6fd101919: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+af2d44a2f1a9: Layer already exists
+ccf6fd101919: Layer already exists
+ed6d2ffa030a: Layer already exists
+9b0527ee93d7: Layer already exists
+a1dcf546c41a: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+latest: digest: sha256:2a03953f67bcb86cbbd5fd9125a73af3d1b075944cf506968db5164553d9c62f size: 2007
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-spades:1.0.2
+  ghcr.io/bdrd-genomics/allinone-spades:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-taxpasta:1.0.2
+Dockerfile: Dockerfile.taxpasta
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.taxpasta
+#1 transferring dockerfile: 740B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 214B done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.taxpasta.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml     && /opt/conda/bin/mamba clean -a -y     && /opt/conda/bin/conda clean -a -y     && rm -rf /opt/conda/pkgs/* /root/.cache /tmp/* /var/tmp/*
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:1357974ed6ec4d467d52c3063209ae1b43eb203ffd75e58e2c7a23aa61d7c078 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-taxpasta:1.0.2 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-taxpasta:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-taxpasta:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-taxpasta]
+8840171d042d: Preparing
+08ccdf9c4ee1: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+ed6d2ffa030a: Layer already exists
+9b0527ee93d7: Layer already exists
+a1dcf546c41a: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+08ccdf9c4ee1: Pushed
+8840171d042d: Pushed
+1.0.2: digest: sha256:5b2352e9a2849cae339ca9d3a52fdfe66a4ae34ec5b7ce1f8d431896f99ddca4 size: 2007
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-taxpasta:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-taxpasta]
+8840171d042d: Preparing
+08ccdf9c4ee1: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+8840171d042d: Layer already exists
+a1dcf546c41a: Layer already exists
+9b0527ee93d7: Layer already exists
+08ccdf9c4ee1: Layer already exists
+ed6d2ffa030a: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+latest: digest: sha256:5b2352e9a2849cae339ca9d3a52fdfe66a4ae34ec5b7ce1f8d431896f99ddca4 size: 2007
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-taxpasta:1.0.2
+  ghcr.io/bdrd-genomics/allinone-taxpasta:latest
+SKIP: Dockerfile.tool-template
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-unicycler:1.0.2
+Dockerfile: Dockerfile.unicycler
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.unicycler
+#1 transferring dockerfile: 578B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 4.01kB done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.unicycler.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml &&     /opt/conda/bin/conda clean -a -y
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:98822ee8784c973f6f333ccfb499210f17a7141c95ea39e8822817718df6d1a0 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-unicycler:1.0.2 done
+#8 naming to ghcr.io/bdrd-genomics/allinone-unicycler:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-unicycler:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-unicycler]
+7c0a45b4e6a0: Preparing
+e5ac6665f5fc: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+9b0527ee93d7: Layer already exists
+e5ac6665f5fc: Layer already exists
+ed6d2ffa030a: Layer already exists
+a1dcf546c41a: Layer already exists
+7c0a45b4e6a0: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+1.0.2: digest: sha256:b192bf83179cfc512faeb00eda86205438e97b1481c507810046fefd5f295dc0 size: 2008
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-unicycler:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-unicycler]
+7c0a45b4e6a0: Preparing
+e5ac6665f5fc: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+c82be61ce08a: Waiting
+325e753dfc15: Waiting
+e5ac6665f5fc: Layer already exists
+7c0a45b4e6a0: Layer already exists
+ed6d2ffa030a: Layer already exists
+9b0527ee93d7: Layer already exists
+a1dcf546c41a: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+latest: digest: sha256:b192bf83179cfc512faeb00eda86205438e97b1481c507810046fefd5f295dc0 size: 2008
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-unicycler:1.0.2
+  ghcr.io/bdrd-genomics/allinone-unicycler:latest
+
+============================================================
+Building:   ghcr.io/bdrd-genomics/allinone-vs:1.0.2
+Dockerfile: Dockerfile.vs
+============================================================
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.vs
+#1 transferring dockerfile: 543B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/3] FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 12.14kB done
+#5 DONE 0.0s
+
+#6 [2/3] COPY environment.vs.yml /tmp/environment.yml
+#6 CACHED
+
+#7 [3/3] RUN /opt/conda/bin/mamba env create -f /tmp/environment.yml &&     /opt/conda/bin/conda clean -a -y
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 writing image sha256:52a7a42af8689bbcb82cac62b9d7ef72b14f124ab383fd93e272251938f0922b done
+#8 naming to ghcr.io/bdrd-genomics/allinone-vs:1.0.2 0.0s done
+#8 naming to ghcr.io/bdrd-genomics/allinone-vs:latest done
+#8 DONE 0.0s
+
+Testing ps...
+PASS: ps validation
+PASS: source label
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-vs:1.0.2
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-vs]
+a7a559844d94: Preparing
+480b8ea1989e: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+9b0527ee93d7: Layer already exists
+480b8ea1989e: Layer already exists
+ed6d2ffa030a: Layer already exists
+2d6e09443d18: Layer already exists
+a7a559844d94: Layer already exists
+a1dcf546c41a: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+1.0.2: digest: sha256:33b48ff516e2a1f1cce4935c99ac8ed2b14699f75f44c2a1159071793c067830 size: 2009
+
+Pushing:
+  ghcr.io/bdrd-genomics/allinone-vs:latest
+The push refers to repository [ghcr.io/bdrd-genomics/allinone-vs]
+a7a559844d94: Preparing
+480b8ea1989e: Preparing
+ed6d2ffa030a: Preparing
+a1dcf546c41a: Preparing
+9b0527ee93d7: Preparing
+2d6e09443d18: Preparing
+325e753dfc15: Preparing
+c82be61ce08a: Preparing
+2d6e09443d18: Waiting
+325e753dfc15: Waiting
+c82be61ce08a: Waiting
+a7a559844d94: Layer already exists
+ed6d2ffa030a: Layer already exists
+a1dcf546c41a: Layer already exists
+480b8ea1989e: Layer already exists
+9b0527ee93d7: Layer already exists
+2d6e09443d18: Layer already exists
+325e753dfc15: Layer already exists
+c82be61ce08a: Layer already exists
+latest: digest: sha256:33b48ff516e2a1f1cce4935c99ac8ed2b14699f75f44c2a1159071793c067830 size: 2009
+
+SUCCESS:
+  ghcr.io/bdrd-genomics/allinone-vs:1.0.2
+  ghcr.io/bdrd-genomics/allinone-vs:latest
+
+
+============================================================
+SUMMARY
+============================================================
+
+Built, validated, and pushed: 38
+  ghcr.io/bdrd-genomics/allinone-aio_qc:1.0.2
+  ghcr.io/bdrd-genomics/allinone-amrfinder_plus:1.0.2
+  ghcr.io/bdrd-genomics/allinone-autocycler:1.0.2
+  ghcr.io/bdrd-genomics/allinone-bbmap:1.0.2
+  ghcr.io/bdrd-genomics/allinone-blast:1.0.2
+  ghcr.io/bdrd-genomics/allinone-busco:1.0.2
+  ghcr.io/bdrd-genomics/allinone-checkm2:1.0.2
+  ghcr.io/bdrd-genomics/allinone-checkm-genome:1.0.2
+  ghcr.io/bdrd-genomics/allinone-checkv:1.0.2
+  ghcr.io/bdrd-genomics/allinone-diamond:1.0.2
+  ghcr.io/bdrd-genomics/allinone-dragonflye:1.0.2
+  ghcr.io/bdrd-genomics/allinone-fastp_long:1.0.2
+  ghcr.io/bdrd-genomics/allinone-fastqc:1.0.2
+  ghcr.io/bdrd-genomics/allinone-gottcha2:1.0.2
+  ghcr.io/bdrd-genomics/allinone-interleave:1.0.2
+  ghcr.io/bdrd-genomics/allinone-kraken2:1.0.2
+  ghcr.io/bdrd-genomics/allinone-krona:1.0.2
+  ghcr.io/bdrd-genomics/allinone-md:1.0.2
+  ghcr.io/bdrd-genomics/allinone-metaphlan4:1.0.2
+  ghcr.io/bdrd-genomics/allinone-mlst:1.0.2
+  ghcr.io/bdrd-genomics/allinone-mmseqs2:1.0.2
+  ghcr.io/bdrd-genomics/allinone-mobsuite:1.0.2
+  ghcr.io/bdrd-genomics/allinone-multiqc:1.0.2
+  ghcr.io/bdrd-genomics/allinone-myloasm:1.0.2
+  ghcr.io/bdrd-genomics/allinone-nanoplot:1.0.2
+  ghcr.io/bdrd-genomics/allinone-nextflow:1.0.2
+  ghcr.io/bdrd-genomics/allinone-phispy:1.0.2
+  ghcr.io/bdrd-genomics/allinone-plasme:1.0.2
+  ghcr.io/bdrd-genomics/allinone-prokka:1.0.2
+  ghcr.io/bdrd-genomics/allinone-python_reports:1.0.2
+  ghcr.io/bdrd-genomics/allinone-python_utils:1.0.2
+  ghcr.io/bdrd-genomics/allinone-rgi:1.0.2
+  ghcr.io/bdrd-genomics/allinone-ribodetector:1.0.2
+  ghcr.io/bdrd-genomics/allinone-sourmash:1.0.2
+  ghcr.io/bdrd-genomics/allinone-spades:1.0.2
+  ghcr.io/bdrd-genomics/allinone-taxpasta:1.0.2
+  ghcr.io/bdrd-genomics/allinone-unicycler:1.0.2
+  ghcr.io/bdrd-genomics/allinone-vs:1.0.2
+
+Build failures: 0
+
+ps failures: 0
+
+Push failures: 0
+
+Skipped Dockerfiles: 4
+  Dockerfile.almalinux9.autoactivate
+  Dockerfile.base
+  Dockerfile.conda-base
+  Dockerfile.tool-template
+
+All images built, validated, and pushed successfully.

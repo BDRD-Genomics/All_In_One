@@ -1,0 +1,33 @@
+nextflow_workflow {
+
+    name "All_In_One short reads"
+
+    script "../main.nf"
+
+    config "./nextflow.config"
+
+
+    params {
+
+        samplesheet = "data/short/samplesheet.csv"
+
+        run_id = "test_short"
+
+        outdir = "results_short"
+
+        shortreads = true
+        longreads  = false
+        hybrid     = false
+
+    }
+
+
+    test("short read workflow completes") {
+
+        assert workflow.success
+
+        assert path("results_short").exists()
+
+    }
+
+}

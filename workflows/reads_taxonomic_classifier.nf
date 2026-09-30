@@ -146,7 +146,6 @@ process KRAKEN2_KRONA_SNAPSHOT {
 
     publishDir "${params.outdir}/${params.run_id}/reads_taxonomic_classifier/kraken2/snapshots", mode: 'copy'
 
-    container "${params.krona_screenshot_container}"
     errorStrategy 'ignore'
     input:
     tuple val(sample_id), path(krona_html)

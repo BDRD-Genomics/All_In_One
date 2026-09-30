@@ -1,0 +1,3 @@
+2026-09-30 17:54:28	5.1s	boring_brahmagupta	ERR	a2f8408018d031009db66b4220390fc3	01fc9e1e-d09e-44b3-84ab-befea7361e98	nextflow run . -profile test --samplesheet tests/data/short/samplesheet.csv --run_id reviewer_short --shortreads true
+2026-09-30 17:55:49	4.5s	tiny_kalman	ERR	a2f8408018d031009db66b4220390fc3	ef2d9f3b-49fd-430b-b074-bafb8213ee8e	nextflow run . -profile test --samplesheet tests/data/short/samplesheet.csv --run_id reviewer_short --shortreads true
+2026-09-30 17:56:29	-	happy_magritte	-	a2f8408018d031009db66b4220390fc3	08a9773f-2daa-4d85-a406-f4e45ea7e2fa	nextflow run . -profile test,apptainer --samplesheet tests/data/short/samplesheet.csv --run_id reviewer_short --shortreads true
