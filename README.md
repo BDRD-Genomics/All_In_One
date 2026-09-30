@@ -306,6 +306,72 @@ Examples:
 
 The available execution/backend profiles are defined in [`conf/profiles.config`](conf/profiles.config).
 
+### Test profiles
+
+All-In-One includes lightweight test profiles for validating the pipeline without downloading the full production database set.
+
+These profiles are intended for:
+
+- reviewers evaluating the pipeline
+- developers validating changes
+- users confirming that their Nextflow/container installation is working
+- testing short-read, long-read, and hybrid execution paths
+
+The available test profiles are:
+
+| Profile | Sequencing mode | Purpose |
+| --- | --- | --- |
+| `test_short` | Paired short reads | Run the lightweight short-read test dataset |
+| `test_long` | Long reads | Run the lightweight long-read test dataset |
+| `test_hybrid` | Short + long reads | Run the lightweight hybrid test dataset |
+
+For example, to run the short-read test with Apptainer:
+
+```bash
+nextflow run main.nf \
+    -profile test_short,apptainer
+```
+
+Run the long-read test with:
+
+```bash
+nextflow run main.nf \
+    -profile test_long,apptainer
+```
+
+Run the hybrid test with:
+
+```bash
+nextflow run main.nf \
+    -profile test_hybrid,apptainer
+```
+
+Docker or Conda can be selected instead when supported by the local system:
+
+```bash
+nextflow run main.nf -profile test_short,docker
+```
+
+```bash
+nextflow run main.nf -profile test_short,conda
+```
+
+The test profiles use small example sequencing datasets and a reduced test database configuration so that the workflow can be evaluated without provisioning the full production database collection.
+
+Production databases such as the complete NCBI `nt` and `nr` databases are **not required** for the lightweight test runs.
+
+Test profiles are intended for functional validation only. They are not intended to reproduce biologically meaningful production analyses or pipeline benchmarks.
+
+To run all supported test modes, use:
+
+```bash
+./scripts/run_all_tests.sh
+```
+
+This runs the short-read, long-read, and hybrid test configurations sequentially.
+
+For air-gapped systems, the required test datasets, databases, and container/software dependencies should be staged on an internet-connected system before transfer to the offline environment.
+
 ### Conda/Mamba
 
 The Conda profile uses repository-managed environments from:
