@@ -1,2 +1,0 @@
-sample_id,fastq_1,fastq_2,long_read
-test_hybrid,tests/data/hybrid/sample_R1.fastq.gz,tests/data/hybrid/sample_R2.fastq.gz,tests/data/hybrid/sample_long.fastq.gz

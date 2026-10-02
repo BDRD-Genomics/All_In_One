@@ -1,0 +1,6 @@
+task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	peak_rss	peak_vmem	rchar	wchar
+1	ff/2cc0ba	2216823	QC_Workflow:Interleave (test_short)	CACHED	0	2026-10-02 15:20:52.285	1.2s	838ms	182.3%	23.6 MB	249.8 MB	7.6 MB	2.2 MB
+2	74/92b32f	2216840	QC_Workflow:Quality_Control (test_short)	CACHED	0	2026-10-02 15:20:52.301	6.1s	5.8s	139.4%	3.2 GB	4.2 GB	23.4 MB	7.3 MB
+6	19/6b9217	2225108	MapReads_2_RefSeq:Map_Reads_2_RefSeq (test_short)	FAILED	1	2026-10-02 15:42:17.065	1.5s	1.5s	-	-	-	-	-
+7	e0/d6a45f	2225530	QC_Workflow:Post_trim_fastqc (test_short)	COMPLETED	0	2026-10-02 15:42:18.605	3.3s	2.9s	79.1%	201.1 MB	5.4 GB	10.7 MB	1.5 MB
+5	cc/c9f4bb	2226322	QC_Workflow:Pretrim_fastqc_merged (test_short)	COMPLETED	0	2026-10-02 15:45:18.896	3.3s	2.9s	74.1%	196 MB	5.4 GB	10.8 MB	1.5 MB
