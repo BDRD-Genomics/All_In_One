@@ -112,7 +112,7 @@ process Pretrim_NanoPlot {
     tuple val(sample_id), path("${sample_id}_pretrim_nanoplot"), emit: pretrim_nanoplot_ch
 
     when:
-    params.run_qc_stats && (params.longreads || params.hybrid)
+    params.run_qc_stats && (mode == 'long' || mode == 'hybrid')
 
     script:
     """
@@ -184,7 +184,8 @@ process PoreChop {
     tuple val(sample_id), file("${sample_id}.LR.porechop.fastq.gz"), emit: porechop_ch
     
     when:
-    params.longreads || params.hybrid
+    mode == 'long' || mode == 'hybrid'
+
     script:
     """
     porechop -i ${long_read} \

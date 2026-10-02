@@ -22,6 +22,7 @@ RUN mamba create -y -n fastqc \
         -c conda-forge \
         -c bioconda \
         fastqc \
+        seqkit \
     && mamba clean -a -y
 
 ENV CONDA_DEFAULT_ENV=fastqc
