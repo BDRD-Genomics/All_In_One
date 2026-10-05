@@ -1,2 +1,0 @@
-file	format	type	num_seqs	sum_len	min_len	avg_len	max_len	Q1	Q2	Q3	sum_gap	N50	N50_num	Q20(%)	Q30(%)	AvgQual	GC(%)	sum_n
-test_short_fastp_merged.fastq.gz	FASTQ	DNA	6000	899962	140	150.0	150	150	150	150	0	150	1	100	100	40.00	49.98	0

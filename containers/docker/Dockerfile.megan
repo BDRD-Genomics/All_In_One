@@ -1,0 +1,59 @@
+FROM ghcr.io/bdrd-genomics/allinone-conda-base:latest
+
+LABEL org.opencontainers.image.title="All-In-One MEGAN"
+LABEL org.opencontainers.image.description="MEGAN 7 Community Edition and Krona for All-In-One"
+LABEL org.opencontainers.image.source="https://github.com/BDRD-Genomics/All_In_One"
+
+SHELL ["/bin/bash", "-lc"]
+
+USER root
+
+ARG MEGAN_VERSION=7_2_0
+ARG MEGAN_INSTALLER=MEGAN_Community_unix_${MEGAN_VERSION}.sh
+ARG MEGAN_URL=https://software-ab.cs.uni-tuebingen.de/download/megan7/${MEGAN_INSTALLER}
+
+# Runtime/build utilities required by MEGAN
+RUN dnf install -y \
+        wget \
+        ca-certificates \
+        unzip \
+        fontconfig \
+        libX11 \
+        libXext \
+        libXrender \
+        libXtst \
+        libXi \
+        procps-ng \
+        findutils \
+        which \
+        make \
+    && dnf clean all \
+    && rm -rf /var/cache/dnf
+
+# Install MEGAN 7 Community Edition
+RUN wget -O /tmp/${MEGAN_INSTALLER} "${MEGAN_URL}" \
+    && chmod +x /tmp/${MEGAN_INSTALLER} \
+    && /tmp/${MEGAN_INSTALLER} \
+        -q \
+        -dir /opt/megan7 \
+    && rm -f /tmp/${MEGAN_INSTALLER}
+
+# Install Krona
+RUN mamba create -y \
+        -n megan_tools \
+        -c conda-forge \
+        -c bioconda \
+        krona \
+    && mamba clean -a -y
+
+# Make MEGAN CLI tools and Krona available directly on PATH
+ENV PATH=/opt/megan7/tools:/opt/megan7:/opt/conda/envs/megan_tools/bin:/opt/conda/bin:$PATH
+
+# Fail the build if the required pipeline executables are missing
+RUN test -x /opt/megan7/tools/daa-meganizer \
+    && test -x /opt/megan7/tools/daa2info \
+    && command -v ktImportTaxonomy
+
+WORKDIR /data
+
+CMD ["/bin/bash"]
