@@ -1,7 +1,0 @@
-task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	peak_rss	peak_vmem	rchar	wchar
-4	fe/6838ac	2196343	QC_Workflow:PoreChop (test_short)	FAILED	1	2026-10-02 14:49:09.640	876ms	797ms	-	-	-	-	-
-1	5d/696b85	2196336	QC_Workflow:Quality_Control (test_short)	COMPLETED	0	2026-10-02 14:49:09.632	3.3s	2.6s	86.9%	557.6 MB	18.2 GB	15.8 MB	426.8 KB
-5	6a/c4cc2d	2197419	MapReads_2_RefSeq:Map_Reads_2_RefSeq (test_short)	FAILED	1	2026-10-02 14:49:12.996	1.2s	1.1s	-	-	-	-	-
-6	2f/2c0e1e	2198422	QC_Workflow:Post_trim_fastqc (test_short)	FAILED	127	2026-10-02 15:00:05.976	1.8s	1.8s	-	-	-	-	-
-3	15/6eb857	2198761	QC_Workflow:Pretrim_NanoPlot (test_short)	FAILED	1	2026-10-02 15:00:17.540	6.7s	6.7s	-	-	-	-	-
-2	2a/7d326a	2199385	QC_Workflow:Interleave (test_short)	ABORTED	-	2026-10-02 15:00:27.077	-	-	-	-	-	-	-

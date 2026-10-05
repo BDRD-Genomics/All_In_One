@@ -136,9 +136,6 @@ process Meganize_ShortReads_BlastX {
     errorStrategy 'ignore'
     publishDir { "${params.outdir}/${params.run_id}/${sample_id}/blast/meganized_reads" }, mode: 'copy'
     label 'megan'
-    cpus { 32 }
-    memory { '128 GB'}
-    time '36h'
 
     input:
     tuple val(sample_id), file(blastx_short)
@@ -152,30 +149,32 @@ process Meganize_ShortReads_BlastX {
 
     script:
     """
-    ln -sf ${params.megandb}/ncbi.map ./ncbi.map 
-    ln -sf ${params.megandb}/ncbi.tre ./ncbi.tre 
-
-    ${params.meganpath}/daa-meganizer \\
+    daa-meganizer \\
         --in ${blastx_short} \\
         --only Taxonomy \\
-        --mapDB ${params.megandb}/megan-map.updated.db \\
+        --mapDB ${params.megan_mdb} \\
         --threads ${task.cpus} \\
         --minSupportPercent 0 \\
         --topPercent 0.5 \\
         --lcaAlgorithm weighted \\
         --longReads false \\
-        --verbose
+        --verbose   
 
-    paste <(${params.meganpath}/daa2info -P ${params.meganpath}/.MEGAN.def -i ${blastx_short} -c2c Taxonomy | awk '{print \$1}') \\
-          <(${params.meganpath}/daa2info -P ${params.meganpath}/.MEGAN.def -i ${blastx_short} -p -c2c Taxonomy | awk '{print \$1,\$2}' FS='\\t' OFS='\\t') \\
-          > ${sample_id}_short_reads_blastx_daa_summary_count.tsv
+    paste <(daa2info -i ${blastx_short} -c2c Taxonomy | awk '{print \$1}') \\
+          <(daa2info -i ${blastx_short} -p -c2c Taxonomy | awk '{print \$1,\$2}' FS='\\t' OFS='\\t') \\
+          > ${sample_id}_short_reads_blastx_daa_summary_count.tsv   
 
-    ${params.meganpath}/daa2info -i ${blastx_short} \
-        -c2c Taxonomy -o ${sample_id}_shortreads_blastx.tsv
+    daa2info \\
+        -i ${blastx_short} \\
+        -c2c Taxonomy \\
+        -o ${sample_id}_shortreads_blastx.tsv   
 
-    ktImportTaxonomy \
-        -tax ${params.krona_db} \
-        -t 1 -m 2 ${sample_id}_shortreads_blastx.tsv -o ${sample_id}_shortreads_krona.html
+    ktImportTaxonomy \\
+        -tax ${params.krona_db} \\
+        -t 1 \\
+        -m 2 \\
+        ${sample_id}_shortreads_blastx.tsv \\
+        -o ${sample_id}_shortreads_krona.html
     """
 }
 
@@ -196,13 +195,13 @@ process Meganize_LongReads_BlastX {
 
     script:
     """
-    ln -sf ${params.megandb}/ncbi.map ./ncbi.map 
-    ln -sf ${params.megandb}/ncbi.tre ./ncbi.tre 
+    ln -sf ${params.megan_mdb}/ncbi.map ./ncbi.map 
+    ln -sf ${params.megan_mdb}/ncbi.tre ./ncbi.tre 
 
     ${params.meganpath}/daa-meganizer \\
         --in ${blastx_long} \\
         --only Taxonomy \\
-        --mapDB ${params.megandb}/megan-map.updated.db \\
+        --mapDB ${params.megan_mdb} \\
         --threads ${task.cpus} \\
         --minSupportPercent 0 \\
         --topPercent 0.5 \\
@@ -243,12 +242,12 @@ process Meganize_BlastX_Contigs {
 
     script:
     """
-    ln -sf ${params.megandb}/ncbi.map ./ncbi.map
-    ln -sf ${params.megandb}/ncbi.tre ./ncbi.tre
+    ln -sf ${params.megan_mdb}/ncbi.map ./ncbi.map
+    ln -sf ${params.megan_mdb}/ncbi.tre ./ncbi.tre
 
     ${params.meganpath}/daa-meganizer \\
         --in ${daa_file} \\
-        --mapDB ${params.megandb}/megan-map.updated.db \\
+        --mapDB ${params.megan_mdb} \\
         --threads ${task.cpus} \\
         --topPercent 0.5 \\
         --minSupportPercent 0 \\

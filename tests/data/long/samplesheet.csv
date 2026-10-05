@@ -1,0 +1,2 @@
+sample_id,fastq_1,fastq_2,long_read
+test_long,No_Read,No_Read,tests/data/long/sample_long.fastq.gz
