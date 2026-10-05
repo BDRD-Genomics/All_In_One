@@ -1,4 +1,4 @@
-# All-In-One: A Comprehensive Pipeline for Processing and Analyzing Metagenomic and Viral Sequencing Data
+# All-in-One: A Comprehensive Pipeline for Processing and Analyzing Metagenomic and Viral Sequencing Data
 
 **All-In-One** is a modular [Nextflow](https://www.nextflow.io/) DSL2 workflow for metagenomic and viral sequencing analysis. It supports **paired short-read**, **long-read**, and **hybrid** sequencing data and combines quality control, host/rRNA removal, assembly, taxonomic classification, viral analysis, genome characterization, and reporting in a single configurable pipeline.
 
