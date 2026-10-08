@@ -104,6 +104,7 @@ while [[ $# -gt 0 ]]; do
             echo "plasme"
             echo "nt"
             echo "nr"
+            echo "taxonomy"
             exit 0
             ;;
         -h|--help)
@@ -128,7 +129,7 @@ export AIO_DATABASE_DIR="$DB_ROOT"
 
 need wget
 need tar
-
+need curl
 
 if [[ -n "$DB_LIST" && -n "$PRESET" ]]; then
     die "Use either --db or --preset, not both"
@@ -446,6 +447,91 @@ download_plasme() {
         rm -f "$archive"
 }
 
+# ============================================================
+# NCBI Taxonomy
+# ============================================================
+
+install_ncbi_taxonomy() {
+    local taxonomy_dir="${DB_ROOT}/taxonomy"
+    local taxdump="${taxonomy_dir}/taxdump.tar.gz"
+    local taxa_sqlite="${taxonomy_dir}/taxa.sqlite"
+    local traverse="${taxonomy_dir}/taxa.sqlite.traverse.pkl"
+
+    echo "============================================================"
+    echo "Installing NCBI taxonomy / ETE3 taxa.sqlite"
+    echo "============================================================"
+
+    mkdir -p "${taxonomy_dir}"
+
+    # Download the official NCBI taxonomy archive
+    if [[ ! -s "${taxdump}" ]]; then
+        curl -L \
+            --retry 3 \
+            -o "${taxdump}" \
+            "https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/taxdump.tar.gz"
+    else
+        echo "NCBI taxdump already exists; skipping download."
+    fi
+
+    # Build the ETE3 SQLite database
+    if [[ ! -s "${taxa_sqlite}" ]]; then
+
+        # Remove any partial files left from a failed build
+        rm -f "${taxa_sqlite}" "${traverse}"
+
+        docker run --rm -i \
+            --user "$(id -u):$(id -g)" \
+            -v "${DB_ROOT}:${DB_ROOT}" \
+            -w /tmp \
+            ghcr.io/bdrd-genomics/allinone-python_utils:latest \
+            python - "${taxdump}" "${taxa_sqlite}" <<'PY'
+import sys
+
+from ete3 import NCBITaxa
+
+taxdump = sys.argv[1]
+dbfile = sys.argv[2]
+
+print("Building ETE3 taxonomy database:")
+print(f"  taxdump: {taxdump}")
+print(f"  output : {dbfile}")
+
+try:
+    ncbi = NCBITaxa(
+        dbfile=dbfile,
+        taxdump_file=taxdump
+    )
+except TypeError:
+    # Compatibility with older ETE3 releases
+    from ete3.ncbi_taxonomy.ncbiquery import update_db
+
+    update_db(dbfile, taxdump)
+    ncbi = NCBITaxa(dbfile=dbfile)
+
+# Basic validation
+names = ncbi.get_taxid_translator([9606])
+
+if 9606 not in names:
+    raise RuntimeError(
+        "ETE3 taxonomy validation failed: taxid 9606 could not be resolved"
+    )
+
+print(f"Validation successful: 9606 -> {names[9606]}")
+print(f"Created: {dbfile}")
+PY
+
+    else
+        echo "ETE3 taxa.sqlite already exists; skipping build."
+    fi
+
+    if [[ ! -s "${taxa_sqlite}" ]]; then
+        echo "ERROR: Failed to create ${taxa_sqlite}" >&2
+        exit 1
+    fi
+
+    echo "NCBI taxonomy database ready:"
+    echo "  ${taxa_sqlite}"
+}
 
 # ============================================================
 # MOB-suite raw database
@@ -556,7 +642,9 @@ install_one() {
         nt|nr)
             download_blast_db "$1"
             ;;
-
+        taxonomy)
+            install_ncbi_taxonomy
+            ;;
         *)
             die "Unknown database: $1"
             ;;

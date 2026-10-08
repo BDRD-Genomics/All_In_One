@@ -1,11 +1,10 @@
-#!/usr/bin/ nextflow
+#!/usr/bin/env nextflow
 
-
-nextflow.enable.dsl=2
+nextflow.enable.dsl = 2
 
 /*
 ========================================================================================
-   BlastX
+  BlastX
 ========================================================================================
 */
 
@@ -14,6 +13,7 @@ process BlastX_contigs {
     publishDir { "${params.outdir}/${params.run_id}/${sample_id}/blast/" }, mode: 'copy'
     label 'optimized_blastx_contigs'
     errorStrategy 'ignore'
+
     input:
     tuple val(sample_id), val(assembler), path(contigs_fasta)
 
@@ -32,8 +32,7 @@ process BlastX_contigs {
         --range-culling -F 15 \\
         --evalue 1e-5 \\
         --outfmt 100 \\
-        --out ${sample_id}_${assembler}_blastx.daa 
-
+        --out ${sample_id}_${assembler}_blastx.daa
     """
 }
 
@@ -50,31 +49,48 @@ process BlastX_reads {
     tuple val(sample_id), file("*"), emit: blastx_reads_ch
     tuple val(sample_id), file("${sample_id}_short_reads_blastx.daa"), optional: true, emit: short_reads_blastx_channel
     tuple val(sample_id), file("${sample_id}_long_reads_blastx.daa"), optional: true, emit: long_reads_blastx_channel
-    
+
     when:
     params.agnostic_read_analysis
 
     script:
     """
+    # A gzip file containing zero reads is still non-zero bytes on disk, so -s alone
+    # is not enough. Check that the decompressed/plain FASTQ has actual content.
+    has_reads=false
 
-    if [[ "$mode" == "long" && -s "$fastq_file" ]]; then
+    if [[ -s "${fastq_file}" ]]; then
+        if [[ "${fastq_file}" == *.gz ]]; then
+            if gzip -cd "${fastq_file}" 2>/dev/null | head -n 1 | grep -q .; then
+                has_reads=true
+            fi
+        else
+            if head -n 1 "${fastq_file}" | grep -q .; then
+                has_reads=true
+            fi
+        fi
+    fi
+
+    if [[ "${mode}" == "long" && "\$has_reads" == "true" ]]; then
         diamond blastx ${params.diamond_args} \\
             --threads ${task.cpus} \\
             --db ${params.diamond_dbdir} \\
-            --query "$fastq_file" \\
+            --query "${fastq_file}" \\
             --evalue 1e-5 \\
             --outfmt 100 \\
             --out "${sample_id}_long_reads_blastx.daa"
-    elif [[ "$mode" == "short" && -s "$fastq_file" ]]; then 
+
+    elif [[ "${mode}" == "short" && "\$has_reads" == "true" ]]; then
         diamond blastx ${params.diamond_args} \\
             --threads ${task.cpus} \\
             --db ${params.diamond_dbdir} \\
-            --query "$fastq_file" \\
+            --query "${fastq_file}" \\
             --evalue 1e-5 \\
             --outfmt 100 \\
             --out "${sample_id}_short_reads_blastx.daa"
+
     else
-        echo "SKIP: No valid reads provided for $mode mode" > "${sample_id}_blastx.skipped.txt"
+        echo "SKIP: No valid reads provided for ${mode} mode" > "${sample_id}_blastx.skipped.txt"
     fi
 
     echo "OK" > "${sample_id}_blastx_reads.finished"
@@ -82,50 +98,24 @@ process BlastX_reads {
 }
 
 // DAA2INFO contigs .daa file
-
 process DAA2INFO_contigs_daa_file {
-    tag {sample_id}
+    tag { sample_id }
     errorStrategy 'ignore'
     publishDir { "${params.outdir}/${params.run_id}/${sample_id}/blast/" }, mode: 'copy'
     label 'normal'
 
     input:
-
     tuple val(sample_id), file(blastx_contigs)
 
     output:
-
     tuple val(sample_id), file("${sample_id}_c2c.txt"), emit: c2c_txt_file
 
-
     script:
-
     """
-    if [ "${params.metaspades}" == "true" ]; then
-      bash ${params.meganpath}/daa2info \
-      -i ${params.outdir}/${params.run_id}/${sample_id}/blast/${sample_id}_metaspades_blastx.daa \
-      -o ${sample_id}_c2c.txt \
-      -c2c Taxonomy -n -r -u
-
-    elif [ "${params.hybrid}" == "true" ]; then 
-      bash ${params.meganpath}/daa2info \
-      -i ${params.outdir}/${params.run_id}/${sample_id}/blast/${sample_id}_dragonflye_blastx.daa \
-      -o ${sample_id}_c2c.txt \
-      -c2c Taxonomy -n -r -u
-    elif [ "${params.dragonflye_isolate}" == "true" ]; then 
-      bash ${params.meganpath}/daa2info \
-      -i ${params.outdir}/${params.run_id}/${sample_id}/blast/${sample_id}_dragonflye_isolate_contigs_blastx.daa \
-      -o ${sample_id}_c2c.txt \
-      -c2c Taxonomy -n -r -u
-    elif [ "${params.unicycler}" == "true" ]; then 
-      bash ${params.meganpath}/daa2info \
-      -i ${params.outdir}/${params.run_id}/${sample_id}/blast/${sample_id}_unicycler_blastx.daa \
-      -o ${sample_id}_c2c.txt \
-      -c2c Taxonomy -n -r -u
-    else 
-      "skip this process"
-  
-    fi
+    daa2info \\
+        -i ${blastx_contigs} \\
+        -o ${sample_id}_c2c.txt \\
+        -c2c Taxonomy -n -r -u
     """
 }
 
@@ -144,6 +134,7 @@ process Meganize_ShortReads_BlastX {
     tuple val(sample_id), file("${sample_id}_short_reads_blastx_daa_summary_count.tsv"), emit: meganize_short_reads_ch
     tuple val(sample_id), file("*"), emit: all_shortreads_meganized_files
     tuple val(sample_id), file(blastx_short), emit: meganized_short_daa_ch
+
     when:
     params.agnostic_read_analysis || params.shortreads || params.hybrid
 
@@ -158,16 +149,16 @@ process Meganize_ShortReads_BlastX {
         --topPercent 0.5 \\
         --lcaAlgorithm weighted \\
         --longReads false \\
-        --verbose   
+        --verbose
 
     paste <(daa2info -i ${blastx_short} -c2c Taxonomy | awk '{print \$1}') \\
-          <(daa2info -i ${blastx_short} -p -c2c Taxonomy | awk '{print \$1,\$2}' FS='\\t' OFS='\\t') \\
-          > ${sample_id}_short_reads_blastx_daa_summary_count.tsv   
+          <(daa2info -i ${blastx_short} -p -c2c Taxonomy | awk '{print \$1,\$2}' FS='\t' OFS='\t') \\
+          > ${sample_id}_short_reads_blastx_daa_summary_count.tsv
 
     daa2info \\
         -i ${blastx_short} \\
         -c2c Taxonomy \\
-        -o ${sample_id}_shortreads_blastx.tsv   
+        -o ${sample_id}_shortreads_blastx.tsv
 
     ktImportTaxonomy \\
         -tax ${params.krona_db} \\
@@ -183,6 +174,7 @@ process Meganize_LongReads_BlastX {
     errorStrategy 'ignore'
     publishDir { "${params.outdir}/${params.run_id}/${sample_id}/blast/meganized_reads" }, mode: 'copy'
     label 'megan'
+
     input:
     tuple val(sample_id), file(blastx_long)
 
@@ -190,15 +182,13 @@ process Meganize_LongReads_BlastX {
     tuple val(sample_id), file("${sample_id}_long_reads_blastx_daa_summary_count.tsv"), emit: meganize_long_reads_ch
     tuple val(sample_id), file("*"), emit: all_longreads_meganized_files
     tuple val(sample_id), file(blastx_long), emit: long_reads_daa_meganized_ch
+
     when:
     params.agnostic_read_analysis || params.longreads || params.hybrid
 
     script:
     """
-    ln -sf ${params.megan_mdb}/ncbi.map ./ncbi.map 
-    ln -sf ${params.megan_mdb}/ncbi.tre ./ncbi.tre 
-
-    ${params.meganpath}/daa-meganizer \\
+    daa-meganizer \\
         --in ${blastx_long} \\
         --only Taxonomy \\
         --mapDB ${params.megan_mdb} \\
@@ -206,22 +196,24 @@ process Meganize_LongReads_BlastX {
         --minSupportPercent 0 \\
         --topPercent 0.5 \\
         --lcaAlgorithm weighted \\
-        --longReads false \\
-        --verbose 
+        --longReads true \\
+        --verbose
 
-    paste <(${params.meganpath}/daa2info -P ${params.meganpath}/.MEGAN.def -i ${blastx_long} -c2c Taxonomy | awk '{print \$1}') \\
-          <(${params.meganpath}/daa2info -P ${params.meganpath}/.MEGAN.def -i ${blastx_long} -p -c2c Taxonomy | awk '{print \$1,\$2}' FS='\\t' OFS='\\t') \\
+    paste <(daa2info -i ${blastx_long} -c2c Taxonomy | awk '{print \$1}') \\
+          <(daa2info -i ${blastx_long} -p -c2c Taxonomy | awk '{print \$1,\$2}' FS='\t' OFS='\t') \\
           > ${sample_id}_long_reads_blastx_daa_summary_count.tsv
 
-    ${params.meganpath}/daa2info -i ${blastx_long} \
-        -c2c Taxonomy \
+    daa2info \\
+        -i ${blastx_long} \\
+        -c2c Taxonomy \\
         -o ${sample_id}_longreads_blastx.tsv
 
-
-    ktImportTaxonomy \
-        -tax ${params.krona_db} \
-        -t 1 -m 2 ${sample_id}_longreads_blastx.tsv -o ${sample_id}_longreads_blastx_krona.html
-
+    ktImportTaxonomy \\
+        -tax ${params.krona_db} \\
+        -t 1 \\
+        -m 2 \\
+        ${sample_id}_longreads_blastx.tsv \\
+        -o ${sample_id}_longreads_blastx_krona.html
     """
 }
 
@@ -230,6 +222,7 @@ process Meganize_BlastX_Contigs {
     publishDir { "${params.outdir}/${params.run_id}/${sample_id}/blast/meganized_contigs/" }, mode: 'copy'
     label 'optimized_Meganize_Contigs_BlastX'
     errorStrategy 'ignore'
+
     input:
     tuple val(sample_id), val(assembler), path(daa_file)
 
@@ -242,22 +235,20 @@ process Meganize_BlastX_Contigs {
 
     script:
     """
-    ln -sf ${params.megan_mdb}/ncbi.map ./ncbi.map
-    ln -sf ${params.megan_mdb}/ncbi.tre ./ncbi.tre
-
-    ${params.meganpath}/daa-meganizer \\
+    daa-meganizer \\
         --in ${daa_file} \\
+        --only Taxonomy \\
         --mapDB ${params.megan_mdb} \\
         --threads ${task.cpus} \\
         --topPercent 0.5 \\
         --minSupportPercent 0 \\
         --lcaAlgorithm longReads \\
         --longReads true \\
-        --verbose 
+        --verbose
 
     # DAA summary counts (ID + counts)
-    paste <(${params.meganpath}/daa2info -P ${params.meganpath}/.MEGAN.def -i ${daa_file} -c2c Taxonomy | awk '{print \$1}') \\
-          <(${params.meganpath}/daa2info -P ${params.meganpath}/.MEGAN.def -i ${daa_file} -p -c2c Taxonomy | awk -F'\\t' '{print \$1, \$2}' OFS='\\t') \\
+    paste <(daa2info -i ${daa_file} -c2c Taxonomy | awk '{print \$1}') \\
+          <(daa2info -i ${daa_file} -p -c2c Taxonomy | awk -F'\t' '{print \$1, \$2}' OFS='\t') \\
           > ${sample_id}_${assembler}_contigs_blastx_daa_summary_count.tsv
 
     diamond view \\
@@ -266,17 +257,19 @@ process Meganize_BlastX_Contigs {
         > ${sample_id}_${assembler}_contigs_blastx_diamondview.tsv
 
     # MEGAN taxonomy TSV (Krona input)
-    ${params.meganpath}/daa2info \\
-        -i ${daa_file} -c2c Taxonomy \\
+    daa2info \\
+        -i ${daa_file} \\
+        -c2c Taxonomy \\
         -o ${sample_id}_${assembler}_contigs_blastx.tsv
 
-    # Krona 
+    # Krona
     ktImportTaxonomy \\
         -tax ${params.krona_db} \\
-        -t 1 -m 2 \\
+        -t 1 \\
+        -m 2 \\
         ${sample_id}_${assembler}_contigs_blastx.tsv \\
         -o ${sample_id}_${assembler}_contigs_blastx_krona.html
-"""
+    """
 }
 
 process Parse_BlastX_Contigs {
@@ -284,6 +277,7 @@ process Parse_BlastX_Contigs {
     publishDir { "${params.outdir}/${params.run_id}/${sample_id}/blast/" }, mode: 'copy'
     label 'lowmem'
     errorStrategy 'ignore'
+
     input:
     tuple val(sample_id), val(assembler), val(diamondview_file)
 
@@ -293,16 +287,16 @@ process Parse_BlastX_Contigs {
     script:
     """
     # TMP FIX
-    #
     export OMP_NUM_THREADS=${task.cpus}
     export OPENBLAS_NUM_THREADS=${task.cpus}
     export MKL_NUM_THREADS=${task.cpus}
     export NUMEXPR_NUM_THREADS=${task.cpus}
     export VECLIB_MAXIMUM_THREADS=${task.cpus}
+
     python ${params.scripts}/VS_MD_diamond_parser_linFilt_Mar2026_fast.py \\
-      -i ${diamondview_file} \\
-      -t blastx \\
-      -v ${params.vhunter} \\
-      -n ${params.ncbi_taxa}
+        -i ${diamondview_file} \\
+        -t blastx \\
+        -v ${params.megan_mdb} \\
+        -n ${params.ncbi_taxa}
     """
 }

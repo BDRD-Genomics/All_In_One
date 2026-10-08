@@ -96,7 +96,7 @@ process Multiqc_QC_host_removal {
     """
     mkdir -p ${params.outdir}/${params.run_id}/multiqc/targeted_read_mapping/
     mkdir -p ${params.outdir}/${params.run_id}/qc_stats/targeted_read_mapping/
-    multiqc ${params.outdir}/${params.run_id}/fastqc/targeted_read_mapping/ --data-format csv --outdir ${params.outdir}/${params.run_id}/multiqc/targeted_read_mapping//
+    multiqc ${params.outdir}/${params.run_id}/fastqc/targeted_read_mapping/ --data-format csv --outdir ${params.outdir}/${params.run_id}/multiqc/targeted_read_mapping// --force
     Rscript ${params.scripts}/create_host_removed_qc_stats.R -p ${params.outdir}/${params.run_id}/multiqc/targeted_read_mapping/multiqc_data/multiqc_general_stats.csv \
                                                 -o ${params.outdir}/${params.run_id}/qc_stats/targeted_read_mapping/
     """

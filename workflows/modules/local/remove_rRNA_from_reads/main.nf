@@ -99,7 +99,7 @@ process Multiqc_QC_rRNA_removal {
     """
     mkdir -p ${params.outdir}/${params.run_id}/multiqc/rRNA_removal/
     mkdir -p ${params.outdir}/${params.run_id}/qc_stats/targeted_read_mapping/
-    multiqc ${params.outdir}/${params.run_id}/fastqc/rRNA_removal/ --data-format csv --outdir ${params.outdir}/${params.run_id}/multiqc/rRNA_removal/
+    multiqc ${params.outdir}/${params.run_id}/fastqc/rRNA_removal/ --data-format csv --force --outdir ${params.outdir}/${params.run_id}/multiqc/rRNA_removal/
     Rscript ${params.scripts}/create_remove_rRNA_qc_stats.R -r ${params.outdir}/${params.run_id}/multiqc/rRNA_removal/multiqc_data/multiqc_general_stats.csv \
                                                 -o ${params.outdir}/${params.run_id}/qc_stats/rRNA_removal/
     """
