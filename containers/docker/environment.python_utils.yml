@@ -8,3 +8,4 @@ dependencies:
   - python=3.12
   - pandas
   - ete3
+  - biopython

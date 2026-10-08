@@ -280,79 +280,172 @@ process Fastq_2_Fasta {
 
 */
 
-/* map reads to reference sequence and use for downstream analysis (Optional)*/
-
 process Map_Reads_2_Contigs {
+
     tag { "${sample_id}_${assembler}" }
-    publishDir { "${params.outdir}/${params.run_id}/${sample_id}/VS_supplemental_outputs" }, 
-                mode: 'copy',
-                overwrite: true,
-                saveAs: { fn -> "${assembler}/${fn}" }
-    //label 'optimized_map2reads' // can erase if new tuple works
+
+    publishDir {
+        "${params.outdir}/${params.run_id}/${sample_id}/VS_supplemental_outputs"
+    },
+    mode: 'copy',
+    overwrite: true,
+    saveAs: { fn -> "${assembler}/${fn}" }
+
     errorStrategy 'ignore'
     conda "$baseDir/env/md.yaml"
+
     cpus { cpus }
     memory { mem }
 
     input:
-    tuple val(sample_id), file(fastq_1), file(fastq_2), file(long_read), file(contigs), val(mode), val(cpus), val(mem), val(assembler)
+    tuple val(sample_id),
+          file(fastq_1),
+          file(fastq_2),
+          file(long_read),
+          file(contigs),
+          val(mode),
+          val(cpus),
+          val(mem),
+          val(assembler)
 
     output:
-    tuple val(sample_id), file("${sample_id}_assembly_mapping_LR_covstats.txt"), file("lr_count.txt"), optional: true, emit: map2assembly_ch_lr
-    tuple val(sample_id), file("${sample_id}_assembly_mapping_SR_covstats.txt"), file("sr_count.txt"), optional: true, emit: map2assembly_ch_sr
-    tuple val(sample_id), file("${sample_id}_assembly_mapped_LR.fastq.gz"), file("${sample_id}_assembly_unmapped_LR.fastq.gz"), optional: true, emit: mapping_reads2contigs_LR
-    tuple val(sample_id), file("${sample_id}_assembly_mapped_SR.fastq.gz"), file("${sample_id}_assembly_unmapped_SR.fastq.gz"),	optional: true,	emit: mapping_reads2contigs_SR
-    tuple val(sample_id), file("*"), optional: true, emit: map2assembly_ch_all
+    tuple val(sample_id),
+          file("${sample_id}_assembly_mapping_LR_covstats.txt"),
+          file("lr_count.txt"),
+          optional: true,
+          emit: map2assembly_ch_lr
 
+    tuple val(sample_id),
+          file("${sample_id}_assembly_mapping_SR_covstats.txt"),
+          file("sr_count.txt"),
+          optional: true,
+          emit: map2assembly_ch_sr
+
+    tuple val(sample_id),
+          file("${sample_id}_assembly_mapped_LR.fastq.gz"),
+          file("${sample_id}_assembly_unmapped_LR.fastq.gz"),
+          optional: true,
+          emit: mapping_reads2contigs_LR
+
+    tuple val(sample_id),
+          file("${sample_id}_assembly_mapped_SR.fastq.gz"),
+          file("${sample_id}_assembly_unmapped_SR.fastq.gz"),
+          optional: true,
+          emit: mapping_reads2contigs_SR
+
+    tuple val(sample_id),
+          file("*"),
+          optional: true,
+          emit: map2assembly_ch_all
 
     when:
     params.vs
 
     script:
-    def LR_QC_reads_com = "zgrep -c '^@' ${long_read}"
-    //def LR_QC_count = LR_QC_reads_com.execute().toInteger()
-    def LR_QC_count = LR_QC_reads_com
-    def SR_QC_reads_com = "zgrep -c '^@' ${fastq_1}"
-    //def SR_QC_count = SR_QC_reads_com.execute().toInteger() * 2
-    def SR_QC_count = SR_QC_reads_com * 2
-    
     """
-    #mkdir -p ${params.outdir}/${params.run_id}/${sample_id}/status_log/
+    set -euo pipefail
 
     if [[ "${mode}" == "long" || "${mode}" == "hybrid" ]]; then
-        LR_QC_reads_com=\$(zgrep -c '^@' ${long_read})
-        echo \$LR_QC_reads_com > lr_count.txt
-        minimap2 -ax map-ont -t $task.cpus ${contigs} \\
-            ${long_read} > ${sample_id}_assembly_mapping_LR.sam
-        
-        samtools fastq -f 4 ${sample_id}_assembly_mapping_LR.sam > ${sample_id}_assembly_mapped_LR.fastq
-        samtools fastq -F 4 ${sample_id}_assembly_mapping_LR.sam > ${sample_id}_assembly_unmapped_LR.fastq
-        samtools sort ${sample_id}_assembly_mapping_LR.sam > ${sample_id}_assembly_mapping_LR_sorted.sam
-        samtools index ${sample_id}_assembly_mapping_LR_sorted.sam
-        samtools idxstats ${sample_id}_assembly_mapping_LR_sorted.sam > ${sample_id}_assembly_mapping_LR_covstats.txt
 
-        pigz *.fastq
+        LR_QC_reads_com=\$(zgrep -c '^@' ${long_read} || true)
+        echo "\${LR_QC_reads_com}" > lr_count.txt
+
+        minimap2 \
+            -ax map-ont \
+            -t ${task.cpus} \
+            ${contigs} \
+            ${long_read} \
+        | samtools view \
+            -@ ${task.cpus} \
+            -b \
+            -o ${sample_id}_assembly_mapping_LR.bam
+
+        # -F 4 = mapped reads
+        samtools fastq \
+            -@ ${task.cpus} \
+            -F 4 \
+            ${sample_id}_assembly_mapping_LR.bam \
+            > ${sample_id}_assembly_mapped_LR.fastq
+
+        # -f 4 = unmapped reads
+        samtools fastq \
+            -@ ${task.cpus} \
+            -f 4 \
+            ${sample_id}_assembly_mapping_LR.bam \
+            > ${sample_id}_assembly_unmapped_LR.fastq
+
+        samtools sort \
+            -@ ${task.cpus} \
+            -o ${sample_id}_assembly_mapping_LR_sorted.bam \
+            ${sample_id}_assembly_mapping_LR.bam
+
+        samtools index \
+            ${sample_id}_assembly_mapping_LR_sorted.bam
+
+        samtools idxstats \
+            ${sample_id}_assembly_mapping_LR_sorted.bam \
+            > ${sample_id}_assembly_mapping_LR_covstats.txt
+
+        pigz \
+            ${sample_id}_assembly_mapped_LR.fastq \
+            ${sample_id}_assembly_unmapped_LR.fastq
     fi
 
-    if [[ "${mode}" == "short" || "${mode}" == "hybrid" ]]; then
-        SR_QC_reads_com=\$(zgrep -c '^@' ${fastq_1})
-        SR_QC_count=\$(( SR_QC_reads_com * 2 ))
-        echo \$SR_QC_count > sr_count.txt
-        reformat.sh in1=${fastq_1} in2=${fastq_2} out=${sample_id}_IR.fastq.gz ow=t
-        minimap2 -ax sr -t $task.cpus ${contigs} \\
-            ${sample_id}_IR.fastq.gz > ${sample_id}_assembly_mapping_SR.sam 
-        
-        samtools fastq -f 4 ${sample_id}_assembly_mapping_SR.sam > ${sample_id}_assembly_mapped_SR.fastq
-        samtools fastq -F 4 ${sample_id}_assembly_mapping_SR.sam > ${sample_id}_assembly_unmapped_SR.fastq
-        samtools sort ${sample_id}_assembly_mapping_SR.sam > ${sample_id}_assembly_mapping_SR_sorted.sam
-        samtools index ${sample_id}_assembly_mapping_SR_sorted.sam
-        samtools idxstats ${sample_id}_assembly_mapping_SR_sorted.sam > ${sample_id}_assembly_mapping_SR_covstats.txt
 
-        pigz ${sample_id}_assembly_*_SR.fastq
+    if [[ "${mode}" == "short" || "${mode}" == "hybrid" ]]; then
+
+        SR_QC_reads_com=\$(zgrep -c '^@' ${fastq_1} || true)
+        SR_QC_count=\$(( SR_QC_reads_com * 2 ))
+        echo "\${SR_QC_count}" > sr_count.txt
+
+        reformat.sh \
+            in1=${fastq_1} \
+            in2=${fastq_2} \
+            out=${sample_id}_IR.fastq.gz \
+            ow=t
+
+        minimap2 \
+            -ax sr \
+            -t ${task.cpus} \
+            ${contigs} \
+            ${sample_id}_IR.fastq.gz \
+        | samtools view \
+            -@ ${task.cpus} \
+            -b \
+            -o ${sample_id}_assembly_mapping_SR.bam
+
+        # -F 4 = mapped reads
+        samtools fastq \
+            -@ ${task.cpus} \
+            -F 4 \
+            ${sample_id}_assembly_mapping_SR.bam \
+            > ${sample_id}_assembly_mapped_SR.fastq
+
+        # -f 4 = unmapped reads
+        samtools fastq \
+            -@ ${task.cpus} \
+            -f 4 \
+            ${sample_id}_assembly_mapping_SR.bam \
+            > ${sample_id}_assembly_unmapped_SR.fastq
+
+        samtools sort \
+            -@ ${task.cpus} \
+            -o ${sample_id}_assembly_mapping_SR_sorted.bam \
+            ${sample_id}_assembly_mapping_SR.bam
+
+        samtools index \
+            ${sample_id}_assembly_mapping_SR_sorted.bam
+
+        samtools idxstats \
+            ${sample_id}_assembly_mapping_SR_sorted.bam \
+            > ${sample_id}_assembly_mapping_SR_covstats.txt
+
+        pigz \
+            ${sample_id}_assembly_mapped_SR.fastq \
+            ${sample_id}_assembly_unmapped_SR.fastq
     fi
     """
 }
-
 
 /*
 ========================================================================================
@@ -398,75 +491,11 @@ script:
     -i "${mmseqs_out}" \\
     -s ${sample_id}_${assembler}_${read_type} \\
     -t mmseqs \\
-    -v ${params.vhunter} \\
+    -v ${params.megan_mdb} \\
     -n ${params.ncbi_taxa} \\
     --no-sort
   """
 }
-
-
-/*
-process Parse_MMseqs_Reads {
-  tag { "${sample_id}" }
-  publishDir { "${params.outdir}/${params.run_id}/${sample_id}/VS_supplemental_outputs/" },
-              mode: 'copy',
-              overwrite: true,
-              saveAs: { fn -> "${assembler}/${fn}" }
-
-  label 'lowmem'
-  errorStrategy 'ignore'
-  conda "${baseDir}/env/vs.yml"
-
-  input:
-  tuple val(sample_id), file(mmseq_out_sr), file(mmseq_out_lr), val(cpus), val(mem), val(mode),val(assembler)
-
-  cpus {cpus}  // setting slurm allocation dynamically
-  memory {mem} // setting slurm allocation dynamically
-
-  output:
-  tuple val(sample_id), file("${sample_id}_sr.mmseqs.parsed"), optional: true, emit: mmseqs_sr_parsed_ch
-  tuple val(sample_id), file("${sample_id}_lr.mmseqs.parsed"), optional: true, emit: mmseqs_lr_parsed_ch
-  tuple val(sample_id), file("${sample_id}_*.mmseqs.parsed"), optional: true, emit: mmseqs_all_parsed_ch
-
-
-script:
-  """
-  set -euo pipefail
-  # TMP FIX
-  export OMP_NUM_THREADS=${task.cpus}
-  export OPENBLAS_NUM_THREADS=${task.cpus}
-  export MKL_NUM_THREADS=${task.cpus}
-  export NUMEXPR_NUM_THREADS=${task.cpus}
-  if [[ "${mode}" == "short" || "${mode}" == "hybrid" ]]; then
-    # remove header
-    tail -n +2 "${mmseq_out_sr}" > tmp && mv tmp "${mmseq_out_sr}"
-
-    python ${params.scripts}/VS_MD_diamond_parser_linFilt_Mar2026_fast.py \\
-      -i "${mmseq_out_sr}" \\
-      -s ${sample_id}_sr \\
-      -t mmseqs \\
-      -v ${params.vhunter} \\
-      -n ${params.ncbi_taxa} \\
-      --no-sort
-  fi
-
-  if [[ "${mode}" == "long" || "${mode}" == "hybrid" ]]; then
-    # remove header
-    tail -n +2 "${mmseq_out_lr}" > tmp && mv tmp "${mmseq_out_lr}"
-
-    python ${params.scripts}/VS_MD_diamond_parser_linFilt_Mar2026_fast.py \\
-      -i "${mmseq_out_lr}" \\
-      -s ${sample_id}_lr \\
-      -t mmseqs \\
-      -v ${params.vhunter} \\
-      -n ${params.ncbi_taxa} \\
-      --no-sort
-  fi
-
-  """
-}
-*/
-
 
 /*
 ========================================================================================

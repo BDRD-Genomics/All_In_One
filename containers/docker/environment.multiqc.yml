@@ -8,15 +8,20 @@ dependencies:
   - python=3.11
   - multiqc=1.23
 
-  # R runtime and packages used by pipeline reporting scripts
-  - r-base
-  - r-optparse
-  - r-scales
-  - r-openxlsx
-
-  # Static plot rendering for MultiQC 1.23
+  # Keep Plotly compatible with self-contained Kaleido
+  - plotly=5.22.0
   - python-kaleido=0.2.1
   - kaleido-core=0.2.1
+
+  # R runtime and reporting packages
+  - r-base
+  - r-optparse
+  - r-readxl
+  - r-dplyr
+  - r-tidyr
+  - r-ggplot2
+  - r-scales
+  - r-openxlsx
 
   # Fonts
   - fontconfig

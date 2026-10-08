@@ -330,9 +330,9 @@ process Multiqc_QC_Stats {
     """
     rm -rf "${params.outdir}/${params.run_id}//multiqc/pretrim" "${params.outdir}/${params.run_id}//multiqc/post_trim" "${params.outdir}/${params.run_id}/qc_stats/"
     mkdir -p ${params.outdir}/${params.run_id}/multiqc/pretrim/
-    multiqc ${params.outdir}/${params.run_id}/fastqc/pretrim/ --data-format csv --outdir ${params.outdir}/${params.run_id}/multiqc/pretrim/ --export
+    multiqc ${params.outdir}/${params.run_id}/fastqc/pretrim/ --data-format csv --outdir ${params.outdir}/${params.run_id}/multiqc/pretrim/ --export --force
     mkdir -p ${params.outdir}/${params.run_id}/ multiqc/post_trim/
-    multiqc ${params.outdir}/${params.run_id}/fastqc/post_trim/ --data-format csv --outdir ${params.outdir}/${params.run_id}/multiqc/post_trim/ --export
+    multiqc ${params.outdir}/${params.run_id}/fastqc/post_trim/ --data-format csv --outdir ${params.outdir}/${params.run_id}/multiqc/post_trim/ --export --force
     mkdir -p ${params.outdir}/${params.run_id}/qc_stats/
     Rscript ${params.scripts}/create_qc_stats.R -i ${params.outdir}/${params.run_id}/multiqc/pretrim/multiqc_data/multiqc_general_stats.csv \
                                                                                 -p ${params.outdir}/${params.run_id}/multiqc/post_trim/multiqc_data/multiqc_general_stats.csv \

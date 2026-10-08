@@ -42,7 +42,7 @@ workflow MMSEQ_AllAssemblers {
     def built_qdir  = built_q.map { comp, qdb -> tuple(comp, qdb.parent) }     // (comp, qdir)
     def hits        = ES_SEARCH(built_qdir, db_for_search)                     // (comp, alnDB.dbtype, log)
     def paired      = built_qdir.join(hits).map { comp, qdir, adbtype, _log ->
-                       tuple(comp, qdir, adbtype.parent) }                      // (comp, qdir, aln_dir)
+                       tuple(comp, qdir, adbtype) }                      // (comp, qdir, aln_dir)
     def tsvs        = ES_CONVERT(paired, db_for_convert)                        // (comp, tsv)
 
     // Split composite back to (asm, sid) and branch to per-assembler streams

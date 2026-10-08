@@ -43,6 +43,7 @@ RUN mamba create -y \
         -n megan_tools \
         -c conda-forge \
         -c bioconda \
+        diamond \
         krona \
     && mamba clean -a -y
 
