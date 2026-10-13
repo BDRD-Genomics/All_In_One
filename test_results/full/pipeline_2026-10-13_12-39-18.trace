@@ -1,7 +1,0 @@
-task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	peak_rss	peak_vmem	rchar	wchar
-2	e0/4efebd	135938	QC_Workflow:Interleave (test_short)	COMPLETED	0	2026-10-13 12:39:22.465	1.1s	427ms	304.5%	6.4 MB	8.6 MB	7.6 MB	2.2 MB
-5	60/04dc19	136863	QC_Workflow:Pretrim_fastqc_merged (test_short)	COMPLETED	0	2026-10-13 12:39:23.583	1.8s	1.2s	141.2%	178.7 MB	5.4 GB	10.8 MB	1.6 MB
-4	cd/dd5258	135926	QC_Workflow:Quality_Control (test_short)	COMPLETED	0	2026-10-13 12:39:22.458	8.1s	7.4s	137.1%	4 GB	5.2 GB	23.2 MB	7.2 MB
-6	b0/2217b4	138423	MapReads_2_RefSeq:Map_Reads_2_RefSeq (test_short)	FAILED	1	2026-10-13 12:39:30.595	954ms	870ms	-	-	-	-	-
-7	46/48a5d0	139036	QC_Workflow:Post_trim_fastqc (test_short)	COMPLETED	0	2026-10-13 12:39:31.552	1.9s	1.3s	145.1%	181.2 MB	5.4 GB	10.7 MB	1.6 MB
-8	26/5f73a1	139540	QC_Workflow:Multiqc_QC_Stats	FAILED	2	2026-10-13 12:39:33.517	1.5s	1.4s	-	-	-	-	-
