@@ -1,3 +1,0 @@
-task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	peak_rss	peak_vmem	rchar	wchar
-4	c8/f33baf	117008	QC_Workflow:Quality_Control (test_short)	FAILED	127	2026-10-13 10:22:49.624	99ms	18ms	-	-	-	-	-
-2	e4/9aa60e	117020	QC_Workflow:Interleave (test_short)	FAILED	127	2026-10-13 10:22:49.633	94ms	1ms	-	-	-	-	-
